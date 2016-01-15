@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "alcesAccessManagerClient",
+    "style": "scss",
+    "postcss": false
+  }
+}
