@@ -23,9 +23,10 @@ class NoVnc extends React.Component {
 
   componentDidMount() {
     this.canvas = document.getElementById('novnc-canvas');
+    this.$canvas = $(this.canvas);
 
     // Add event handlers.
-    $(this.canvas).on('vnc:connect', this.handleVncConnect.bind(this));
+    this.$canvas.on('vnc:connect', this.handleVncConnect.bind(this));
 
     this.rfb = new noVNC.RFB({
       local_cursor: true,
@@ -49,13 +50,13 @@ class NoVnc extends React.Component {
     if (eventState && this.canvas) {
       const eventName = `vnc:${eventState}`
       const data = {rfb, state, oldstate, msg,};
-      $(this.canvas).trigger(eventName, data);
+      this.$canvas.trigger(eventName, data);
     }
   }
 
   componentWillUnmount() {
     // TODO: Not actually manually tested yet as component never unmounts.
-    $(this.canvas).off();
+    this.$canvas.off();
   }
 
   connect() {
