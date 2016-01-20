@@ -1,0 +1,23 @@
+cluster:
+  uuid: '7b4249e8-637a-11e5-a343-7831c1c0e63c'
+  token: '8R0c6lyMG1pJGP/wzg8dHA=='
+  name: 'el7cluster'
+  role: 'master'
+  tags:
+    scheduler_roles: ':master:compute:'
+    galaxy_roles: ':master:compute:'
+    storage_roles: ':master:'
+  interface: enp0s8
+  quorum: 2
+  service_url: https://flight.alces-software.com
+instance:
+  users:
+  - username: markt
+    uid: 509
+    group: markt
+    gid: 509
+    groups:
+      - gridware
+      - admins:388
+    ssh_public_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+0G7pJYXeKfcIFYmpzAQYWNI5kSiVQItfbnChcgb3IOF0qtJpm0gxsNvU1tu8LA0toswV11c/XQ76yREeBi7W50fOtpxgElKbfQO5YxMGteH/JSU/I/vilJC5IlGLYk1YCauMAfMNaizShF/taVpAtThL5z/FzhO48wlGvE34gexyLck1+Uc8gjpEEHSFnoeyAzALJw6OHM6sOroEZ1pUeJfgKD6DbLS9cxj5BLSWwShS7f37m9X8HYFuxt+ywV+f0KtXaaTYKbcbU9uzJ+wmxV35EKgWi6yhIXyIU85pk3hpJQ5F9RSU2B/flgbkLDnycpLNi8H0l4M4bnfEZMYP markt
