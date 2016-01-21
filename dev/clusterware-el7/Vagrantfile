@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Update the below vars to match your configuration
   #projects = "#{ENV['HOME']}/projects"
-  projects = "#{ENV['HOME']}/code/alces"
+  projects = "#{ENV['HOME']}/projects/alces"
   hostonly_net = "vboxnet0"
 
   config.vm.provider "virtualbox" do |v|
