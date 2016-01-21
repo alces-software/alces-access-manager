@@ -11,7 +11,7 @@ class AppComponent extends React.Component {
     // http://procbits.com/2013/10/09/connecting-to-a-sockjs-server-from-native-html5-websocket.
     return (
       <div className="index">
-        <NoVNC host="localhost" port={6080} password="" path="websockify"/>
+        <NoVNC url="ws://localhost:41361/websockify" password="LE94kYw5"/>
       </div>
     );
   }
