@@ -65,7 +65,9 @@
   },
   "dependencies": {
     "core-js": "^2.0.0",
+    "jquery": "^2.2.0",
     "normalize.css": "^3.0.3",
+    "novnc-node": "^0.5.2",
     "react": "^0.14.0",
     "react-dom": "^0.14.0"
   }
