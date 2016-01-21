@@ -48,6 +48,7 @@ class NoVnc extends React.Component {
     };
     const eventState = statesMap[state];
     if (eventState && this.canvas) {
+      console.log(eventState)
       const eventName = `vnc:${eventState}`
       const data = {rfb, state, oldstate, msg,};
       this.$canvas.trigger(eventName, data);
@@ -62,7 +63,14 @@ class NoVnc extends React.Component {
   connect() {
     // /websocket suffix required as specified here:
     // http://procbits.com/2013/10/09/connecting-to-a-sockjs-server-from-native-html5-websocket.
-    this.rfb.connect('ws://localhost:6080/websocket', 6080);
+    const {host, port, password, path,} = this.props;
+    const uri = `ws://${host}:${port}/${path}`;
+    console.log(uri)
+    // TODO: For some reason this won't work when pass in four parameters host,
+    // port, password, path, so construct uri ourselves including needed port
+    // and path; port also can then be anything here. Possibly worth
+    // investigating and/or better handling bad values of these.
+    this.rfb.connect(uri, port, password);
   }
 
   handleMouseOver() {
