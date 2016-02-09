@@ -1,0 +1,65 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+.flightPanel {
+    @extend .panel-default;
+
+    margin-bottom: rem(10px);
+
+    & .panel {
+        margin-bottom: 0;
+    }
+
+    & .panel-heading {
+        @extend .flight-pageHeader;
+
+        .flightPanel-header-actions-button {
+            float: right;
+        }
+    }
+
+    & .panel-title {
+        @extend %c-header;
+        @extend %c-h2;
+
+        .flight-icon {
+            color: $text-muted;
+            font-size: 140%;
+        }
+
+        * {
+            vertical-align: middle;
+        }
+    }
+    &.flightPanel-header--small .panel-title {
+        @extend %c-h4;
+    }
+
+    & .panel-body {
+        // XXX Portal has this set for panel bodies somehow. Figure out how and
+        // consider using that method.
+        background-color: whitesmoke;
+    }
+
+    &.flightPanel-width--medium {
+        @extend .col-sm-offset-1;
+        @extend .col-sm-10;
+        @extend .col-md-offset-2;
+        @extend .col-md-8;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    &.flightPanel-width--wide {
+        @extend .col-sm-offset-1;
+        @extend .col-sm-10;
+        @extend .col-md-offset-1;
+        @extend .col-md-10;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

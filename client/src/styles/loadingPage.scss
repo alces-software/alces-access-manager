@@ -1,0 +1,22 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+.loading-indicator {
+    @extend .container;
+    padding-left: 25%;
+    padding-right: 25%;
+    margin-top: 10%;
+    text-align: center;
+    P {
+        font-size: 120%;
+    }
+}
+
+.loading-indicator-progress-bar {
+    background-color: $progress-bar-bg;
+    transition-duration: 0.1s;
+}

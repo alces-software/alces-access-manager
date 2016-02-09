@@ -1,0 +1,22 @@
+#!/bin/bash
+#=============================================================================
+# Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+#
+# This file is part of Alces Flight.
+#
+# All rights reserved, see LICENSE.txt.
+#=============================================================================
+
+# Script to run a command within the Docker container.
+#
+# Usage: docker-run [port] command
+# If no port is given the default port is used.
+
+DEFAULT_PORT=3001
+
+case $1 in
+    ''|*[!0-9]*) PORT=$DEFAULT_PORT; ARGS="$@" ;;
+    *) PORT="$1"; echo "$@"; ARGS="${@:2}" ;;
+esac
+
+docker run -it --rm -v $(pwd):/home/aviator/aviator -p $PORT:$PORT aviator $ARGS

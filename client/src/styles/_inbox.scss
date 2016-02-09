@@ -1,0 +1,30 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+/* *************************************
+ *
+ *   inbox
+ *   -> styles looking for a home.
+ *
+ * *************************************/
+
+DL.dl-horizontal.dl-horizontal--wide > DT {
+    width: 250px;
+}
+DL.dl-horizontal.dl-horizontal--wide > DD {
+    margin-left: 270px;
+}
+
+// Show envelope icon next to mailto links.
+a[href^="mailto:"]:after {
+    font-family: FontAwesome;
+    content: $fa-var-envelope-o;
+    margin-left: rem(5px);
+    font-size: 80%;
+    display: inline-block;
+    text-indent: 0;
+}

@@ -1,16 +1,36 @@
-/*eslint no-console:0 */
-require('core-js/fn/object/assign');
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+/* eslint-disable no-console */
+var express = require('express');
 var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./webpack.config');
-var open = require('open');
+var config = require('./webpack.config.js');
 
-new WebpackDevServer(webpack(config), config.devServer)
-.listen(config.port, 'localhost', function(err) {
+var app = express();
+var compiler = webpack(config);
+
+var port = 3001;
+var host = "0.0.0.0";
+var url = "http://" + host + ":" + port;
+
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath
+}));
+
+app.use(require('webpack-hot-middleware')(compiler, {
+  log: console.log, path: "/__webpack_hmr", heartbeat: 10 * 1000
+}));
+
+app.listen(port, host, function(err) {
   if (err) {
     console.log(err);
+    return;
   }
-  console.log('Listening at localhost:' + config.port);
-  console.log('Opening your system browser...');
-  open('http://localhost:' + config.port + '/webpack-dev-server/');
+
+  console.log('Listening at ' + url);
 });

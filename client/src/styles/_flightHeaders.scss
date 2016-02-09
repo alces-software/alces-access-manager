@@ -1,0 +1,26 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+/* *************************************
+ *
+ *   flightHeaders
+ *   -> shared page header styles
+ *
+ * *************************************/
+%c-flight-pageHeader {
+    background-color: $c-primary-color--lighter;
+}
+
+
+.flight-pageHeader {
+    @extend %c-flight-pageHeader;
+    // @include make-row();
+    // margin: rem(5px) 0 rem(15px) 0;
+    // padding: rem(15px) rem(10px);
+    // position: relative;
+}
+

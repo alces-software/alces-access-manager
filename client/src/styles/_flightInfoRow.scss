@@ -1,0 +1,43 @@
+/*=============================================================================
+ * Copyright (C) 2015-2016 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+
+.flight-InfoRows {
+    margin: rem(5px) rem(20px) rem(5px) rem(20px);
+
+    & > :first-child {
+        border-top: 1px solid $text-muted;
+        padding-top: rem(15px);
+    }
+
+    .flight-InfoRow {
+        border-bottom: 1px solid $text-muted;
+        margin-bottom: rem(15px);
+        padding-bottom: rem(15px);
+
+        .flight-InfoRow-title {
+            @extend %c-h5;
+            @extend %c-header;
+            color: $text-muted;
+            font-weight: bold;
+            margin-top: 0;
+        }
+
+        .flight-InfoRow-body {
+            padding-left: rem(75px);
+        }
+
+        .flight-InfoRow-icon {
+            color: $c-sec2-color--pastel;
+            float: left;
+            line-height: rem(40px);
+            font-size: 300%;
+            padding-top: rem(5px);
+            text-align: center;
+        }
+    }
+}

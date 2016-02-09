@@ -1,0 +1,25 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+@import "core/settings";
+@import "core/helpers";
+
+.missingNotice {
+    background-color: $c-bg-color--lighter;
+    color: $text-muted;
+
+    .missingNotice-title {
+        font-weight: bold;
+    }
+
+    .missingNotice-body {
+        p {
+            margin-bottom: rem(15px);
+            font-size: 21px;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+/*=============================================================================
+ * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
+ *
+ * This file is part of Alces Flight.
+ *
+ * All rights reserved, see LICENSE.txt.
+ *===========================================================================*/
+.flight-help-popover {
+    border-bottom: 1px dotted;
+    color: #737373;
+    cursor: help;
+
+    & .flight-icon, .formTip & .flight-icon {
+        display: inline;
+        height: auto;
+        margin: 0 2px;
+        vertical-align: unset;
+        width: auto;
+    }
+}
