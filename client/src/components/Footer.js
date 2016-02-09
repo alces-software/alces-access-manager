@@ -11,7 +11,7 @@ class Footer extends React.Component {
   render() {
     return (
       <footer>
-        Alces Flight <span className="flightFooter-copyright">&copy;</span> 2015&nbsp;
+        Alces Access Manager <span className="flightFooter-copyright">&copy;</span> 2016&nbsp;
         <a className="flightFooter-us" href="http://www.alces-software.com">
           Alces&nbsp;Software&nbsp;Ltd
         </a>
