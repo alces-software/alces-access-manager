@@ -14,12 +14,8 @@ import DevTools from 'containers/DevTools';
 
 import configureStore from 'store/configureStore';
 import routes from 'routes';
-import {retrieveSession, setCsrfToken} from 'auth/actions';
-import retrieveCsrfToken from 'utils/retrieveCsrfToken.js';
 
 const store = configureStore();
-store.dispatch(setCsrfToken(retrieveCsrfToken()));
-store.dispatch(retrieveSession());
 
 ReactDOM.render(
   <Provider store={store}>

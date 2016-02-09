@@ -9,28 +9,15 @@ import promiseMiddleware from 'redux-simple-promise';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import apiRequestMiddleware from './apiRequests';
+// import apiRequestMiddleware from './apiRequests';
 import logger from './logger';
-import form from 'forms/middleware';
-import {
-  messageMapperMiddleware as bayeuxMessageMapper,
-  handleConnectionEvents as handleBayeuxConnectionEvents
-} from 'bayeux/middleware';
-import {
-  createBayeuxConnectionEvents,
-  messageMapperConfig as bayeuxMessageMapperConfig
-} from './bayeuxConfig';
 
 const enhanceWithMiddleware = applyMiddleware(
-    apiRequestMiddleware,
-    createBayeuxConnectionEvents,
-    handleBayeuxConnectionEvents,
-    bayeuxMessageMapper(bayeuxMessageMapperConfig),
+    // apiRequestMiddleware,
     promiseMiddleware(),
-    form,
     thunk,
     logger
 );
 
 export default enhanceWithMiddleware;
-export { apiRequestMiddleware, logger };
+export { logger };

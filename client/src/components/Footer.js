@@ -6,7 +6,6 @@
  * All rights reserved, see LICENSE.txt.
  *===========================================================================*/
 import React from 'react';
-import { Link } from 'react-router';
 
 class Footer extends React.Component {
   render() {
@@ -16,20 +15,8 @@ class Footer extends React.Component {
         <a className="flightFooter-us" href="http://www.alces-software.com">
           Alces&nbsp;Software&nbsp;Ltd
         </a>
-        {this.separatorBar()}
-        <Link to="/privacy" className="flightFooter-link">Privacy Policy</Link>
-        {this.separatorBar()}
-        <Link to="/terms" className="flightFooter-link">Terms of Service</Link>
-        {this.separatorBar()}
-        <Link to="/security" className="flightFooter-link">Security</Link>
       </footer>
     )
-  }
-
-  separatorBar() {
-    return (
-      <span className="flightFooter-bar" />
-    );
   }
 }
 

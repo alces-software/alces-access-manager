@@ -79,12 +79,6 @@ $popover-arrow-outer-color: fade_in($popover-border-color, 0.05);
 @import "./animations";
 
 
-/* Styles for our various modules */
-@import "~modules/cluster/components/styles";
-@import "~modules/clusterComponent/components/styles";
-@import "~modules/invitation/components/styles";
-
-
 DL.dl-horizontal.dl-horizontal--wide > DT {
     width: 250px;
 }
