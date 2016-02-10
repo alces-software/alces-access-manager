@@ -1,7 +1,7 @@
 {
-  "name": "alces-flight",
+  "name": "alces-access-manager-client",
   "version": "0.0.0",
-  "description": "Alces Flight",
+  "description": "Alces Access Manager Client",
   "engines": {
     "node": "4.1.2"
   },
@@ -42,6 +42,7 @@
     "js-yaml": "^3.4.6",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
+    "novnc-node": "^0.5.2",
     "query-string": "^3.0.0",
     "react": "^0.14.2",
     "react-addons-css-transition-group": "^0.14.2",
