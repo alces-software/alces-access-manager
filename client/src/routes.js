@@ -9,10 +9,12 @@ import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
 
 import App from 'containers/App';
-import MainPageContainer from 'containers/MainPageContainer';
+import ClusterSelectionPage from 'components/pages/ClusterSelectionPage';
+import VncSessionPage from 'components/pages/VncSessionPage';
 
 const routes = <Route path="/" component={App}>
-  <IndexRoute component={MainPageContainer} />
+  <IndexRoute component={ClusterSelectionPage} />
+  <Route path="vnc" component={VncSessionPage} />
 
   <Redirect from="*" to="/" />
 </Route>
