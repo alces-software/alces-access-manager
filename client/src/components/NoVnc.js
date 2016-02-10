@@ -48,7 +48,7 @@ class NoVnc extends React.Component {
     };
     const eventState = statesMap[state];
     if (eventState && this.canvas) {
-      console.log(eventState)
+      console.log(eventState); // eslint-disable-line no-console
       const eventName = `vnc:${eventState}`
       const data = {rfb, state, oldstate, msg,};
       this.$canvas.trigger(eventName, data);
@@ -81,7 +81,7 @@ class NoVnc extends React.Component {
   }
 
   handleVncConnect(event, data) {
-    console.log('handling', event, data);
+    console.log('handling', event, data); // eslint-disable-line no-console
   }
 }
 
