@@ -1,5 +1,6 @@
 
 import React from 'react';
+import {Input} from 'react-bootstrap';
 import FlipCard from 'react-flipcard';
 
 export default class ClusterSelectionBox extends React.Component {
@@ -9,6 +10,7 @@ export default class ClusterSelectionBox extends React.Component {
   }
 
   render() {
+    const {name} = this.props;
     return (
       <div
         className="cluster-selection-box"
@@ -16,19 +18,24 @@ export default class ClusterSelectionBox extends React.Component {
         onFocus={this.handleFocus.bind(this)}
         >
         <FlipCard
-          className="card"
           disabled={true}
           flipped={this.state.isFlipped}
           >
-          <div className="cluster-selection-box-front">Front</div>
-          <div className="cluster-selection-box-back">Back</div>
+          <div className="cluster-selection-box-front">{name}</div>
+          <div className="cluster-selection-box-back">
+            <Input label="Username" type="text"/>
+            <Input label="Password" type="password"/>
+          </div>
         </FlipCard>
       </div>
     );
   }
 
   handleFocus() {
-    this.setFlipped(true);
+    console.log(this.state.isFlipped); // eslint-disable-line no-console
+    if (!this.state.isFlipped) {
+      this.setFlipped(true);
+    }
   }
 
   handleBlur() {
