@@ -39,6 +39,7 @@
     "faye": "^1.1.2",
     "font-awesome": "^4.5.0",
     "history": "^1.11.0",
+    "jquery": "^2.2.0",
     "js-yaml": "^3.4.6",
     "lodash": "^3.10.1",
     "moment": "^2.10.6",
