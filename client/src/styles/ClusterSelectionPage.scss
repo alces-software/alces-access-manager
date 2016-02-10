@@ -3,6 +3,18 @@
     display: inline-block;
 }
 
+.cluster-selection-box-name {
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.cluster-selection-box-submit {
+  width: 100%;
+  input {
+    width: inherit;
+  }
+}
+
 // Below stolen from react-flipcard example, TODO adapt this
 .ReactFlipCard {
   margin: 25px;
@@ -12,7 +24,7 @@
 .ReactFlipCard__Front,
 .ReactFlipCard__Back {
   box-sizing: border-box;
-  height: 220px;
+  height: 222px;
   width: 300px;
 }
 .ReactFlipCard__Front,
