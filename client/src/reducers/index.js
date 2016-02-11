@@ -10,12 +10,14 @@
 // Reducers:
 import { combineReducers } from 'redux';
 import { routerStateReducer } from 'redux-router';
+import clusters from 'clusters/reducer';
 
 // import {CLEAN_SESSION} from 'auth/actionTypes';
 
 // Reducers for state to be reset to initial state when clearing app state
 // on sign out.
 const unpreservedStateReducers = {
+  clusters,
 };
 
 // Reducers for state to be preserved when clearing app state on sign out
