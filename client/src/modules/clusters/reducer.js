@@ -2,10 +2,10 @@
 
 function initialState() {
   return [
-    {name: "A normal cluster"},
-    {name: "Better cluster"},
-    {name: "Test cluster"},
-    {name: "Best cluster"},
+    {id: 1, name: "A normal cluster"},
+    {id: 2, name: "Better cluster"},
+    {id: 3, name: "Test cluster"},
+    {id: 4, name: "Best cluster"},
   ]
 
 }

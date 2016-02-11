@@ -9,7 +9,7 @@ import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
 
 import App from 'containers/App';
-import ClusterSelectionPage from 'components/pages/ClusterSelectionPage';
+import ClusterSelectionPage from 'containers/ClusterSelectionPageContainer';
 import VncSessionPage from 'components/pages/VncSessionPage';
 
 const routes = <Route path="/" component={App}>
