@@ -3,7 +3,7 @@ import React from 'react';
 
 import NoVnc from 'components/NoVnc';
 
-export default class MainPage extends React.Component {
+export default class VncSessionPage extends React.Component {
   render() {
     return (
       <div className="container">

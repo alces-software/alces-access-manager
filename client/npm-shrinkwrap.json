@@ -3737,6 +3737,11 @@
       "from": "react-element-to-jsx-string@>=2.1.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/react-element-to-jsx-string/-/react-element-to-jsx-string-2.1.5.tgz"
     },
+    "react-flipcard": {
+      "version": "0.2.1",
+      "from": "react-flipcard@*",
+      "resolved": "https://registry.npmjs.org/react-flipcard/-/react-flipcard-0.2.1.tgz"
+    },
     "react-fontawesome": {
       "version": "0.3.3",
       "from": "https://registry.npmjs.org/react-fontawesome/-/react-fontawesome-0.3.3.tgz",
