@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 
-import ClusterSelectionBox from 'components/ClusterSelectionBox';
+import SessionSelectionBox from 'components/SessionSelectionBox';
 
 // require("styles/ClusterSelectionPage.scss");
 
@@ -43,7 +43,7 @@ export default class SessionSelectionPage extends React.Component {
   renderClusterColumn(cluster) {
     return (
       <Col md={4} key={cluster.id}>
-        <ClusterSelectionBox name={cluster.name}/>
+        <SessionSelectionBox name={cluster.name}/>
       </Col>
     )
   }

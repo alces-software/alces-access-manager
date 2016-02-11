@@ -51,3 +51,19 @@
 .ReactFlipCard__Back {
   background-color: #cef;
 }
+
+// TODO wrong place for this
+// TODO reduce duplication
+.session-selection-box {
+  margin: 25px;
+  text-align: center;
+
+  box-sizing: border-box;
+  height: 222px;
+
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 25px;
+
+  background-color: #eee;
+}
