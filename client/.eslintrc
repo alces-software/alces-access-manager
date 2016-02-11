@@ -6,6 +6,7 @@
       "__DEVELOPMENT__": true,
       "__PRODUCTION__": true,
       "__TEST__": true,
+      "__DEMO__": true,
       "module": true,
       "require": true
     },
