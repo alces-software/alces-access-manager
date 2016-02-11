@@ -24,12 +24,12 @@ const unpreservedStateReducers = {
 // (currently just router state is preserved, otherwise page refresh occurs
 // after sign out).
 const preservedStateReducers = {
-  router: routerStateReducer
+  router: routerStateReducer,
 }
 
 const combinedReducers = combineReducers({
   ...unpreservedStateReducers,
-  ...preservedStateReducers
+  ...preservedStateReducers,
 })
 
 // function reduceWithJsonApiResourceInclusion(state, action) {
