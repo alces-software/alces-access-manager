@@ -2,7 +2,7 @@
 import {initialOrDemoState} from 'utils/reducer';
 
 const demoState = [
-  {id: 1, name: "A normal cluster"},
+  {id: 1, name: "Normal cluster"},
   {id: 2, name: "Better cluster"},
   {id: 3, name: "Test cluster"},
   {id: 4, name: "Best cluster"},
