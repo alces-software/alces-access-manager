@@ -15,6 +15,18 @@
   }
 }
 
+.environment-details-box {
+  // TODO: reduce duplication between this and below styles.
+  margin: 25px;
+  text-align: center;
+
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 25px;
+
+  background-color: #eee;
+}
+
 // Below stolen from react-flipcard example, TODO adapt this
 .ReactFlipCard {
   margin: 25px;
