@@ -9,7 +9,7 @@ require("styles/ClusterSelectionPage.scss");
 
 export default class ClusterSelectionPage extends React.Component {
   render() {
-    const {clusters} = this.props;
+    const {clusters, environment} = this.props;
     const groupedClusters = _.chunk(clusters, 3);
 
     return (
@@ -17,7 +17,9 @@ export default class ClusterSelectionPage extends React.Component {
         <Grid>
           <Row>
             <Col md={12}>
-              <div className="environment-details-box">You are connected to an environment. Select a cluster below to get started.</div>
+              <div className="environment-details-box">
+                Connected to environment <em>{environment.name}</em>. Select a cluster below to get started.
+              </div>
             </Col>
           </Row>
           {this.renderClusterRows(groupedClusters)}
