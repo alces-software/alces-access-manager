@@ -5,7 +5,7 @@ import {Grid, Row, Col} from 'react-bootstrap';
 
 require("styles/ClusterSelectionPage.scss");
 
-export default class ClusterSelectionPage extends React.Component {
+export default class SelectionPage extends React.Component {
   render() {
     const {headerText, items} = this.props;
     const groupedItems = _.chunk(items, 3);
