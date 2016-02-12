@@ -17,7 +17,7 @@ import routes from 'routes';
 
 const storeEnhancers = [
   enhanceWithMiddleware,
-  reduxReactRouter({routes, createHistory})
+  reduxReactRouter({routes, createHistory}),
 ]
 
 if (__PERSIST_STATE__) {
