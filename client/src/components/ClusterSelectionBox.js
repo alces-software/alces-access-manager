@@ -28,7 +28,7 @@ export default class ClusterSelectionBox extends React.Component {
               <Input placeholder="Username" type="text"/>
               <Input placeholder="Password" type="password"/>
               <ButtonInput
-                className="cluster-selection-box-submit"
+                className="selection-box-button"
                 type="submit"
                 value="View"
                 bsStyle="success"

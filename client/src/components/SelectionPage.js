@@ -3,8 +3,6 @@ import _ from 'lodash';
 import React from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 
-require("styles/ClusterSelectionPage.scss");
-
 export default class SelectionPage extends React.Component {
   render() {
     const {headerText, items} = this.props;
@@ -15,7 +13,7 @@ export default class SelectionPage extends React.Component {
         <Grid>
           <Row>
             <Col md={12}>
-              <div className="environment-details-box">
+              <div className="selection-details-box">
                 {headerText}
               </div>
             </Col>

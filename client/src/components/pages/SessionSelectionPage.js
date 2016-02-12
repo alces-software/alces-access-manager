@@ -6,8 +6,6 @@ import SessionSelectionBox from 'components/SessionSelectionBox';
 import SelectionPage from 'components/SelectionPage';
 import Icon from 'components/Icon';
 
-// require("styles/ClusterSelectionPage.scss");
-
 export default class SessionSelectionPage extends React.Component {
   render() {
     const {cluster, sessions} = this.props;

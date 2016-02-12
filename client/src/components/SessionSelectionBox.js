@@ -17,7 +17,7 @@ export default class SessionSelectionBox extends React.Component {
           [Session details to go here]
         </p>
         <ButtonInput
-          className="cluster-selection-box-submit"
+          className="selection-box-button"
           type="button"
           value="Connect"
           bsStyle="success"
