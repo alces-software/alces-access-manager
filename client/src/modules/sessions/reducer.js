@@ -2,10 +2,10 @@
 import {initialOrDemoState} from 'utils/reducer';
 
 const demoState = [
-  {id: 1, name: "Normal cluster"},
-  {id: 2, name: "Better cluster"},
-  {id: 3, name: "Test cluster"},
-  {id: 4, name: "Best cluster"},
+  {id: 1, name: "Terminal session"},
+  {id: 2, name: "Gnome session"},
+  {id: 3, name: "XFCE session"},
+  {id: 4, name: "KDE session"},
 ];
 const initialState = initialOrDemoState({}, demoState);
 

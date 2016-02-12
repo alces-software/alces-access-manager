@@ -29,7 +29,7 @@ class NoVnc extends React.Component {
     this.$canvas.on('vnc:connect', this.handleVncConnect.bind(this));
 
     this.rfb = new noVNC.RFB({
-      local_cursor: true,
+      local_cursor: true, // eslint-disable-line camelcase
       target: this.canvas,
       onUpdateState: this.stateHandler.bind(this),
     });
@@ -50,7 +50,7 @@ class NoVnc extends React.Component {
     if (eventState && this.canvas) {
       console.log(eventState); // eslint-disable-line no-console
       const eventName = `vnc:${eventState}`
-      const data = {rfb, state, oldstate, msg,};
+      const data = {rfb, state, oldstate, msg};
       this.$canvas.trigger(eventName, data);
     }
   }

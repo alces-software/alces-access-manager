@@ -7,23 +7,28 @@ export default class ClusterSelectionBox extends React.Component {
   render() {
     const {name} = this.props;
 
-    const nameElement = <div className="cluster-selection-box-name">{name}</div>;
     return (
       <div
         className="cluster-selection-box"
         >
         <FlipCard>
           <div className="cluster-selection-box-front">
-            {nameElement}
-            <div>[Cluster details to go here]</div>
+            <p>
+              {name}
+            </p>
+            <p>
+              [Cluster details to go here]
+            </p>
           </div>
           <div className="cluster-selection-box-back">
-            {nameElement}
+            <p>
+              {name}
+            </p>
             <form>
               <Input placeholder="Username" type="text"/>
               <Input placeholder="Password" type="password"/>
               <ButtonInput
-                className="cluster-selection-box-submit"
+                className="selection-box-button"
                 type="submit"
                 value="View"
                 bsStyle="success"

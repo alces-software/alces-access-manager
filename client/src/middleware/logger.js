@@ -23,7 +23,7 @@ if (__PRODUCTION__) {
   const options = {
     collapsed: true,
     level: 'info',
-    predicate: (getState, action) => action.type !== formTypes.CHANGE
+    predicate: (getState, action) => action.type !== formTypes.CHANGE,
   }
   middleware = createLogger(options);
 }

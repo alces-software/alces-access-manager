@@ -18,7 +18,7 @@ const {
   Brand:    NavbarBrand,
   Collapse: NavbarCollapse,
   Header:   NavbarHeader,
-  Toggle:   NavbarToggle
+  Toggle:   NavbarToggle,
 } = Navbar;
 
 class Header extends React.Component {
