@@ -12,7 +12,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var env = process.env.NODE_ENV;
 
-var appName = "alces-flight";
+var appName = "alces-access-manager";
 var entries, devServer, devtool, outputFile, pathinfo, plugins, publicPath,
     loaders;
 
