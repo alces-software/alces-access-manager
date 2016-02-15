@@ -1,0 +1,8 @@
+---
+clusters:
+  - name: "Demo cluster"
+    ip: 127.0.0.1
+
+  - name: "Physics simulation cluster"
+    ip: 10.10.10.10
+...
