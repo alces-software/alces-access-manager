@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'yaml'
 
-class ClustersControllerTest < ActionController::TestCase
+class Api::V1::ClustersControllerTest < ActionController::TestCase
   test "should return the clusters specified in the config file" do
     get :index
     assert_response :success
