@@ -7,13 +7,20 @@ const sessionsState = (state) => state.sessions;
 
 function clusterFromRouteSelector(state, props) {
   const clusterIp = props.routeParams.clusterIp;
-  return _.find(state.clusters, (cluster) => cluster.ip == clusterIp);
+  return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
+}
+
+function sessionsForCluster(cluster, sessions) {
+  // TODO: may get sessions in different way later as won't have loaded to
+  // begin with.
+  return _.filter(sessions, (session) => session.clusterIp == cluster.ip);
 }
 
 export const sessionSelectionPageSelector = createSelector(
   clusterFromRouteSelector,
   sessionsState,
-  (cluster, sessions) => {
+  (cluster, allSessions) => {
+    const sessions = sessionsForCluster(cluster, allSessions);
     return {cluster, sessions};
   }
 );
@@ -24,8 +31,9 @@ function sessionFromRouteSelector(state, props) {
 }
 
 export const vncSessionPageSelector = createSelector(
+  clusterFromRouteSelector,
   sessionFromRouteSelector,
-  (session) => {
-    return {session}
+  (cluster, session) => {
+    return {cluster, session}
   }
 );
