@@ -2,16 +2,18 @@
 import React from 'react';
 import {ButtonInput} from 'react-bootstrap';
 
-export default class SessionSelectionBox extends React.Component {
+import {selectionBoxPropTypes} from 'utils/propTypes';
+
+class SessionSelectionBox extends React.Component {
   render() {
-    const {name} = this.props;
+    const session = this.props.item;
 
     return (
       <div
         className="session-selection-box"
         >
         <p>
-          {name}
+          {session.name}
         </p>
         <p>
           [Session details to go here]
@@ -26,3 +28,7 @@ export default class SessionSelectionBox extends React.Component {
     );
   }
 }
+
+SessionSelectionBox.propTypes = selectionBoxPropTypes;
+
+export default SessionSelectionBox;

@@ -43,7 +43,7 @@ class SelectionPage extends React.Component {
     const key = item[keyProp];
     const selectionBoxElement = React.createElement(
       selectionBoxComponent,
-      {name: item.name}
+      {item}
     );
 
     return (
