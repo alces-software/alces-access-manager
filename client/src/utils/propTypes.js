@@ -5,7 +5,7 @@
  *
  * All rights reserved, see LICENSE.txt.
  *===========================================================================*/
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import {errMsg, createChainableTypeChecker} from 'react-prop-types/lib/common';
 
@@ -47,3 +47,7 @@ function createElementOfTypeChecker(elementType) {
 
 const elementOfType = createElementOfTypeChecker;
 export default elementOfType;
+
+export const selectionBoxPropTypes = {
+  item: PropTypes.object.isRequired,
+}

@@ -18,7 +18,7 @@ export default class ClusterSelectionPage extends React.Component {
        create a cluster within the environment to connect to.`
     :
       `Select a cluster below to get started.`;
-    const headerText = (
+    const header = (
       <div>
         <p>
           Connected to environment <em>{environment.name}</em>.
@@ -32,7 +32,8 @@ export default class ClusterSelectionPage extends React.Component {
     return (
       <SelectionPage
         items={clusters}
-        headerText={headerText}
+        keyProp="ip"
+        header={header}
         selectionBoxComponent={ClusterSelectionBox}
       />
     );

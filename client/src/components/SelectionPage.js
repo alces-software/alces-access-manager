@@ -1,11 +1,12 @@
 
 import _ from 'lodash';
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
+import {elementType} from 'react-prop-types';
 
-export default class SelectionPage extends React.Component {
+class SelectionPage extends React.Component {
   render() {
-    const {headerText, items} = this.props;
+    const {header, items} = this.props;
     const groupedItems = _.chunk(items, 3);
 
     return (
@@ -14,7 +15,7 @@ export default class SelectionPage extends React.Component {
           <Row>
             <Col md={12}>
               <div className="selection-details-box">
-                {headerText}
+                {header}
               </div>
             </Col>
           </Row>
@@ -37,15 +38,28 @@ export default class SelectionPage extends React.Component {
   }
 
   renderColumn(item) {
+    const {keyProp, selectionBoxComponent, selectionBoxProps} = this.props
+
+    const key = item[keyProp];
     const selectionBoxElement = React.createElement(
-      this.props.selectionBoxComponent,
-      {name: item.name}
+      selectionBoxComponent,
+      {item, ...selectionBoxProps}
     );
 
     return (
-      <Col md={4} key={item.id}>
+      <Col md={4} key={key}>
         {selectionBoxElement}
       </Col>
     )
   }
 }
+
+SelectionPage.propTypes = {
+  header: PropTypes.element.isRequired, // Page header.
+  items: PropTypes.array.isRequired, // Items to display.
+  keyProp: PropTypes.string.isRequired, // Property to use for item keys.
+  selectionBoxComponent: elementType.isRequired, // Component to display items with.
+  selectionBoxProps: PropTypes.object, // Props to pass through to each selection box.
+};
+
+export default SelectionPage;

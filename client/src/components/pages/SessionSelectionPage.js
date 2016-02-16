@@ -9,10 +9,12 @@ import Icon from 'components/Icon';
 export default class SessionSelectionPage extends React.Component {
   render() {
     const {cluster, sessions} = this.props;
-    const headerText = (
+
+    // TODO: Display appropriate message if cluster not found.
+    const header = (
       <p>
         <span>
-          Viewing sessions on cluster <em>{cluster.name}</em>. Select a session
+          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select a session
           to connect to below.
         </span>
         &nbsp;
@@ -26,14 +28,18 @@ export default class SessionSelectionPage extends React.Component {
           </Button>
         </span>
       </p>
-    )
+    );
+
+    const selectionBoxProps = {cluster};
 
     return (
       <SelectionPage
         items={sessions}
-        headerText={headerText}
+        keyProp="port"
+        header={header}
         selectionBoxComponent={SessionSelectionBox}
+        selectionBoxProps={selectionBoxProps}
       />
-    )
+    );
   }
 }
