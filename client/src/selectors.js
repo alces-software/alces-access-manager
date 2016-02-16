@@ -17,3 +17,15 @@ export const sessionSelectionPageSelector = createSelector(
     return {cluster, sessions};
   }
 );
+
+function sessionFromRouteSelector(state, props) {
+  const sessionPort = props.routeParams.sessionPort;
+  return _.find(state.sessions, (session) => session.port == sessionPort);
+}
+
+export const vncSessionPageSelector = createSelector(
+  sessionFromRouteSelector,
+  (session) => {
+    return {session}
+  }
+);

@@ -2,10 +2,10 @@
 import {initialOrDemoState} from 'utils/reducer';
 
 const demoState = [
-  {id: 1, name: "Terminal session"},
-  {id: 2, name: "Gnome session"},
-  {id: 3, name: "XFCE session"},
-  {id: 4, name: "KDE session"},
+  {name: "Terminal session", port: 41361},
+  {name: "Gnome session", port: 9000},
+  {name: "XFCE session", port: 9001},
+  {name: "KDE session", port: 9002},
 ];
 const initialState = initialOrDemoState({}, demoState);
 
