@@ -15,8 +15,8 @@ import VncSessionPage from 'components/pages/VncSessionPage';
 
 const routes = <Route path="/" component={App}>
   <IndexRoute component={ClusterSelectionPage} />
-  <Route path="sessions" component={SessionSelectionPage} />
-  <Route path="vnc" component={VncSessionPage} />
+  <Route path="cluster/:clusterIp" component={SessionSelectionPage} />
+  <Route path="cluster/:clusterIp/session/:sessionPort" component={VncSessionPage} />
 
   <Redirect from="*" to="/" />
 </Route>

@@ -9,10 +9,12 @@ import Icon from 'components/Icon';
 export default class SessionSelectionPage extends React.Component {
   render() {
     const {cluster, sessions} = this.props;
+
+    // TODO: Display appropriate message if cluster not found.
     const headerText = (
       <p>
         <span>
-          Viewing sessions on cluster <em>{cluster.name}</em>. Select a session
+          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select a session
           to connect to below.
         </span>
         &nbsp;

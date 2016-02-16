@@ -1,10 +1,8 @@
 import { connect } from 'react-redux';
 
 import SessionSelectionPage from 'components/pages/SessionSelectionPage';
+import {sessionSelectionPageSelector} from 'selectors';
 
 export default connect(
-  (state) => ({
-    cluster: state.clusters[0],
-    sessions: state.sessions,
-  })
+  sessionSelectionPageSelector
 )(SessionSelectionPage);
