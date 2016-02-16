@@ -38,12 +38,12 @@ class SelectionPage extends React.Component {
   }
 
   renderColumn(item) {
-    const {keyProp, selectionBoxComponent} = this.props
+    const {keyProp, selectionBoxComponent, selectionBoxProps} = this.props
 
     const key = item[keyProp];
     const selectionBoxElement = React.createElement(
       selectionBoxComponent,
-      {item}
+      {item, ...selectionBoxProps}
     );
 
     return (
@@ -59,6 +59,7 @@ SelectionPage.propTypes = {
   items: PropTypes.array.isRequired, // Items to display.
   keyProp: PropTypes.string.isRequired, // Property to use for item keys.
   selectionBoxComponent: elementType.isRequired, // Component to display items with.
+  selectionBoxProps: PropTypes.object, // Props to pass through to each selection box.
 };
 
 export default SelectionPage;

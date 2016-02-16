@@ -28,7 +28,9 @@ export default class SessionSelectionPage extends React.Component {
           </Button>
         </span>
       </p>
-    )
+    );
+
+    const selectionBoxProps = {cluster};
 
     return (
       <SelectionPage
@@ -36,7 +38,8 @@ export default class SessionSelectionPage extends React.Component {
         keyProp="port"
         header={header}
         selectionBoxComponent={SessionSelectionBox}
+        selectionBoxProps={selectionBoxProps}
       />
-    )
+    );
   }
 }
