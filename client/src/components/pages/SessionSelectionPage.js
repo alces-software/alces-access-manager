@@ -11,7 +11,7 @@ export default class SessionSelectionPage extends React.Component {
     const {cluster, sessions} = this.props;
 
     // TODO: Display appropriate message if cluster not found.
-    const headerText = (
+    const header = (
       <p>
         <span>
           Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select a session
@@ -34,7 +34,7 @@ export default class SessionSelectionPage extends React.Component {
       <SelectionPage
         items={sessions}
         keyProp="port"
-        headerText={headerText}
+        header={header}
         selectionBoxComponent={SessionSelectionBox}
       />
     )

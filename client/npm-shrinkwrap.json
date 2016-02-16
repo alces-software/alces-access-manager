@@ -3776,29 +3776,8 @@
     },
     "react-prop-types": {
       "version": "0.3.0",
-      "from": "https://registry.npmjs.org/react-prop-types/-/react-prop-types-0.3.0.tgz",
-      "resolved": "https://registry.npmjs.org/react-prop-types/-/react-prop-types-0.3.0.tgz",
-      "dependencies": {
-        "warning": {
-          "version": "2.1.0",
-          "from": "https://registry.npmjs.org/warning/-/warning-2.1.0.tgz",
-          "resolved": "https://registry.npmjs.org/warning/-/warning-2.1.0.tgz",
-          "dependencies": {
-            "loose-envify": {
-              "version": "1.1.0",
-              "from": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
-              "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.1.0.tgz",
-              "dependencies": {
-                "js-tokens": {
-                  "version": "1.0.2",
-                  "from": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz",
-                  "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-1.0.2.tgz"
-                }
-              }
-            }
-          }
-        }
-      }
+      "from": "react-prop-types@>=0.3.0 <0.4.0",
+      "resolved": "https://registry.npmjs.org/react-prop-types/-/react-prop-types-0.3.0.tgz"
     },
     "react-proxy": {
       "version": "1.1.2",
