@@ -32,6 +32,7 @@ export default class ClusterSelectionPage extends React.Component {
     return (
       <SelectionPage
         items={clusters}
+        keyProp="ip"
         headerText={headerText}
         selectionBoxComponent={ClusterSelectionBox}
       />

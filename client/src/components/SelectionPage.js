@@ -37,13 +37,16 @@ export default class SelectionPage extends React.Component {
   }
 
   renderColumn(item) {
+    const {keyProp, selectionBoxComponent} = this.props
+
+    const key = item[keyProp];
     const selectionBoxElement = React.createElement(
-      this.props.selectionBoxComponent,
+      selectionBoxComponent,
       {name: item.name}
     );
 
     return (
-      <Col md={4} key={item.id}>
+      <Col md={4} key={key}>
         {selectionBoxElement}
       </Col>
     )

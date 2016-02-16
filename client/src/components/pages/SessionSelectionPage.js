@@ -33,6 +33,7 @@ export default class SessionSelectionPage extends React.Component {
     return (
       <SelectionPage
         items={sessions}
+        keyProp="port"
         headerText={headerText}
         selectionBoxComponent={SessionSelectionBox}
       />

@@ -5,10 +5,10 @@ import {LOAD_CLUSTERS} from './actionTypes';
 import {initialOrDemoState} from 'utils/reducer';
 
 const demoState = [
-  {id: 1, name: "Normal cluster"},
-  {id: 2, name: "Better cluster"},
-  {id: 3, name: "Test cluster"},
-  {id: 4, name: "Best cluster"},
+  {name: "Normal cluster", ip: '10.10.10.10'},
+  {name: "Better cluster", ip: '10.10.10.11'},
+  {name: "Test cluster", ip: '10.10.10.12'},
+  {name: "Best cluster", ip: '10.10.10.13'},
 ];
 const initialState = initialOrDemoState({}, demoState);
 
