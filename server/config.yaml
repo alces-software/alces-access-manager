@@ -1,3 +1,5 @@
 ---
 clusters:
+  - name: Clusterware Vagrant
+    ip: 127.0.0.1
 ...
