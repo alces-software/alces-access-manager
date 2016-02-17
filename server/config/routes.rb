@@ -9,8 +9,9 @@ Rails.application.routes.draw do
       resources :clusters, only: [:index]
     end
   end
+  post 'login/authenticate'
 
   # For all other GET requests render the index page to load the Access Manager
   # app; this will then show the requested page.
-  get '*path' => 'home#index'
+  # get '*path' => 'home#index'
 end
