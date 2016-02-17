@@ -22,7 +22,7 @@
 
 require 'daemon_client'
 
-module AlcesStorageManager
+module AlcesAccessManager
   class << self
     def config
       @config ||= YAML.load_file(Rails.root.join("config", "storagemanager.yml"))
@@ -38,7 +38,7 @@ module AlcesStorageManager
     private
     
     def connection_opts
-      auth_config = AlcesStorageManager::config[:auth].dup
+      auth_config = AlcesAccessManager::config[:auth].dup
       do_ssl = auth_config.delete(:ssl) != false
       {
         timeout: 5,
@@ -50,14 +50,14 @@ module AlcesStorageManager
       @my_ssl ||= Class.new do
         include Alces::Tools::SSLConfigurator
         def ssl_verify_mode
-          if AlcesStorageManager.config[:ssl][:verify] == false
+          if AlcesAccessManager.config[:ssl][:verify] == false
             OpenSSL::SSL::VERIFY_NONE
           else
             OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
           end
         end
         def ssl
-          ssl_opts = AlcesStorageManager::config[:ssl].dup
+          ssl_opts = AlcesAccessManager::config[:ssl].dup
           Alces::Tools::SSLConfigurator::Configuration.new(
             root: ssl_opts[:root],
             certificate: ssl_opts[:certificate],
@@ -73,4 +73,4 @@ end
 
 # Assert at startup that the config file exists, and bug out with a large stack
 # trace if not.
-AlcesStorageManager.config
+AlcesAccessManager.config

@@ -29,7 +29,7 @@ class LoginController < ApplicationController
 
   def authenticate
     begin
-      auth_response = AlcesStorageManager::authentication_daemon.authenticate?(params[:username], params[:password])
+      auth_response = AlcesAccessManager::authentication_daemon.authenticate?(params[:username], params[:password])
       if auth_response
         reset_session
         session[:authenticated_username] = params[:username]
