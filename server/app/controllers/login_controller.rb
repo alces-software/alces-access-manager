@@ -48,7 +48,7 @@ class LoginController < ApplicationController
     rescue DaemonClient::ConnError
       logger.error $!
       logger.error $!.backtrace
-      handle_error "Unable to communicate with the ASM daemon. Check that it is running and that Alces Storage Manager is configured correctly."
+      render json: {success: false, error: 'daemon_unavailable'}, status: :forbidden
     end
   end
 

@@ -26,6 +26,18 @@ class LoginControllerTest < ActionController::TestCase
     assert_not json_response[:success]
   end
 
+  test "returns error when Daemon not available" do
+    # Would be valid credentials, but invalid port for Daemon.
+    post :authenticate,
+      username: 'vagrant',
+      password: 'vagrant',
+      address: '127.0.0.1:6666'
+
+    assert_response :forbidden # TODO: Appropriate status code?
+    assert_not json_response[:success]
+    assert_equal json_response[:error], 'daemon_unavailable'
+  end
+
   private
 
   def test_daemon_address
