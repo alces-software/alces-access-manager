@@ -43,7 +43,7 @@ class LoginController < ApplicationController
         session[:authenticated_username] = params[:username]
         render json: {success: true}
       else
-        handle_error "Incorrect user name or password."
+        render json: {success: false}, status: :unauthorized
       end
     rescue DaemonClient::ConnError
       logger.error $!
