@@ -6,11 +6,16 @@ Rails.application.routes.draw do
   # Access Manager api.
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resources :clusters, only: [:index]
+
+      resources :clusters, only: [:index] do
+        collection do
+          post :authenticate
+          post :logout
+        end
+      end
+
     end
   end
-  post 'login/authenticate'
-  post 'login/logout'
 
   # For all other GET requests render the index page to load the Access Manager
   # app; this will then show the requested page.
