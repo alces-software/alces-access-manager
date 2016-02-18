@@ -54,8 +54,6 @@ class LoginController < ApplicationController
 
   def logout
     reset_session
-    flash[:notice] = "You have successfully logged out."
-    redirect_to action: :index
   end
 
   private

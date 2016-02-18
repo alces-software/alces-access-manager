@@ -39,6 +39,18 @@ class LoginControllerTest < ActionController::TestCase
     assert_equal 'daemon_unavailable', json_response[:error]
   end
 
+  test "clears session when logout" do
+    post :authenticate,
+      username: 'vagrant',
+      password: 'vagrant',
+      address: test_daemon_address
+    assert_equal 'vagrant', session[:authenticated_username]
+
+    post :logout
+    assert_response :success
+    assert_equal nil, session[:authenticated_username]
+  end
+
   private
 
   def test_daemon_address
