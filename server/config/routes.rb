@@ -9,10 +9,12 @@ Rails.application.routes.draw do
 
       resources :clusters, only: [:index] do
         collection do
-          post :authenticate
           post :logout
         end
       end
+      post 'cluster/:ip/authenticate',
+        to: 'clusters#authenticate',
+        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
 
     end
   end

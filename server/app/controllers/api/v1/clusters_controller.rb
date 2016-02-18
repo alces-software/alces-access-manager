@@ -38,7 +38,7 @@ class Api::V1::ClustersController < ApplicationController
   private
 
   def connection_opts
-    cluster_daemon_address = params[:address]
+    cluster_daemon_address = params[:ip] + ':25269' # TODO read port from config
     configuration.slice(:ssl, :timeout).merge(address: cluster_daemon_address)
   end
 

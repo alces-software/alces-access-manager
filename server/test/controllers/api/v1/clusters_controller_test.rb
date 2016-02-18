@@ -4,6 +4,7 @@ require 'test_helper'
 
 class Api::V1::ClustersControllerTest < ActionController::TestCase
   test "should return the clusters specified in the config file" do
+    # TODO: change this, will currently return whole config (is that what we want?)
     sample_config_file_path = File.join(File.dirname(File.expand_path(__FILE__)), 'sample_config.yaml')
     @controller.stubs(:config_file).returns(sample_config_file_path)
 
@@ -17,13 +18,13 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
   # TODO: At some point should probably decouple tests from actual daemon so
   # don't have to wait for daemon to respond in tests, and so can also test
-  # controller independently of real daemon client .
+  # controller independently of real daemon client.
 
   test "authenticates valid user" do
     post :authenticate,
+      ip: test_daemon_ip,
       username: 'vagrant',
-      password: 'vagrant',
-      address: test_daemon_address
+      password: 'vagrant'
 
     # Returns success code, success Json, and sets username in session.
     assert_response :success
@@ -31,11 +32,13 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     assert_equal 'vagrant', session[:authenticated_username]
   end
 
+  # TODO: This test in particular often fails when nothing wrong, due to not
+  # being able to communicate with Daemon so returning wrong status.
   test "does not authenticate invalid user" do
     post :authenticate,
+      ip: test_daemon_ip,
       username: 'steve',
-      password: 'password',
-      address: test_daemon_address
+      password: 'password'
 
     assert_response :unauthorized
     assert_not json_response[:success]
@@ -45,9 +48,9 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   test "returns error when Daemon not available" do
     # Would be valid credentials, but invalid port for Daemon.
     post :authenticate,
+      ip: '10.10.10.10',
       username: 'vagrant',
-      password: 'vagrant',
-      address: '127.0.0.1:6666'
+      password: 'vagrant'
 
     assert_response :forbidden # TODO: Appropriate status code?
     assert_not json_response[:success]
@@ -56,9 +59,9 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
   test "clears session when logout" do
     post :authenticate,
+      ip: test_daemon_ip,
       username: 'vagrant',
-      password: 'vagrant',
-      address: test_daemon_address
+      password: 'vagrant'
     assert_equal 'vagrant', session[:authenticated_username]
 
     post :logout
@@ -68,9 +71,9 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
   private
 
-  def test_daemon_address
+  def test_daemon_ip
     # TODO: Don't hardcode this?
-    '127.0.0.1:25269'
+    '127.0.0.1'
   end
 
   def json_response
