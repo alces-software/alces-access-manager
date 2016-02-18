@@ -2,8 +2,7 @@ require 'yaml'
 
 class Api::V1::ClustersController < ApplicationController
   def index
-    config = YAML.load_file(config_file)
-    render json: config.to_json
+    render json: configuration.to_json
   end
 
   # TODO: From LoginController, need to test and adapt for AM
@@ -16,13 +15,6 @@ class Api::V1::ClustersController < ApplicationController
 
   def authenticate
     begin
-      cluster_daemon_address = params[:address]
-      connection_opts = {
-        address: cluster_daemon_address,
-        ssl: false,
-        timeout: 5,
-        ssl_config: nil
-      }
       authentication_daemon = DaemonClient::Connection.new(connection_opts)
       auth_response = authentication_daemon.authenticate?(params[:username], params[:password])
       if auth_response
@@ -45,8 +37,17 @@ class Api::V1::ClustersController < ApplicationController
 
   private
 
+  def connection_opts
+    cluster_daemon_address = params[:address]
+    configuration.slice(:ssl, :timeout).merge(address: cluster_daemon_address)
+  end
+
   def config_file
     Rails.configuration.x.config_file
+  end
+
+  def configuration
+    @config ||= YAML.load_file(config_file)
   end
 
   def handle_error(message, status)

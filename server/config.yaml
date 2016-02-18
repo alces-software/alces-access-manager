@@ -2,4 +2,7 @@
 clusters:
   - name: Clusterware Vagrant
     ip: 127.0.0.1
+    auth_port: 25269
+    ssl: false
+    timeout: 5
 ...
