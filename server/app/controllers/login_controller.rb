@@ -43,12 +43,12 @@ class LoginController < ApplicationController
         session[:authenticated_username] = params[:username]
         render json: {success: true}
       else
-        render json: {success: false}, status: :unauthorized
+        handle_error 'invalid_credentials', :unauthorized
       end
     rescue DaemonClient::ConnError
       logger.error $!
       logger.error $!.backtrace
-      render json: {success: false, error: 'daemon_unavailable'}, status: :forbidden
+      handle_error 'daemon_unavailable', :forbidden
     end
   end
 
@@ -60,10 +60,8 @@ class LoginController < ApplicationController
 
   private
 
-  def handle_error(message)
-    flash[:alert] = message
-    @user = params[:username]
-    render :index
+  def handle_error(message, status)
+    render json: {success: false, error: message}, status: status
   end
 
 end

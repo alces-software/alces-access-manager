@@ -24,6 +24,7 @@ class LoginControllerTest < ActionController::TestCase
 
     assert_response :unauthorized
     assert_not json_response[:success]
+    assert_equal 'invalid_credentials', json_response[:error]
   end
 
   test "returns error when Daemon not available" do
@@ -35,7 +36,7 @@ class LoginControllerTest < ActionController::TestCase
 
     assert_response :forbidden # TODO: Appropriate status code?
     assert_not json_response[:success]
-    assert_equal json_response[:error], 'daemon_unavailable'
+    assert_equal 'daemon_unavailable', json_response[:error]
   end
 
   private
