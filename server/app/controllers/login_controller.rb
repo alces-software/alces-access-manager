@@ -29,11 +29,19 @@ class LoginController < ApplicationController
 
   def authenticate
     begin
-      auth_response = AlcesAccessManager::authentication_daemon.authenticate?(params[:username], params[:password])
+      cluster_daemon_address = params[:address]
+      connection_opts = {
+        address: cluster_daemon_address,
+        ssl: false,
+        timeout: 5,
+        ssl_config: nil
+      }
+      authentication_daemon = DaemonClient::Connection.new(connection_opts)
+      auth_response = authentication_daemon.authenticate?(params[:username], params[:password])
       if auth_response
         reset_session
         session[:authenticated_username] = params[:username]
-        redirect_to root_url
+        render json: {success: true}
       else
         handle_error "Incorrect user name or password."
       end
