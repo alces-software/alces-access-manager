@@ -105,9 +105,4 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   def test_daemon_ip
     '127.0.0.1'
   end
-
-  def json_response
-    decoded_json = ActiveSupport::JSON.decode @response.body
-    decoded_json.with_indifferent_access
-  end
 end
