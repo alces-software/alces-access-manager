@@ -21,5 +21,5 @@ Rails.application.routes.draw do
 
   # For all other GET requests render the index page to load the Access Manager
   # app; this will then show the requested page.
-  # get '*path' => 'home#index'
+  get '*path' => 'home#index'
 end
