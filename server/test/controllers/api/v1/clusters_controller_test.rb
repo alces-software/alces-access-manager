@@ -53,9 +53,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       username: 'invalid_user',
       password: 'password'
 
-    assert_response :unauthorized
-    assert_not json_response[:success]
-    assert_equal 'invalid_credentials', json_response[:error]
+    assert_error_response :unauthorized, 'invalid_credentials'
   end
 
   test "returns error when Daemon not available" do
@@ -63,9 +61,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
     mock_authenticate_with_valid_login
 
-    assert_response :forbidden # TODO: Appropriate status code?
-    assert_not json_response[:success]
-    assert_equal 'daemon_unavailable', json_response[:error]
+    assert_error_response :forbidden, 'daemon_unavailable'
   end
 
   test "returns error if not configured to authenticate with cluster at given IP" do
@@ -74,9 +70,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       username: 'steve',
       password: 'password'
 
-    assert_response :not_found
-    assert_not json_response[:success]
-    assert_equal 'unknown_cluster', json_response[:error]
+    assert_error_response :not_found, 'unknown_cluster'
   end
 
   test "clears session when logout" do
@@ -115,5 +109,11 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
   def test_daemon_ip
     '127.0.0.1'
+  end
+
+  def assert_error_response(status, message)
+    assert_response status
+    assert_not json_response[:success]
+    assert_equal message, json_response[:error]
   end
 end
