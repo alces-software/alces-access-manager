@@ -24,9 +24,9 @@ class Api::V1::ClustersController < ApplicationController
       else
         handle_error 'invalid_credentials', :unauthorized
       end
-    rescue DaemonClient::ConnError
-      logger.error $!
-      logger.error $!.backtrace
+    rescue DaemonClient::ConnError => ex
+      logger.error ex
+      ex.backtrace.each { |line| logger.error line }
       handle_error 'daemon_unavailable', :forbidden
     end
   end
