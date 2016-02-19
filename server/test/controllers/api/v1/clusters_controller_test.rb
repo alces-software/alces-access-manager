@@ -10,10 +10,9 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
         rather than attempting requests to actual Daemon.")
   end
 
+  # TODO: change this, will currently return whole config (is that what we want?)
   test "should return the clusters specified in the config file" do
-    # TODO: change this, will currently return whole config (is that what we want?)
-    sample_config_file_path = File.join(File.dirname(File.expand_path(__FILE__)), 'sample_config.yaml')
-    @controller.stubs(:config_file).returns(sample_config_file_path)
+    mock_config_file
 
     get :index
     assert_response :success
@@ -24,29 +23,17 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   test "authenticates valid user" do
-    @controller.stubs(:auth_response).returns(true)
-
-    post :authenticate,
-      ip: test_daemon_ip,
-      username: 'real_user',
-      password: 'hunter2'
+    mock_successful_authenticate
 
     # Returns success code, success Json, and sets username in session.
     assert_response :success
     assert json_response[:success]
-    assert_equal 'real_user', session[:authenticated_username]
+    assert_equal valid_mock_user_name, session[:authenticated_username]
   end
 
   test "uses cluster config from file when authenticating" do
-    sample_config_file_path = File.join(File.dirname(File.expand_path(__FILE__)), 'sample_config.yaml')
-    @controller.stubs(:config_file).returns(sample_config_file_path)
-
-    @controller.stubs(:auth_response).returns(true)
-
-    post :authenticate,
-      ip: test_daemon_ip,
-      username: 'real_user',
-      password: 'hunter2'
+    mock_config_file
+    mock_successful_authenticate
 
     # Not ideal to test private method but want to make sure using correct
     # options for Daemon connection; may be better way to do this.
@@ -74,11 +61,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   test "returns error when Daemon not available" do
     @controller.stubs(:auth_response).raises(DaemonClient::ConnError)
 
-    # Would be valid credentials, but invalid port for Daemon.
-    post :authenticate,
-      ip: test_daemon_ip,
-      username: 'real_user',
-      password: 'hunter2'
+    mock_authenticate_with_valid_login
 
     assert_response :forbidden # TODO: Appropriate status code?
     assert_not json_response[:success]
@@ -86,13 +69,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   test "clears session when logout" do
-    @controller.stubs(:auth_response).returns(true)
-
-    post :authenticate,
-      ip: test_daemon_ip,
-      username: 'real_user',
-      password: 'hunter2'
-    assert_equal 'real_user', session[:authenticated_username]
+    mock_successful_authenticate
 
     post :logout
     assert_response :success
@@ -100,6 +77,30 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   private
+
+  def mock_config_file
+    @controller.stubs(:config_file).returns(sample_config_file_path)
+  end
+
+  def sample_config_file_path
+    File.join(File.dirname(File.expand_path(__FILE__)), 'sample_config.yaml')
+  end
+
+  def mock_successful_authenticate
+    @controller.stubs(:auth_response).returns(true)
+    mock_authenticate_with_valid_login
+  end
+
+  def mock_authenticate_with_valid_login
+    post :authenticate,
+      ip: test_daemon_ip,
+      username: valid_mock_user_name,
+      password: 'hunter2'
+  end
+
+  def valid_mock_user_name
+    'real_user'
+  end
 
   def test_daemon_ip
     '127.0.0.1'
