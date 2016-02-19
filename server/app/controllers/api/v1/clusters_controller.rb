@@ -14,6 +14,8 @@ class Api::V1::ClustersController < ApplicationController
   # end
 
   def authenticate
+    params.require(:username)
+    params.require(:password)
     unless cluster_config
       handle_error 'unknown_cluster', :not_found and return
     end

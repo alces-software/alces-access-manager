@@ -26,6 +26,14 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
         rather than attempting requests to actual Daemon.")
     end
 
+    test "requires username and password" do
+      post :authenticate, ip: test_daemon_ip, username: 'brian'
+      assert_response :bad_request
+
+      post :authenticate, ip: test_daemon_ip, password: 'password'
+      assert_response :bad_request
+    end
+
     test "authenticates valid user" do
       mock_successful_authenticate
 
