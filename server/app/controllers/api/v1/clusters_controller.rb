@@ -15,8 +15,6 @@ class Api::V1::ClustersController < ApplicationController
 
   def authenticate
     begin
-      authentication_daemon = DaemonClient::Connection.new(connection_opts)
-      auth_response = authentication_daemon.authenticate?(params[:username], params[:password])
       if auth_response
         reset_session
         session[:authenticated_username] = params[:username]
@@ -36,6 +34,11 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   private
+
+  def auth_response
+    authentication_daemon = DaemonClient::Connection.new(connection_opts)
+    authentication_daemon.authenticate?(params[:username], params[:password])
+  end
 
   def connection_opts
     cluster_daemon_address = params[:ip] + ':25269' # TODO read port from config
