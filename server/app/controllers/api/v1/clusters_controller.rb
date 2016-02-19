@@ -2,7 +2,7 @@ require 'yaml'
 
 class Api::V1::ClustersController < ApplicationController
   def index
-    render json: configuration.to_json
+    render json: overall_config.to_json
   end
 
   # TODO: From LoginController, need to test and adapt for AM
@@ -39,15 +39,21 @@ class Api::V1::ClustersController < ApplicationController
 
   def connection_opts
     cluster_daemon_address = params[:ip] + ':25269' # TODO read port from config
-    configuration.slice(:ssl, :timeout).merge(address: cluster_daemon_address)
+    cluster_config.slice(:ssl, :timeout).merge(address: cluster_daemon_address)
   end
 
   def config_file
     Rails.configuration.x.config_file
   end
 
-  def configuration
-    @config ||= YAML.load_file(config_file)
+  def overall_config
+    @config ||= YAML.load_file(config_file).with_indifferent_access
+  end
+
+  def cluster_config
+    clusters_config = overall_config[:clusters]
+    cluster_configs_matching_ip = clusters_config.select { |config| config[:ip] == params[:ip] }
+    cluster_configs_matching_ip[0]
   end
 
   def handle_error(message, status)
