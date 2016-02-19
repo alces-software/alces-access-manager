@@ -68,7 +68,7 @@ module DaemonClient
         r.forked_io(*a,&b)
       end
     end
-      
+
     def exec(s, *a, &b)
       options = a.extract_options!
       remotely do |r|
