@@ -14,6 +14,10 @@ class Api::V1::ClustersController < ApplicationController
   # end
 
   def authenticate
+    unless cluster_config
+      handle_error 'unknown_cluster', :not_found and return
+    end
+
     begin
       if auth_response
         reset_session
@@ -56,7 +60,11 @@ class Api::V1::ClustersController < ApplicationController
   def cluster_config
     clusters_config = overall_config[:clusters]
     cluster_configs_matching_ip = clusters_config.select { |config| config[:ip] == params[:ip] }
-    cluster_configs_matching_ip[0]
+    if cluster_configs_matching_ip.present?
+      cluster_configs_matching_ip[0]
+    else
+      false
+    end
   end
 
   def handle_error(message, status)

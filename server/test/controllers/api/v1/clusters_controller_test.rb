@@ -68,6 +68,17 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     assert_equal 'daemon_unavailable', json_response[:error]
   end
 
+  test "returns error if not configured to authenticate with cluster at given IP" do
+    post :authenticate,
+      ip: '1.2.3.4',
+      username: 'steve',
+      password: 'password'
+
+    assert_response :not_found
+    assert_not json_response[:success]
+    assert_equal 'unknown_cluster', json_response[:error]
+  end
+
   test "clears session when logout" do
     mock_successful_authenticate
 
