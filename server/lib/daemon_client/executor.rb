@@ -82,7 +82,7 @@ module DaemonClient
         block.call(@remote)
       end
     rescue TimeoutError
-      raise DaemonClient::ConnError, "Could not communicate with ASM daemon: #{$!.message}"
+      raise DaemonClient::ConnError, "Timeout when communicating with ASM daemon: #{$!.message}"
     rescue DRb::DRbConnError, Errno::ECONNREFUSED
       raise DaemonClient::ConnError, "Could not communicate with ASM daemon: #{$!.message}"
     rescue Alces::StorageManagerDaemon::HandlerError
