@@ -7,9 +7,14 @@ gem 'rails-api'
 
 gem 'spring', :group => :development
 
-gem 'mocha', :group => :test
+group :test do
+  gem 'mocha'
+  gem 'minitest-reporters'
+end
 
-
+# Required for daemon client.
+gem 'net-ping'
+gem 'alces-tools', :github => 'alces-software/alces-tools', :tag => '0.13.0'
 
 
 # To use ActiveModel has_secure_password

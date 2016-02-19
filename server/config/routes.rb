@@ -6,7 +6,16 @@ Rails.application.routes.draw do
   # Access Manager api.
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
-      resources :clusters, only: [:index]
+
+      resources :clusters, only: [:index] do
+        collection do
+          post :logout
+        end
+      end
+      post 'cluster/:ip/authenticate',
+        to: 'clusters#authenticate',
+        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+
     end
   end
 
