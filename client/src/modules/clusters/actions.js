@@ -1,14 +1,17 @@
 
-import axios from 'axios';
-
 import * as actionTypes from './actionTypes';
 import {redirectTo} from 'actions/router';
 
 export function loadClusters() {
   return {
     type: actionTypes.LOAD_CLUSTERS,
-    payload: {
-      promise: axios.get('/api/v1/clusters'),
+    meta: {
+      apiRequest: {
+        config: {
+          url: '/api/v1/clusters',
+          method: 'get',
+        },
+      },
     },
   }
 }
