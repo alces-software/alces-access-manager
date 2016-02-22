@@ -14,6 +14,7 @@ import { routerStateReducer } from 'redux-router';
 
 import clusters from 'clusters/reducer';
 import environment from 'environment/reducer';
+import notification from 'notification/reducer';
 import sessions from 'sessions/reducer';
 
 // import {CLEAN_SESSION} from 'auth/actionTypes';
@@ -24,6 +25,7 @@ const unpreservedStateReducers = {
   clusters,
   environment,
   form,
+  notification,
   sessions,
 };
 
