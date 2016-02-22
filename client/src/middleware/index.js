@@ -9,11 +9,11 @@ import promiseMiddleware from 'redux-simple-promise';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-// import apiRequestMiddleware from './apiRequests';
+import apiRequestMiddleware from './apiRequests';
 import logger from './logger';
 
 const enhanceWithMiddleware = applyMiddleware(
-    // apiRequestMiddleware,
+    apiRequestMiddleware,
     promiseMiddleware(),
     thunk,
     logger

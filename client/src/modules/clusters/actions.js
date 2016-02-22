@@ -16,8 +16,14 @@ export function loadClusters() {
 export function authenticate(ip, {username, password}) {
   const authenticateRequest = {
     type: actionTypes.AUTHENTICATE,
-    payload: {
-      promise: axios.post(`/api/v1/cluster/${ip}/authenticate`, {username, password}),
+    meta: {
+      apiRequest: {
+        config: {
+          url: `/api/v1/cluster/${ip}/authenticate`,
+          method: 'post',
+          data: {username, password},
+        },
+      },
     },
   };
 
@@ -26,5 +32,5 @@ export function authenticate(ip, {username, password}) {
       then( () => {
         dispatch(redirectTo(`/cluster/${ip}`));
     });
-  }
+  };
 }
