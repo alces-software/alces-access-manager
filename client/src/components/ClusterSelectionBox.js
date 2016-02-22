@@ -59,7 +59,6 @@ class ClusterSelectionBox extends React.Component {
 ClusterSelectionBox.propTypes = selectionBoxPropTypes;
 
 ClusterSelectionBox = reduxForm({
-  form: 'authenticate-cluster', // TODO: Different clusters will need different form names.
   fields: ['username', 'password'],
 })(ClusterSelectionBox);
 
