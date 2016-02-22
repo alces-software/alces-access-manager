@@ -52,7 +52,7 @@ export default class NotificationModals extends React.Component {
 // depending on the message type, so I haven't specified it here.
 const modalShape = {
   messageId: PropTypes.number.isRequired,
-  messageType: PropTypes.string.isRequired
+  messageType: PropTypes.string.isRequired,
 };
 
 NotificationModals.propTypes = {
@@ -63,5 +63,5 @@ NotificationModals.propTypes = {
   // The modal that is currently being hidden / is animating out.
   exitingModal: PropTypes.shape(modalShape),
   // Callback to run when the modal is closed.
-  onCloseNotification: PropTypes.func.isRequired
+  onCloseNotification: PropTypes.func.isRequired,
 }

@@ -54,7 +54,7 @@ export default class MessageGenerator {
     return {
       title: title,
       content: content,
-      actions: actions
+      actions: actions,
     }
   }
 }

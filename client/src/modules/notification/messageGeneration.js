@@ -10,7 +10,7 @@ import Console from "utils/console";
 import MessageGeneratorsMap from "./MessageGeneratorsMap";
 import {
   setupDefaultErrorMessageGenerators, addActionTypeCustomizations,
-  unexpectedErrorMessageGenerator
+  unexpectedErrorMessageGenerator,
 } from "./errorMessageCustomization";
 
 
@@ -60,7 +60,7 @@ function parseError(rawError) {
   return {
     status: rawError.messagePayload.response.status,
     actionType: rawError.messagePayload.action.type,
-    payload: rawError.messagePayload
+    payload: rawError.messagePayload,
   }
 }
 

@@ -20,7 +20,7 @@ const initialState = {
   currentModal: undefined,
   // The modal that is being animated out.
   exitingModal: undefined,
-  showingCurrentModal: false
+  showingCurrentModal: false,
 }
 
 function addModalMessage(messageType) {
@@ -28,7 +28,7 @@ function addModalMessage(messageType) {
     const newMessage = {
       messagePayload: action.payload,
       messageType: messageType,
-      messageId: nextMessageId()
+      messageId: nextMessageId(),
     };
 
     let currentModal = state.currentModal;
@@ -40,7 +40,7 @@ function addModalMessage(messageType) {
       ...state,
       modalMessages: [ ...state.modalMessages, newMessage ],
       currentModal: currentModal,
-      showingCurrentModal: true
+      showingCurrentModal: true,
     };
   }
 }
@@ -60,7 +60,7 @@ function closeModal(state) {
     modalMessages: newMessages,
     currentModal: currentModal,
     exitingModal: exitingModal,
-    showingCurrentModal: newMessages.length > 0
+    showingCurrentModal: newMessages.length > 0,
   }
 }
 

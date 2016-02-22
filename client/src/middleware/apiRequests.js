@@ -18,7 +18,7 @@ const jsonApiMimeType = "application/vnd.api+json";
 axios.defaults.headers.common['Accept'] = [
   jsonApiMimeType,
   apiMimeType,
-  'application/json'
+  'application/json',
 ];
 
 // function addHeaders(config, csrfToken) {
@@ -34,8 +34,8 @@ axios.defaults.headers.common['Accept'] = [
 function metaWithoutApiRequest(action) {
   const newActionMeta = {
     meta: {
-      ...action.meta
-    }
+      ...action.meta,
+    },
   };
 
   if (Object.keys(newActionMeta.meta).length === 1) {
@@ -111,9 +111,9 @@ function apiRequestMiddleware({dispatch}) {
                 throw error;
               }
             ),
-            ...action.payload
+            ...action.payload,
           },
-          ...metaWithoutApiRequest(action)
+          ...metaWithoutApiRequest(action),
         };
 
         return dispatch(newAction);

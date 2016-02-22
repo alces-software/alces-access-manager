@@ -9,7 +9,7 @@ import React, {PropTypes} from 'react';
 
 import StandardModal from 'components/StandardModal';
 import {
-  generateErrorMessage, generateInformationMessage
+  generateErrorMessage, generateInformationMessage,
 } from 'notification/messageGeneration';
 
 export default class NotificationModal extends React.Component {
@@ -39,9 +39,9 @@ export default class NotificationModal extends React.Component {
 
 const messageShape = {
   title: PropTypes.string,
-  content: PropTypes.string
+  content: PropTypes.string,
 };
 
 NotificationModal.propTypes = {
-  message: PropTypes.shape(messageShape)
+  message: PropTypes.shape(messageShape),
 }

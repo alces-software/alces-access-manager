@@ -15,7 +15,7 @@ const {
   Body:   ModalBody,
   Footer: ModalFooter,
   Header: ModalHeader,
-  Title:  ModalTitle
+  Title:  ModalTitle,
 } = Modal;
 
 export default class StandardModal extends React.Component {
