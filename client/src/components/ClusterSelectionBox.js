@@ -1,15 +1,23 @@
 
+import _ from 'lodash';
 import React from 'react';
 import {ButtonInput, Input} from 'react-bootstrap';
 import FlipCard from 'react-flipcard';
-import {Link} from 'react-router';
+import {reduxForm} from 'redux-form';
 
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class ClusterSelectionBox extends React.Component {
   render() {
-    const cluster = this.props.item;
-    const clusterLink = `/cluster/${cluster.ip}`;
+    const {
+      authenticate,
+      fields: {username, password},
+      handleSubmit,
+      item,
+    } = this.props;
+    const cluster = item;
+
+    const authenticateCluster = _.partial(authenticate, cluster.ip);
 
     return (
       <div
@@ -31,17 +39,15 @@ class ClusterSelectionBox extends React.Component {
             <p>
               {cluster.name}
             </p>
-            <form>
-              <Input placeholder="Username" type="text"/>
-              <Input placeholder="Password" type="password"/>
-              <Link to={clusterLink}>
+            <form onSubmit={handleSubmit(authenticateCluster)}>
+              <Input placeholder="Username" type="text" {...username}/>
+              <Input placeholder="Password" type="password" {...password}/>
                 <ButtonInput
                   className="selection-box-button"
                   type="submit"
                   value="View"
                   bsStyle="success"
                 />
-              </Link>
             </form>
           </div>
         </FlipCard>
@@ -51,5 +57,10 @@ class ClusterSelectionBox extends React.Component {
 }
 
 ClusterSelectionBox.propTypes = selectionBoxPropTypes;
+
+ClusterSelectionBox = reduxForm({
+  form: 'authenticate-cluster', // TODO: Different clusters will need different form names.
+  fields: ['username', 'password'],
+})(ClusterSelectionBox);
 
 export default ClusterSelectionBox;
