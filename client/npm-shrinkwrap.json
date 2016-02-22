@@ -3987,9 +3987,9 @@
       "resolved": "https://registry.npmjs.org/redux-devtools-themes/-/redux-devtools-themes-1.0.0.tgz"
     },
     "redux-form": {
-      "version": "3.0.6",
-      "from": "redux-form@3.0.6",
-      "resolved": "https://registry.npmjs.org/redux-form/-/redux-form-3.0.6.tgz"
+      "version": "3.1.7",
+      "from": "redux-form@>=3.0.6 <4.0.0",
+      "resolved": "https://registry.npmjs.org/redux-form/-/redux-form-3.1.7.tgz"
     },
     "redux-logger": {
       "version": "2.3.1",

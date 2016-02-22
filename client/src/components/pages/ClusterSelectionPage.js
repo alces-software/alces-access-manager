@@ -11,7 +11,14 @@ export default class ClusterSelectionPage extends React.Component {
   }
 
   render() {
-    const {clusters, environment} = this.props;
+    const {clusters, environment, authenticate} = this.props;
+
+    const clusterSelectionBoxProps = (cluster) => {
+      const form = `authenticate-cluster-${cluster.ip}`;
+      return {
+        authenticate, form,
+      }
+    }
 
     const clustersAvailableMessage = _.isEmpty(clusters) ?
       `There are no clusters available within this environment, please
@@ -35,6 +42,7 @@ export default class ClusterSelectionPage extends React.Component {
         keyProp="ip"
         header={header}
         selectionBoxComponent={ClusterSelectionBox}
+        selectionBoxProps={clusterSelectionBoxProps}
       />
     );
   }

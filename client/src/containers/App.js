@@ -13,9 +13,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import LoadingPage from 'components/LoadingPage';
+import * as notificationActions from 'notification/actions';
+import NotificationModals from 'notification/components/NotificationModals';
+import {appSelector} from 'selectors';
 
 if (!__TEST__){
-require("styles/main.scss");
+  require("styles/main.scss");
 }
 
 class App extends React.Component {
@@ -23,6 +26,12 @@ class App extends React.Component {
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
+          <NotificationModals
+            showingModal={this.props.notifications.showingModal}
+            onCloseNotification={this.props.closeNotificationModal}
+            currentModal={this.props.notifications.currentModal}
+            exitingModal={this.props.notifications.exitingModal}
+          />
           <Header/>
           <div className="pageContainer">
             {this.page()}
@@ -85,4 +94,9 @@ class FadeTransitionHandler extends React.Component {
   }
 }
 
-export default connect()(App);
+export default connect(
+  appSelector,
+  {
+    closeNotificationModal: notificationActions.closeModal,
+  }
+)(App);

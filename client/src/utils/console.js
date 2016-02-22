@@ -17,7 +17,7 @@ const consoleMethods = [
   "groupEnd",
   "info",
   "log",
-  "warn"
+  "warn",
 ]
 
 class Console {
