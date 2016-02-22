@@ -7,10 +7,6 @@
  *===========================================================================*/
 import React from 'react';
 
-import * as authActionTypes from 'auth/actionTypes';
-import * as clusterComponentActionTypes from 'clusterComponent/actionTypes';
-import * as environmentActionTypes from 'environment/actionTypes';
-import * as registrationActionTypes from 'registration/actionTypes';
 import {ContactCustomerSupport} from 'components/CustomerSupport';
 
 import MessageGenerator from "./MessageGenerator";
@@ -70,61 +66,7 @@ export function setupDefaultErrorMessageGenerators(generatorsMap) {
 // customize as they see fit.
 //
 export function addActionTypeCustomizations(generatorsMap) {
-  generatorsMap.
-    customizeMessage(
-      "unexpected",
-      authActionTypes.RETRIEVE_SESSION,
-      {
-        title: "Unable to retrieve your session",
-        content: <div>
-          An unexpected error occurred while attempting to retrieve your
-          session. <ContactCustomerSupport/>
-        </div>
-      }
-    ).
-
-    customizeMessage(
-      401,
-      authActionTypes.SIGN_IN,
-      {
-        title: 'Authentication failure',
-        content: "The provided username and/or password were incorrect. Please correct and try again."
-      }
-    ).
-
-    customizeMessage(
-      422,
-      registrationActionTypes.REGISTER,
-      {
-        title: 'Registration failure',
-        content: <div>
-          It was not possible to create your account. {correctErrorsText()}
-        </div>
-      }
-    ).
-
-    customizeMessage(
-      422,
-      clusterComponentActionTypes.CREATE,
-      {
-        title: 'Cluster component creation failed',
-        content: <div>
-          It was not possible to create your cluster component.
-          {correctErrorsText()}
-        </div>
-      }
-    ).
-
-    customizeMessage(
-      422,
-      environmentActionTypes.CREATE,
-      {
-        title: 'Environment creation failed',
-        content: <div>
-          It was not possible to create your environment. {correctErrorsText()}
-        </div>
-      }
-    );
+  generatorsMap
 }
 
 

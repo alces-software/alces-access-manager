@@ -37,3 +37,25 @@ export const vncSessionPageSelector = createSelector(
     return {cluster, session}
   }
 );
+
+const notificationsSelector = createSelector(
+  (state) => state.notifications,
+
+  (notifications) => {
+    return {
+      showingModal: notifications.showingCurrentModal,
+      currentModal: notifications.currentModal,
+      exitingModal: notifications.exitingModal,
+    };
+  }
+);
+
+export const appSelector = createSelector(
+  notificationsSelector,
+
+  (notifications) => {
+    return {
+      notifications,
+    }
+  }
+);

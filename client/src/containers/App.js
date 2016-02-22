@@ -13,7 +13,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import LoadingPage from 'components/LoadingPage';
+import * as notificationActions from 'notification/actions';
 import NotificationModals from 'notification/components/NotificationModals';
+import {appSelector} from 'selectors';
 
 if (!__TEST__){
   require("styles/main.scss");
@@ -92,4 +94,9 @@ class FadeTransitionHandler extends React.Component {
   }
 }
 
-export default connect()(App);
+export default connect(
+  appSelector,
+  {
+    closeNotificationModal: notificationActions.closeModal,
+  }
+)(App);
