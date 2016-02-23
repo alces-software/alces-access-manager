@@ -16,6 +16,10 @@ Rails.application.routes.draw do
         to: 'clusters#authenticate',
         constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
 
+      get 'cluster/:ip/sessions',
+        to: 'clusters#sessions',
+        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+
     end
   end
 

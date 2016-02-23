@@ -39,11 +39,24 @@ class Api::V1::ClustersController < ApplicationController
     reset_session
   end
 
+  def sessions
+    username = params[:username]
+    opts = {
+      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
+      :username => username
+    }
+    wrapper = DaemonClient::Wrapper.new(daemon, opts)
+    render json: wrapper.sessions_for(username)
+  end
+
   private
 
   def auth_response
-    authentication_daemon = DaemonClient::Connection.new(connection_opts)
-    authentication_daemon.authenticate?(params[:username], params[:password])
+    daemon.authenticate?(params[:username], params[:password])
+  end
+
+  def daemon
+    DaemonClient::Connection.new(connection_opts)
   end
 
   def connection_opts
