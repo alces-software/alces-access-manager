@@ -52,18 +52,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # AAM additions to Clusterware Vagrantfile below this point.
 
-  # Sync in ASM daemon to test authing.
-  # TODO: change this to AAM daemon when this exists.
-  config.vm.synced_folder "#{projects}/alces-storage-manager-daemon", "/media/host/alces-storage-manager-daemon"
+  # Sync in AAM daemon.
+  config.vm.synced_folder "#{projects}/alces-access-manager-daemon", "/media/host/alces-access-manager-daemon"
 
-  # TODO: various setup needed to make ASM daemon run initially - installing
+  # TODO: various setup needed to make AAM daemon run initially - installing
   # gems, ruby headers, git etc - make this part of provisioning process.
 
-  # Start ASM daemon in screen session.
-  config.vm.provision 'shell',
-    run: 'always',
-    inline: "cd /media/host/alces-storage-manager-daemon && screen -S asmd -d -m bin/alces-storage-manager-daemon"
-
-  # Note: to forward daemon port use:
+  # TODO: Make below part of provisioning process.
+  #
+  # Note:
+  # - To start daemon:
+  # cd /media/host/alces-access-manager-daemon && rvmsudo bin/alces-access-manager-daemon
+  #
+  # - To forward daemon port:
   # ssh -L 25269:10.0.2.15:25269 -p 2222 vagrant@localhost
 end
