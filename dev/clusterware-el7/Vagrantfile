@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "hfm4/centos7"
   config.vm.box_check_update = false
-  config.vm.hostname = "master-#{(rand * (10 ** 8)).to_i.to_s(16)}.cluster"
+  config.vm.hostname = "master"
 
   # Update the below vars to match your configuration
   #projects = "#{ENV['HOME']}/projects"
