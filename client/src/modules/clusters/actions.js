@@ -1,6 +1,7 @@
 
 import * as actionTypes from './actionTypes';
 import {redirectTo} from 'actions/router';
+import {loadSessions} from 'sessions/actions';
 
 export function loadClusters() {
   return {
@@ -33,6 +34,7 @@ export function authenticate(ip, {username, password}) {
   return (dispatch) => {
     return dispatch(authenticateRequest).
       then( () => {
+        dispatch(loadSessions(ip));
         dispatch(redirectTo(`/cluster/${ip}`));
     });
   };

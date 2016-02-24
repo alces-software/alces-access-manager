@@ -10,10 +10,12 @@ function clusterFromRouteSelector(state, props) {
   return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
 }
 
-function sessionsForCluster(cluster, sessions) {
-  // TODO: may get sessions in different way later as won't have loaded to
-  // begin with.
-  return _.filter(sessions, (session) => session.clusterIp == cluster.ip);
+function sessionsForCluster(cluster, allSessions) {
+  return sessionsForClusterWithIp(cluster.ip, allSessions);
+}
+
+function sessionsForClusterWithIp(clusterIp, allSessions) {
+  return allSessions[clusterIp];
 }
 
 export const sessionSelectionPageSelector = createSelector(
@@ -26,8 +28,9 @@ export const sessionSelectionPageSelector = createSelector(
 );
 
 function sessionFromRouteSelector(state, props) {
-  const sessionPort = props.routeParams.sessionPort;
-  return _.find(state.sessions, (session) => session.port == sessionPort);
+  const {clusterIp, sessionPort} = props.routeParams;
+  const clusterSessions = sessionsForClusterWithIp(clusterIp, state.sessions);
+  return _.find(clusterSessions, (session) => session.port == sessionPort);
 }
 
 export const vncSessionPageSelector = createSelector(
