@@ -19,6 +19,8 @@ class ClusterSelectionBox extends React.Component {
 
     const authenticateCluster = _.partial(authenticate, cluster.ip);
 
+    const incomplete = !(username.value && password.value);
+
     return (
       <div
         className="cluster-selection-box"
@@ -47,6 +49,7 @@ class ClusterSelectionBox extends React.Component {
                   type="submit"
                   value="View"
                   bsStyle="success"
+                  disabled={incomplete}
                 />
             </form>
           </div>
