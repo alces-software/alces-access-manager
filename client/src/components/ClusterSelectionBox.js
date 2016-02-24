@@ -1,10 +1,11 @@
 
 import _ from 'lodash';
 import React from 'react';
-import {ButtonInput, Input} from 'react-bootstrap';
+import {Button, Input} from 'react-bootstrap';
 import FlipCard from 'react-flipcard';
 import {reduxForm} from 'redux-form';
 
+import Icon from 'components/Icon';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class ClusterSelectionBox extends React.Component {
@@ -14,12 +15,20 @@ class ClusterSelectionBox extends React.Component {
       fields: {username, password},
       handleSubmit,
       item,
+      submitting,
     } = this.props;
     const cluster = item;
 
     const authenticateCluster = _.partial(authenticate, cluster.ip);
 
     const incomplete = !(username.value && password.value);
+
+    const submitButtonIcon = submitting ? "cluster-authenticating" : "cluster-authenticate-submit";
+    const submitButtonText = (
+      <span>
+        Login&nbsp;&nbsp;<Icon name={submitButtonIcon}/>
+      </span>
+    );
 
     return (
       <div
@@ -44,13 +53,14 @@ class ClusterSelectionBox extends React.Component {
             <form onSubmit={handleSubmit(authenticateCluster)}>
               <Input placeholder="Username" type="text" {...username}/>
               <Input placeholder="Password" type="password" {...password}/>
-                <ButtonInput
+                <Button
                   className="selection-box-button"
                   type="submit"
-                  value="View"
                   bsStyle="success"
-                  disabled={incomplete}
-                />
+                  disabled={incomplete || submitting}
+                >
+                  {submitButtonText}
+                </Button>
             </form>
           </div>
         </FlipCard>
