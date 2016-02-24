@@ -17,8 +17,16 @@ class DaemonConnectionTest < ActionDispatch::IntegrationTest
       # Check can now successfully get sessions for user on cluster.
       sess.get '/api/v1/cluster/127.0.0.1/sessions'
       sess.assert_response :success
-      # TODO: Don't currently assert anything about response as can vary -
-      # maybe should?
+
+      # Check any returned sessions conform to desired format.
+      sessions = sess.json_response
+      sess.assert_respond_to(sessions, :each)
+      sessions.each do |session|
+        session = session.with_indifferent_access
+        [:display, :port, :password, :host, :hostname, :access_host, :websocket, :type].each do |prop|
+          sess.assert session.key?(prop), "Session has no key '#{prop}' - session: #{session.inspect}"
+        end
+      end
     end
   end
 

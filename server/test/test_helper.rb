@@ -12,6 +12,9 @@ class ActiveSupport::TestCase
 
   def json_response
     decoded_json = ActiveSupport::JSON.decode @response.body
-    decoded_json.with_indifferent_access
+    if decoded_json.respond_to? :with_indifferent_access
+      decoded_json = decoded_json.with_indifferent_access
+    end
+    decoded_json
   end
 end
