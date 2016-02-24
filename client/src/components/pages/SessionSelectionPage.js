@@ -9,7 +9,7 @@ import Icon from 'components/Icon';
 
 export default class SessionSelectionPage extends React.Component {
   render() {
-    const {cluster, sessions} = this.props;
+    const {cluster, sessions, loadSessions} = this.props;
 
     // Declare this string separately so don't need to escape angle brackets
     // within JSX.
@@ -29,6 +29,8 @@ export default class SessionSelectionPage extends React.Component {
         Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
         a session to connect to below.
       </span>
+
+    const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
     const header = (
       <p>
         {headerMessage}
@@ -37,6 +39,7 @@ export default class SessionSelectionPage extends React.Component {
           <Button
             bsStyle="primary"
             className="sessions-reload-button"
+            onClick={loadSessionsForCluster}
             >
             Refresh sessions&nbsp;
             <Icon name="sessions-reload" size="2x"/>
