@@ -10,7 +10,6 @@ class NoVnc extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.connect.bind(this)}>Connect</button>
         <canvas
           id='novnc-canvas'
           onMouseOver={this.handleMouseOver.bind(this)}
@@ -33,6 +32,8 @@ class NoVnc extends React.Component {
       target: this.canvas,
       onUpdateState: this.stateHandler.bind(this),
     });
+
+    this.connect();
   }
 
   stateHandler(rfb, state, oldstate, msg) {
