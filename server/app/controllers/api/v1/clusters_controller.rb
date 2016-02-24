@@ -39,11 +39,32 @@ class Api::V1::ClustersController < ApplicationController
     reset_session
   end
 
+  def sessions
+    # TODO: Need to store which cluster this authentication is for/ store
+    # authentications for different clusters for session independently -
+    # currently a user could get sessions for same username on a different
+    # cluster which they've not authenticated on after authenticating on.
+    username = session[:authenticated_username]
+    unless username
+      handle_error 'not_authenticated', :unauthorized and return
+    end
+
+    opts = {
+      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
+      :username => username
+    }
+    wrapper = DaemonClient::Wrapper.new(daemon, opts)
+    render json: wrapper.sessions_for(username)
+  end
+
   private
 
   def auth_response
-    authentication_daemon = DaemonClient::Connection.new(connection_opts)
-    authentication_daemon.authenticate?(params[:username], params[:password])
+    daemon.authenticate?(params[:username], params[:password])
+  end
+
+  def daemon
+    DaemonClient::Connection.new(connection_opts)
   end
 
   def connection_opts

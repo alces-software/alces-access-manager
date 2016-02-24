@@ -96,6 +96,13 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     end
   end
 
+  class SessionsTest < Api::V1::ClustersControllerTest
+    test "returns error if unauthenticated" do
+      get :sessions, ip: '127.0.0.1'
+      assert_response :unauthorized
+    end
+  end
+
   private
 
   def mock_config_file
