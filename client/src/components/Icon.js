@@ -10,7 +10,7 @@ import FontAwesome from 'react-fontawesome';
 import classNames from 'classnames';
 
 const iconNameToFontAwesomeProps = {
-  "cluster-authenticate-submit": {name: "rocket"},
+  "cluster": {name: "rocket"},
   "cluster-authenticating": {name: "spinner", spin: true},
   "sessions-reload":    {name: "refresh"},
 }

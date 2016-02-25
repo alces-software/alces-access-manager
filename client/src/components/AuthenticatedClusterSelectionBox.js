@@ -11,14 +11,14 @@ class AuthenticatedClusterSelectionBox extends React.Component {
 
     const buttonText = (
       <span>
-        View&nbsp;&nbsp;<Icon name="cluster-authenticate-submit"/>
+        View&nbsp;&nbsp;<Icon name="cluster"/>
       </span>
     );
     const clusterLink = `/cluster/${cluster.ip}`;
 
     return (
       <div
-        className="session-selection-box"
+        className="static-selection-box"
         >
         <p>
           {cluster.name}

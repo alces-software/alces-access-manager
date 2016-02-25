@@ -22,7 +22,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
 
     const incomplete = !(username.value && password.value);
 
-    const submitButtonIcon = submitting ? "cluster-authenticating" : "cluster-authenticate-submit";
+    const submitButtonIcon = submitting ? "cluster-authenticating" : "cluster";
     const submitButtonText = (
       <span>
         Login&nbsp;&nbsp;<Icon name={submitButtonIcon}/>
@@ -32,10 +32,10 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
 
     return (
       <div
-        className="cluster-selection-box"
+        className="flip-selection-box"
         >
         <FlipCard>
-          <div className="cluster-selection-box-front">
+          <div className="flip-selection-box-front">
             <p>
               {cluster.name}
             </p>
@@ -46,7 +46,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
               [Cluster details to go here]
             </p>
           </div>
-          <div className="cluster-selection-box-back">
+          <div className="flip-selection-box-back">
             <p>
               {cluster.name}
             </p>

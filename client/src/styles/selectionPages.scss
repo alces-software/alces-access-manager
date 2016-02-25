@@ -27,7 +27,7 @@ $selection-box-color: #eee;
   background-color: $selection-box-color;
 }
 
-.cluster-selection-box {
+.flip-selection-box {
   display: inline-block;
 
   .ReactFlipCard {
@@ -55,7 +55,7 @@ $selection-box-color: #eee;
   }
 }
 
-.session-selection-box {
+.static-selection-box {
   @include selection-box-border();
   @include selection-box-inside();
 
