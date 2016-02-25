@@ -2,6 +2,14 @@ require 'yaml'
 
 class Api::V1::ClustersController < ApplicationController
   def index
+    clusters_config = overall_config[:clusters]
+    clusters_config.each do |cluster|
+      authentication = authentications[cluster[:ip]]
+      if authentication
+        cluster[:authenticated_username] = authentication
+      end
+    end
+
     render json: overall_config.to_json
   end
 

@@ -16,6 +16,33 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       json_response = JSON.parse(@response.body)
       assert_equal json_response, config
     end
+
+    test "includes authenticated username for each cluster" do
+      mock_config = {
+        clusters: [{ip: '10.10.10.1'}, {ip: '10.10.10.2'}]
+      }
+      @controller.stubs(:auth_response).returns(true)
+      @controller.stubs(:overall_config).returns(mock_config)
+
+      auths = [
+        {ip: '10.10.10.1', username: 'user1'},
+        {ip: '10.10.10.2', username: 'user2'},
+      ]
+      auths.map do |auth|
+        post :authenticate,
+          ip: auth[:ip],
+          username: auth[:username],
+          password: 'password'
+      end
+
+      get :index
+
+      expected_response = mock_config.tap do |config|
+        config[:clusters][0][:authenticated_username] = 'user1'
+        config[:clusters][1][:authenticated_username] = 'user2'
+      end.with_indifferent_access
+      assert_equal expected_response, json_response
+    end
   end
 
   class AuthenticateTest < Api::V1::ClustersControllerTest
