@@ -37,13 +37,13 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
         <FlipCard>
           <div className="flip-selection-box-front">
             <p>
-              {cluster.name}
+              <strong>{cluster.name}</strong>
             </p>
             <p>
               IP: {cluster.ip}
             </p>
             <p>
-              [Cluster details to go here]
+              <em>Click to login</em>
             </p>
           </div>
           <div className="flip-selection-box-back">

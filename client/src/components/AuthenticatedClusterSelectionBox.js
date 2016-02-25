@@ -21,13 +21,13 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         className="static-selection-box"
         >
         <p>
-          {cluster.name}
+          <strong>{cluster.name}</strong>
         </p>
         <p>
           IP: {cluster.ip}
         </p>
         <p>
-          [Cluster details to go here]
+          Logged in as <em>{cluster.authenticated_username}</em>
         </p>
         <Link to={clusterLink}>
           <Button
