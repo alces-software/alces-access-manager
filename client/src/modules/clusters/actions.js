@@ -20,6 +20,10 @@ export function loadClusters() {
 export function authenticate(ip, {username, password}) {
   const authenticateRequest = {
     type: actionTypes.AUTHENTICATE,
+    payload: {
+      ip,
+      username,
+    },
     meta: {
       apiRequest: {
         config: {
