@@ -16,6 +16,33 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       json_response = JSON.parse(@response.body)
       assert_equal json_response, config
     end
+
+    test "includes authenticated username for each cluster" do
+      mock_config = {
+        clusters: [{ip: '10.10.10.1'}, {ip: '10.10.10.2'}]
+      }
+      @controller.stubs(:auth_response).returns(true)
+      @controller.stubs(:overall_config).returns(mock_config)
+
+      auths = [
+        {ip: '10.10.10.1', username: 'user1'},
+        {ip: '10.10.10.2', username: 'user2'},
+      ]
+      auths.map do |auth|
+        post :authenticate,
+          ip: auth[:ip],
+          username: auth[:username],
+          password: 'password'
+      end
+
+      get :index
+
+      expected_response = mock_config.tap do |config|
+        config[:clusters][0][:authenticated_username] = 'user1'
+        config[:clusters][1][:authenticated_username] = 'user2'
+      end.with_indifferent_access
+      assert_equal expected_response, json_response
+    end
   end
 
   class AuthenticateTest < Api::V1::ClustersControllerTest
@@ -40,7 +67,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       # Returns success code, success Json, and sets username in session.
       assert_response :success
       assert json_response[:success]
-      assert_equal valid_mock_user_name, session[:authenticated_username]
+      assert_equal valid_mock_user_name, session[:authentications][test_daemon_ip]
     end
 
     test "uses cluster config from file when authenticating" do
@@ -84,6 +111,31 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       assert_error_response :not_found, 'unknown_cluster'
     end
+
+    test "can authenticate with multiple clusters and have authentications remembered" do
+      # Stub these methods so config doesn't need to contain these clusters and
+      # no auth request actually made.
+      [:cluster_config, :auth_response].map do |method|
+        @controller.stubs(method).returns(true)
+      end
+
+      auths = [
+        {ip: '10.10.10.1', username: 'user1'},
+        {ip: '10.10.10.2', username: 'user2'},
+      ]
+
+      auths.map do |auth|
+        post :authenticate,
+          ip: auth[:ip],
+          username: auth[:username],
+          password: 'password'
+      end
+
+      assert_equal Hash[
+        auths[0][:ip] => auths[0][:username],
+        auths[1][:ip] => auths[1][:username],
+      ], session[:authentications]
+    end
   end
 
   class LogoutTest < Api::V1::ClustersControllerTest
@@ -92,7 +144,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       post :logout
       assert_response :success
-      assert_equal nil, session[:authenticated_username]
+      assert_empty session
     end
   end
 

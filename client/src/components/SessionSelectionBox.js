@@ -14,7 +14,7 @@ class SessionSelectionBox extends React.Component {
 
     return (
       <div
-        className="session-selection-box"
+        className="static-selection-box"
         >
         <p>
           {session.name}
