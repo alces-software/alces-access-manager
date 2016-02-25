@@ -22,8 +22,7 @@ class Api::V1::ClustersController < ApplicationController
 
     begin
       if auth_response
-        reset_session
-        session[:authenticated_username] = params[:username]
+        authentications[params[:ip]] = params[:username]
         render json: {success: true}
       else
         handle_error 'invalid_credentials', :unauthorized
@@ -44,7 +43,7 @@ class Api::V1::ClustersController < ApplicationController
     # authentications for different clusters for session independently -
     # currently a user could get sessions for same username on a different
     # cluster which they've not authenticated on after authenticating on.
-    username = session[:authenticated_username]
+    username = authentications[params[:ip]]
     unless username
       handle_error 'not_authenticated', :unauthorized and return
     end
@@ -58,6 +57,13 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   private
+
+  def authentications
+    unless session[:authentications]
+      session[:authentications] = {}
+    end
+    session[:authentications]
+  end
 
   def auth_response
     daemon.authenticate?(params[:username], params[:password])

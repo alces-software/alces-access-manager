@@ -12,7 +12,7 @@ class DaemonConnectionTest < ActionDispatch::IntegrationTest
       # Returns success code, success Json, and sets username in session.
       sess.assert_response :success, "Is the daemon running at the correct address?"
       sess.assert sess.json_response[:success]
-      sess.assert_equal 'vagrant', sess.session[:authenticated_username]
+      sess.assert_equal 'vagrant', sess.session[:authentications]['127.0.0.1']
 
       # Check can now successfully get sessions for user on cluster.
       sess.get '/api/v1/cluster/127.0.0.1/sessions'
