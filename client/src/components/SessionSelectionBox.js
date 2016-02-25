@@ -17,13 +17,13 @@ class SessionSelectionBox extends React.Component {
         className="static-selection-box"
         >
         <p>
-          {session.name}
+          <strong>{session.type}</strong> session running on <strong>{session.hostname}</strong>
         </p>
         <p>
-          Port: {session.port}
+          Display: {session.display}
         </p>
         <p>
-          [Session details to go here]
+          Websocket port: {session.websocket}
         </p>
         <Link to={sessionLink}>
           <ButtonInput

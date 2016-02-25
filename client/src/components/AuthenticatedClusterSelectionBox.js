@@ -21,7 +21,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         className="static-selection-box"
         >
         <p>
-          {cluster.name}
+          <strong>{cluster.name}</strong>
         </p>
         <p>
           IP: {cluster.ip}
