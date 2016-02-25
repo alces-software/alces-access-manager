@@ -214,6 +214,11 @@
           "from": "babel-runtime@>=5.0.0 <6.0.0",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
         },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+        },
         "minimatch": {
           "version": "2.0.10",
           "from": "minimatch@>=2.0.3 <3.0.0",
@@ -229,6 +234,11 @@
         "babel-runtime": {
           "version": "5.8.34",
           "from": "babel-runtime@>=5.0.0 <6.0.0"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -252,6 +262,11 @@
           "version": "5.8.34",
           "from": "babel-runtime@5.8.34",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -276,6 +291,11 @@
           "version": "5.8.34",
           "from": "babel-runtime@5.8.34",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -347,6 +367,11 @@
           "version": "5.8.34",
           "from": "babel-runtime@5.8.34",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -362,12 +387,26 @@
         "babel-traverse": {
           "version": "6.5.0",
           "from": "babel-traverse@>=6.4.5 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-traverse/-/babel-traverse-6.5.0.tgz"
+          "resolved": "https://registry.npmjs.org/babel-traverse/-/babel-traverse-6.5.0.tgz",
+          "dependencies": {
+            "lodash": {
+              "version": "3.10.1",
+              "from": "lodash@>=3.10.1 <4.0.0",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+            }
+          }
         },
         "babel-types": {
           "version": "6.5.1",
           "from": "babel-types@>=6.4.5 <7.0.0",
-          "resolved": "https://registry.npmjs.org/babel-types/-/babel-types-6.5.1.tgz"
+          "resolved": "https://registry.npmjs.org/babel-types/-/babel-types-6.5.1.tgz",
+          "dependencies": {
+            "lodash": {
+              "version": "3.10.1",
+              "from": "lodash@>=3.10.1 <4.0.0",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+            }
+          }
         },
         "babylon": {
           "version": "6.5.0",
@@ -539,6 +578,11 @@
           "version": "5.8.34",
           "from": "babel-runtime@5.8.34",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -833,6 +877,11 @@
         "babel-runtime": {
           "version": "5.8.34",
           "from": "babel-runtime@>=5.0.0 <6.0.0"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -850,6 +899,11 @@
           "version": "5.8.34",
           "from": "babel-runtime@5.8.34",
           "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.34.tgz"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -861,6 +915,11 @@
         "babel-runtime": {
           "version": "5.8.34",
           "from": "babel-runtime@>=5.0.0 <6.0.0"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -872,6 +931,11 @@
         "babel-runtime": {
           "version": "5.8.34",
           "from": "babel-runtime@>=5.0.0 <6.0.0"
+        },
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -2113,7 +2177,7 @@
     },
     "history": {
       "version": "1.17.0",
-      "from": "history@1.17.0",
+      "from": "history@>=1.11.0 <2.0.0",
       "resolved": "https://registry.npmjs.org/history/-/history-1.17.0.tgz"
     },
     "hoek": {
@@ -2679,9 +2743,9 @@
       "resolved": "https://registry.npmjs.org/loader-utils/-/loader-utils-0.2.12.tgz"
     },
     "lodash": {
-      "version": "3.10.1",
-      "from": "lodash@3.10.1",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+      "version": "4.5.1",
+      "from": "lodash@>=4.5.0 <4.6.0",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.5.1.tgz"
     },
     "lodash-es": {
       "version": "4.5.1",
@@ -3807,7 +3871,14 @@
     "react-element-to-jsx-string": {
       "version": "2.1.5",
       "from": "react-element-to-jsx-string@>=2.1.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/react-element-to-jsx-string/-/react-element-to-jsx-string-2.1.5.tgz"
+      "resolved": "https://registry.npmjs.org/react-element-to-jsx-string/-/react-element-to-jsx-string-2.1.5.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.10.1 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+        }
+      }
     },
     "react-flipcard": {
       "version": "0.2.1",
@@ -3854,7 +3925,14 @@
     "react-proxy": {
       "version": "1.1.2",
       "from": "react-proxy@>=1.1.1 <2.0.0",
-      "resolved": "https://registry.npmjs.org/react-proxy/-/react-proxy-1.1.2.tgz"
+      "resolved": "https://registry.npmjs.org/react-proxy/-/react-proxy-1.1.2.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.7.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+        }
+      }
     },
     "react-pure-render": {
       "version": "1.0.2",
@@ -3988,7 +4066,7 @@
     },
     "redux-form": {
       "version": "3.1.7",
-      "from": "redux-form@>=3.0.6 <4.0.0",
+      "from": "redux-form@>=3.1.7 <4.0.0",
       "resolved": "https://registry.npmjs.org/redux-form/-/redux-form-3.1.7.tgz"
     },
     "redux-logger": {
@@ -4128,7 +4206,14 @@
     "sass-graph": {
       "version": "2.0.1",
       "from": "sass-graph@>=2.0.1 <3.0.0",
-      "resolved": "https://registry.npmjs.org/sass-graph/-/sass-graph-2.0.1.tgz"
+      "resolved": "https://registry.npmjs.org/sass-graph/-/sass-graph-2.0.1.tgz",
+      "dependencies": {
+        "lodash": {
+          "version": "3.10.1",
+          "from": "lodash@>=3.8.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+        }
+      }
     },
     "sax": {
       "version": "1.1.4",
