@@ -27,7 +27,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
           IP: {cluster.ip}
         </p>
         <p>
-          [Cluster details to go here]
+          Logged in as <em>{cluster.authenticated_username}</em>
         </p>
         <Link to={clusterLink}>
           <Button
