@@ -47,10 +47,6 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions
-    # TODO: Need to store which cluster this authentication is for/ store
-    # authentications for different clusters for session independently -
-    # currently a user could get sessions for same username on a different
-    # cluster which they've not authenticated on after authenticating on.
     username = authentications[params[:ip]]
     unless username
       handle_error 'not_authenticated', :unauthorized and return
