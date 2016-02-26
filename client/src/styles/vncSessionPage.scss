@@ -1,24 +1,50 @@
 
 .vnc-container {
-    // Have container wrap contents.
-    display: inline-block;
+    // Center within page.
+    margin-left: auto;
+    margin-right: auto;
 
-    margin: 10px;
-    padding: 5px;
-    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    border-radius: 4px;
     background-color: white;
-    border: 1px solid #EEE;
+    border: 1px solid rgb(188, 232, 241);
 
     // TODO does this need vendor-prefixed versions too? - or need to add some
     // lib to do that?
-    box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
+    box-shadow: rem(2px) rem(2px) rem(8px) 0 #777;
+
+    max-width: 1024px;
+
+    // [From Portal] mjt - the consoleCell uses content-box to calculate its
+    // width as we like to be pixel-specific about the internal content (i.e.
+    // the size of the remote-framebuffer).
+    box-sizing: content-box !important;
+    overflow: hidden;
 }
 
 .vnc-button-toolbar {
-    margin: 5px;
+
+    // Padding around button groups.
+    padding-top: rem(3px);
+    padding-bottom: rem(3px);
+    .btn-group:first-child {
+        padding-left: rem(3px);
+    }
+
+    // Make buttons square-ish.
+    .btn {
+        padding: 6px;
+        height: 32px;
+        width: 30px;
+    }
 }
 
 .novnc {
-    // Make noVNC component slightly more defined.
-    border: 1px solid black;
+    // [From Portal] mjt - the consoleCell uses content-box to calculate its
+    // width as we like to be pixel-specific about the internal content (i.e.
+    // the size of the remote-framebuffer).
+    box-sizing: content-box !important;
+    overflow: hidden;
 }
