@@ -153,6 +153,16 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       get :sessions, ip: '127.0.0.1'
       assert_response :unauthorized
     end
+
+    test "returns error when Daemon not available" do
+      @controller.stubs(:sessions_for_response).raises(DaemonClient::ConnError)
+
+      mock_successful_authenticate
+
+      get :sessions, ip: '127.0.0.1'
+
+      assert_error_response :bad_gateway, 'daemon_unavailable'
+    end
   end
 
   private

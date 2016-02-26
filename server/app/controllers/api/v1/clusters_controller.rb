@@ -52,12 +52,15 @@ class Api::V1::ClustersController < ApplicationController
       handle_error 'not_authenticated', :unauthorized and return
     end
 
-    opts = {
-      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
-      :username => username
-    }
-    wrapper = DaemonClient::Wrapper.new(daemon, opts)
-    render json: wrapper.sessions_for(username)
+    begin
+      user_sessions = sessions_for_response(username)
+    rescue DaemonClient::ConnError => ex
+      logger.error ex
+      ex.backtrace.each { |line| logger.error line }
+      handle_error 'daemon_unavailable', :bad_gateway and return
+    end
+
+    render json: user_sessions
   end
 
   private
@@ -80,6 +83,15 @@ class Api::V1::ClustersController < ApplicationController
   def connection_opts
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
     cluster_config.slice(:ssl, :timeout).merge(address: cluster_daemon_address)
+  end
+
+  def sessions_for_response(username)
+    opts = {
+      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
+      :username => username
+    }
+    wrapper = DaemonClient::Wrapper.new(daemon, opts)
+    wrapper.sessions_for(username)
   end
 
   def config_file
