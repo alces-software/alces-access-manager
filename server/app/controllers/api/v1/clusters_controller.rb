@@ -1,6 +1,8 @@
 require 'yaml'
 
 class Api::V1::ClustersController < ApplicationController
+  rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
+
   def index
     clusters_config = overall_config[:clusters]
     clusters_config.each do |cluster|
@@ -28,17 +30,11 @@ class Api::V1::ClustersController < ApplicationController
       handle_error 'unknown_cluster', :not_found and return
     end
 
-    begin
-      if auth_response
-        authentications[params[:ip]] = params[:username]
-        render json: {success: true}
-      else
-        handle_error 'invalid_credentials', :unauthorized
-      end
-    rescue DaemonClient::ConnError => ex
-      logger.error ex
-      ex.backtrace.each { |line| logger.error line }
-      handle_error 'daemon_unavailable', :bad_gateway
+    if auth_response
+      authentications[params[:ip]] = params[:username]
+      render json: {success: true}
+    else
+      handle_error 'invalid_credentials', :unauthorized
     end
   end
 
@@ -52,18 +48,17 @@ class Api::V1::ClustersController < ApplicationController
       handle_error 'not_authenticated', :unauthorized and return
     end
 
-    begin
-      user_sessions = sessions_for_response(username)
-    rescue DaemonClient::ConnError => ex
-      logger.error ex
-      ex.backtrace.each { |line| logger.error line }
-      handle_error 'daemon_unavailable', :bad_gateway and return
-    end
-
+    user_sessions = sessions_for_response(username)
     render json: user_sessions
   end
 
   private
+
+  def daemon_connection_error_handler(exception)
+    logger.error exception
+    exception.backtrace.each { |line| logger.error line }
+    handle_error 'daemon_unavailable', :bad_gateway
+  end
 
   def authentications
     unless session[:authentications]
