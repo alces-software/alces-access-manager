@@ -12,7 +12,13 @@ import classNames from 'classnames';
 const iconNameToFontAwesomeProps = {
   "cluster": {name: "rocket"},
   "cluster-authenticating": {name: "spinner", spin: true},
-  "sessions-reload":    {name: "refresh"},
+  "sessions-reload": {name: "refresh"},
+  "vnc-volume-on": {name: "volume-up"},
+  "vnc-volume-off": {name: "volume-off"},
+  "vnc-copy": {name: "files-o"},
+  "vnc-paste": {name: "clipboard"},
+  "vnc-interactive": {name: "mouse-pointer"},
+  "vnc-drag-viewport": {name: "arrows"},
 }
 
 const faPropsForIconName = (iconName) => {
