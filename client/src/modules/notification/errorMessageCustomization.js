@@ -10,6 +10,7 @@ import React from 'react';
 import {ContactCustomerSupport} from 'components/CustomerSupport';
 
 import * as clusterActionTypes from 'clusters/actionTypes';
+import * as sessionActionTypes from 'sessions/actionTypes';
 import MessageGenerator from "./MessageGenerator";
 
 export const unexpectedErrorMessageGenerator = new MessageGenerator(
@@ -91,6 +92,21 @@ export function addActionTypeCustomizations(generatorsMap) {
     customizeMessage(
       502, // bad gateway - i.e. daemon not running/reachable.
       clusterActionTypes.AUTHENTICATE,
+      {
+        title: 'Daemon unavailable',
+        content: (
+          <div>
+            The Alces Access Manager Daemon did not respond, please
+            ensure the daemon is running and accessible to the Alces Access
+            Manager. <ContactCustomerSupport/>
+          </div>
+        ),
+      }
+    ).
+
+    customizeMessage(
+      502, // bad gateway - i.e. daemon not running/reachable.
+      sessionActionTypes.LOAD_SESSIONS,
       {
         title: 'Daemon unavailable',
         content: (
