@@ -1,0 +1,24 @@
+
+.vnc-container {
+    // Have container wrap contents.
+    display: inline-block;
+
+    margin: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid #EEE;
+
+    // TODO does this need vendor-prefixed versions too? - or need to add some
+    // lib to do that?
+    box-shadow: 7px 7px 7px 0px rgba(0,0,0,0.75);
+}
+
+.vnc-button-toolbar {
+    margin: 5px;
+}
+
+.novnc {
+    // Make noVNC component slightly more defined.
+    border: 1px solid black;
+}

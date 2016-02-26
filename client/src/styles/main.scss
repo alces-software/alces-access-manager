@@ -45,6 +45,7 @@ $popover-arrow-outer-color: fade_in($popover-border-color, 0.05);
 
 /* Access Manager styles */
 @import "./selectionPages.scss";
+@import "./vncSessionPage.scss";
 
 // TODO remove unneeded below for Access Manager.
 
