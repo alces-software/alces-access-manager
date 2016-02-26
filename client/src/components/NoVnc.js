@@ -4,8 +4,6 @@ import React from 'react';
 import noVNC from 'novnc-node';
 import $ from 'jquery';
 
-require('styles/NoVnc.scss');
-
 class NoVnc extends React.Component {
   render() {
     return (
