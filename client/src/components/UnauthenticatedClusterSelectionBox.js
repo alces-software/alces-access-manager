@@ -48,7 +48,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
           </div>
           <div className="flip-selection-box-back">
             <p>
-              {cluster.name}
+              <strong>{cluster.name}</strong>
             </p>
             <form onSubmit={handleSubmit(authenticateCluster)}>
               <Input placeholder="Username" type="text" {...username}/>
