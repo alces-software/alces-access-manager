@@ -23,43 +23,43 @@ export default class VncSessionPage extends React.Component {
     const interactiveTooltip = <Tooltip>Interactive mode</Tooltip>;
     const dragViewportTooltip = <Tooltip>Drag viewport mode</Tooltip>;
 
-      return (
-        <div className="container">
-          <div className="vnc-container">
-            <ButtonToolbar className="vnc-button-toolbar">
-              <OverlayTrigger placement="top" overlay={volumeTooltip}>
+    return (
+      <div className="container">
+        <div className="vnc-container">
+          <ButtonToolbar className="vnc-button-toolbar">
+            <OverlayTrigger placement="top" overlay={volumeTooltip}>
+              <Button>
+                <Icon name="vnc-volume-on"/>
+              </Button>
+            </OverlayTrigger>
+            <ButtonGroup>
+              <OverlayTrigger placement="top" overlay={copyTooltip}>
                 <Button>
-                  <Icon name="vnc-volume-on"/>
+                  <Icon name="vnc-copy"/>
                 </Button>
               </OverlayTrigger>
-              <ButtonGroup>
-                <OverlayTrigger placement="top" overlay={copyTooltip}>
-                  <Button>
-                    <Icon name="vnc-copy"/>
-                  </Button>
-                </OverlayTrigger>
-                <OverlayTrigger placement="top" overlay={pasteTooltip}>
-                  <Button>
-                    <Icon name="vnc-paste"/>
-                  </Button>
-                </OverlayTrigger>
-              </ButtonGroup>
-              <ButtonGroup>
-                <OverlayTrigger placement="top" overlay={interactiveTooltip}>
-                  <Button>
-                    <Icon name="vnc-interactive"/>
-                  </Button>
-                </OverlayTrigger>
-                <OverlayTrigger placement="top" overlay={dragViewportTooltip}>
-                  <Button>
-                    <Icon name="vnc-drag-viewport"/>
-                  </Button>
-                </OverlayTrigger>
-              </ButtonGroup>
-            </ButtonToolbar>
-            <NoVnc url={url} password={session.password}/>
-          </div>
+              <OverlayTrigger placement="top" overlay={pasteTooltip}>
+                <Button>
+                  <Icon name="vnc-paste"/>
+                </Button>
+              </OverlayTrigger>
+            </ButtonGroup>
+            <ButtonGroup>
+              <OverlayTrigger placement="top" overlay={interactiveTooltip}>
+                <Button>
+                  <Icon name="vnc-interactive"/>
+                </Button>
+              </OverlayTrigger>
+              <OverlayTrigger placement="top" overlay={dragViewportTooltip}>
+                <Button>
+                  <Icon name="vnc-drag-viewport"/>
+                </Button>
+              </OverlayTrigger>
+            </ButtonGroup>
+          </ButtonToolbar>
+          <NoVnc url={url} password={session.password}/>
         </div>
+      </div>
     );
   }
 }
