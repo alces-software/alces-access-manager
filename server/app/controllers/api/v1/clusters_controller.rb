@@ -38,7 +38,7 @@ class Api::V1::ClustersController < ApplicationController
     rescue DaemonClient::ConnError => ex
       logger.error ex
       ex.backtrace.each { |line| logger.error line }
-      handle_error 'daemon_unavailable', :forbidden
+      handle_error 'daemon_unavailable', :bad_gateway
     end
   end
 

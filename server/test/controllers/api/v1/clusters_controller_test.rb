@@ -100,7 +100,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       mock_authenticate_with_valid_login
 
-      assert_error_response :forbidden, 'daemon_unavailable'
+      assert_error_response :bad_gateway, 'daemon_unavailable'
     end
 
     test "returns error if not configured to authenticate with cluster at given IP" do
