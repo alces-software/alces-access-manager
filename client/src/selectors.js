@@ -5,7 +5,7 @@ import {createSelector} from 'reselect';
 // const clustersState = (state) => state.clusters;
 const sessionsState = (state) => state.sessions;
 
-function clusterFromRouteSelector(state) {
+export function clusterFromRouteSelector(state) {
   const clusterIp = state.router.params.clusterIp;
   return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
 }
