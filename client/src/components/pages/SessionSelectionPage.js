@@ -9,7 +9,12 @@ import Icon from 'components/Icon';
 
 export default class SessionSelectionPage extends React.Component {
   render() {
-    const {cluster, sessions, ui, loadSessions} = this.props;
+    const {
+      cluster,
+      loadSessions,
+      sessions,
+      ui: {loadingSessions},
+    } = this.props;
 
     // Declare this string separately so don't need to escape angle brackets
     // within JSX.
@@ -38,7 +43,7 @@ export default class SessionSelectionPage extends React.Component {
         </span>
     );
 
-    const reloadIconName = ui.loadingSessions ? "sessions-reloading" : "sessions-reload";
+    const reloadIconName = loadingSessions ? "sessions-reloading" : "sessions-reload";
 
     const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
     const header = (
@@ -50,6 +55,7 @@ export default class SessionSelectionPage extends React.Component {
             bsStyle="primary"
             className="sessions-reload-button"
             onClick={loadSessionsForCluster}
+            disabled={loadingSessions}
             >
             Refresh sessions&nbsp;
             <Icon name={reloadIconName} size="2x"/>
