@@ -16,9 +16,7 @@ import { Link } from 'react-router';
 // So we rename them here to `NavbarBrand` for instance.
 const {
   Brand:    NavbarBrand,
-  Collapse: NavbarCollapse,
   Header:   NavbarHeader,
-  Toggle:   NavbarToggle,
 } = Navbar;
 
 class Header extends React.Component {
@@ -27,17 +25,9 @@ class Header extends React.Component {
       <Navbar className="flight-Navbar" fluid fixedTop>
         <NavbarHeader>
           <NavbarBrand className="flight-Navbar-brand"><Link to="/">Alces Flight</Link></NavbarBrand>
-          <NavbarToggle/>
         </NavbarHeader>
-        <NavbarCollapse eventKey={0}>
-          {this.navbar()}
-        </NavbarCollapse>
       </Navbar>
     )
-  }
-
-  navbar() {
-    return null;
   }
 }
 
