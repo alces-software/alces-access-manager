@@ -21,8 +21,10 @@ export default class ClusterSelectionPage extends React.Component {
     }
 
     const clustersAvailableMessage = _.isEmpty(clusters) ?
-      `There are no clusters available within this environment, please
-       create a cluster within the environment to connect to.`
+      <strong>
+        There are no clusters available within this environment, please create
+        a cluster within the environment to connect to.
+      </strong>
     :
       `Select a cluster below to get started.`;
     const header = (

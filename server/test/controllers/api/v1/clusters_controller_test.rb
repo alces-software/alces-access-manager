@@ -43,6 +43,18 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       end.with_indifferent_access
       assert_equal expected_response, json_response
     end
+
+    test "returns empty array if clusters config empty" do
+      mock_config = {
+        clusters: nil
+      }
+      @controller.stubs(:load_config).returns(mock_config)
+
+      get :index
+
+      expected_response = {clusters: []}.with_indifferent_access
+      assert_equal expected_response, json_response
+    end
   end
 
   class AuthenticateTest < Api::V1::ClustersControllerTest

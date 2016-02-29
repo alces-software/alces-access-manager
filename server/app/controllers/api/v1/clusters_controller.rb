@@ -94,6 +94,12 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def overall_config
+    load_config.tap do |config|
+      config[:clusters] ||= []
+    end
+  end
+
+  def load_config
     @config ||= YAML.load_file(config_file).with_indifferent_access
   end
 
