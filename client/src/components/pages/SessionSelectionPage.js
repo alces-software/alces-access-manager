@@ -19,10 +19,16 @@ export default class SessionSelectionPage extends React.Component {
     // TODO: Display appropriate message if cluster not found.
     const headerMessage = _.isEmpty(sessions) ?
       <span>
-        You currently have no sessions running
-        on <em>{cluster && cluster.name}</em>, you'll need to sign in to your
-        environment and create a session to connect to (this can be done with
-        "{sessionStartCommand}").
+        <p>
+          <strong>
+            You currently have no sessions running
+            on <em>{cluster && cluster.name}</em>.
+          </strong>
+        </p>
+        <p>
+          You'll need to sign in to your environment and create a session to
+          connect to; this can be done with <code>{sessionStartCommand}</code>.
+        </p>
       </span>
     :
       <span>
