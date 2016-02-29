@@ -5,6 +5,7 @@
  *
  * All rights reserved, see LICENSE.txt.
  *===========================================================================*/
+import _ from 'lodash';
 import React from 'react';
 
 import {ContactCustomerSupport} from 'components/CustomerSupport';
@@ -87,37 +88,28 @@ export function addActionTypeCustomizations(generatorsMap) {
         content: `The provided username and/or password are incorrect for the
           selected cluster. Please correct these and try again.`,
       }
-    ).
-
-    customizeMessage(
-      502, // bad gateway - i.e. daemon not running/reachable.
-      clusterActionTypes.AUTHENTICATE,
-      {
-        title: 'Daemon unavailable',
-        content: (
-          <div>
-            The Alces Access Manager Daemon did not respond, please
-            ensure the daemon is running and accessible to the Alces Access
-            Manager. <ContactCustomerSupport/>
-          </div>
-        ),
-      }
-    ).
-
-    customizeMessage(
-      502, // bad gateway - i.e. daemon not running/reachable.
-      sessionActionTypes.LOAD_SESSIONS,
-      {
-        title: 'Daemon unavailable',
-        content: (
-          <div>
-            The Alces Access Manager Daemon did not respond, please
-            ensure the daemon is running and accessible to the Alces Access
-            Manager. <ContactCustomerSupport/>
-          </div>
-        ),
-      }
     );
+
+    const daemonUnavailableMessage = {
+      title: 'Daemon unavailable',
+      content: (
+        <div>
+          The Alces Access Manager Daemon did not respond, please
+          ensure the daemon is running and accessible to the Alces Access
+          Manager. <ContactCustomerSupport/>
+        </div>
+      ),
+    }
+
+    _.each(
+      [clusterActionTypes.AUTHENTICATE, sessionActionTypes.LOAD_SESSIONS],
+      (action) => {
+        generatorsMap.customizeMessage(
+          502, // bad gateway - i.e. daemon not running/reachable.
+          action,
+          daemonUnavailableMessage
+        );
+    });
 }
 
 
