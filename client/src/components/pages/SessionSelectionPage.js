@@ -13,10 +13,8 @@ export default class SessionSelectionPage extends React.Component {
 
     // Declare this string separately so don't need to escape angle brackets
     // within JSX.
-    // TODO: show this command as code.
     const sessionStartCommand = "alces session start <session type>";
 
-    // TODO: Display appropriate message if cluster not found.
     const headerMessage = _.isEmpty(sessions) ?
       <span>
         <p>
