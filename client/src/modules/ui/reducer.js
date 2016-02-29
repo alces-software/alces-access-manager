@@ -19,7 +19,10 @@ export default function reducer(state=initialState, action) {
     case sessionActionTypes.LOAD_SESSIONS:
       return {...state, loadingSessions: true}
 
+    // Stop session loading animation either after timeout, if sessions loaded
+    // successfully, or if load request fails.
     case actionTypes.STOP_SESSION_RELOAD_ANIMATION:
+    case reject(sessionActionTypes.LOAD_SESSIONS):
       return {...state, loadingSessions: false}
 
     default:
