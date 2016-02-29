@@ -16,7 +16,8 @@ function sessionsForCluster(cluster, allSessions) {
 }
 
 function sessionsForClusterWithIp(clusterIp, allSessions) {
-  return allSessions[clusterIp];
+  const clusterSessions = allSessions[clusterIp];
+  return clusterSessions ? clusterSessions : [];
 }
 
 export const sessionSelectionPageSelector = createSelector(
