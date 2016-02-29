@@ -15,14 +15,19 @@ import SessionSelectionPage from 'containers/SessionSelectionPageContainer';
 import VncSessionPage from 'containers/VncSessionPageContainer';
 import * as authorization from 'utils/authorization';
 
+const checkAuthenticatedForCluster = authorize(
+  authorization.authenticatedWithCurrentCluster,
+  authorization.redirectToClustersPage
+);
+
 const routes = <Route path="/" component={App}>
   <IndexRoute component={ClusterSelectionPage} />
 
-  <Route component={authorize(authorization.authenticatedWithCurrentCluster, authorization.redirectToClustersPage)}>
+  <Route component={checkAuthenticatedForCluster}>
     <Route path="cluster/:clusterIp" component={SessionSelectionPage} />
   </Route>
 
-  <Route component={authorize(authorization.authenticatedWithCurrentCluster, authorization.redirectToClustersPage)}>
+  <Route component={checkAuthenticatedForCluster}>
     <Route path="cluster/:clusterIp/session/:sessionPort" component={VncSessionPage} />
   </Route>
 
