@@ -1,8 +1,9 @@
 
 import * as actionTypes from './actionTypes';
+import * as uiActions from 'ui/actions';
 
 export function loadSessions(clusterIp) {
-  return {
+  const loadSessionsRequest = {
     type: actionTypes.LOAD_SESSIONS,
     meta: {
       apiRequest: {
@@ -15,5 +16,18 @@ export function loadSessions(clusterIp) {
     payload: {
       clusterIp,
     },
+  };
+
+  // After received response to request, dispatch action to stop animation
+  // after a timeout; this stops the animation being jarring if the request and
+  // response time is very short.
+  return (dispatch) => {
+    return dispatch(loadSessionsRequest).
+      then( () => {
+      setTimeout(
+        () => dispatch(uiActions.stopSessionReloadAnimation()),
+        1000
+      );
+    });
   }
 }

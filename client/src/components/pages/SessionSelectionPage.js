@@ -9,32 +9,41 @@ import Icon from 'components/Icon';
 
 export default class SessionSelectionPage extends React.Component {
   render() {
-    const {cluster, sessions, loadSessions} = this.props;
+    const {
+      cluster,
+      loadSessions,
+      sessions,
+      ui: {loadingSessions},
+    } = this.props;
 
     // Declare this string separately so don't need to escape angle brackets
     // within JSX.
-    // TODO: show this command as code.
     const sessionStartCommand = "alces session start <session type>";
 
-    // TODO: Display appropriate message if cluster not found.
     const headerMessage = _.isEmpty(sessions) ?
-      <span>
-        <p>
-          <strong>
-            You currently have no sessions running
-            on <em>{cluster && cluster.name}</em>.
-          </strong>
-        </p>
-        <p>
-          You'll need to sign in to your environment and create a session to
-          connect to; this can be done with <code>{sessionStartCommand}</code>.
-        </p>
-      </span>
+      (
+        <span>
+          <p>
+            <strong>
+              You currently have no sessions running
+              on <em>{cluster && cluster.name}</em>.
+            </strong>
+          </p>
+          <p>
+            You'll need to sign in to your environment and create a session to
+            connect to; this can be done with <code>{sessionStartCommand}</code>.
+          </p>
+        </span>
+    )
     :
-      <span>
-        Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
-        a session to connect to below.
-      </span>
+      (
+        <span>
+          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
+          a session to connect to below.
+        </span>
+    );
+
+    const reloadIconName = loadingSessions ? "sessions-reloading" : "sessions-reload";
 
     const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
     const header = (
@@ -46,9 +55,10 @@ export default class SessionSelectionPage extends React.Component {
             bsStyle="primary"
             className="sessions-reload-button"
             onClick={loadSessionsForCluster}
+            disabled={loadingSessions}
             >
             Refresh sessions&nbsp;
-            <Icon name="sessions-reload" size="2x"/>
+            <Icon name={reloadIconName} size="2x"/>
           </Button>
         </span>
       </p>
