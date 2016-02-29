@@ -4,9 +4,10 @@ import {createSelector} from 'reselect';
 
 // const clustersState = (state) => state.clusters;
 const sessionsState = (state) => state.sessions;
+const uiState = (state) => state.ui;
 
-function clusterFromRouteSelector(state, props) {
-  const clusterIp = props.routeParams.clusterIp;
+export function clusterFromRouteSelector(state) {
+  const clusterIp = state.router.params.clusterIp;
   return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
 }
 
@@ -27,8 +28,8 @@ export const sessionSelectionPageSelector = createSelector(
   }
 );
 
-function sessionFromRouteSelector(state, props) {
-  const {clusterIp, sessionPort} = props.routeParams;
+function sessionFromRouteSelector(state) {
+  const {clusterIp, sessionPort} = state.router.params;
   const clusterSessions = sessionsForClusterWithIp(clusterIp, state.sessions);
   return _.find(clusterSessions, (session) => session.port == sessionPort);
 }
@@ -55,10 +56,12 @@ const notificationsSelector = createSelector(
 
 export const appSelector = createSelector(
   notificationsSelector,
+  uiState,
 
-  (notifications) => {
+  (notifications, ui) => {
     return {
       notifications,
+      ui,
     }
   }
 );

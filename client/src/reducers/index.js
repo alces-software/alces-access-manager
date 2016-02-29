@@ -14,6 +14,7 @@ import { routerStateReducer } from 'redux-router';
 
 import clusters from 'clusters/reducer';
 import environment from 'environment/reducer';
+import ui from 'ui/reducer';
 import notifications from 'notification/reducer';
 import sessions from 'sessions/reducer';
 
@@ -25,6 +26,7 @@ const unpreservedStateReducers = {
   clusters,
   environment,
   form,
+  ui,
   notifications,
   sessions,
 };
