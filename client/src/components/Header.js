@@ -6,19 +6,17 @@
  * All rights reserved, see LICENSE.txt.
  *===========================================================================*/
 import React from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router';
 
-// import Icon from 'components/Icon';
+import {NavItemLink} from 'components/Links';
 
 // Make Babel optimizations happy.  One of the optimization plugins we use for
 // production builds doesn't like the use of `Navbar.Brand` in JSX elements.
 // So we rename them here to `NavbarBrand` for instance.
 const {
   Brand:    NavbarBrand,
-  Collapse: NavbarCollapse,
   Header:   NavbarHeader,
-  Toggle:   NavbarToggle,
 } = Navbar;
 
 class Header extends React.Component {
@@ -26,18 +24,17 @@ class Header extends React.Component {
     return (
       <Navbar className="flight-Navbar" fluid fixedTop>
         <NavbarHeader>
-          <NavbarBrand className="flight-Navbar-brand"><Link to="/">Alces Flight</Link></NavbarBrand>
-          <NavbarToggle/>
+          <NavbarBrand className="flight-Navbar-brand">
+            <Link to="/"/>
+          </NavbarBrand>
         </NavbarHeader>
-        <NavbarCollapse eventKey={0}>
-          {this.navbar()}
-        </NavbarCollapse>
+        <Nav>
+          <NavItemLink to="/">
+            Alces Access Manager
+          </NavItemLink>
+        </Nav>
       </Navbar>
     )
-  }
-
-  navbar() {
-    return null;
   }
 }
 
