@@ -8,7 +8,7 @@ class ToolbarButton extends React.Component {
   render() {
     const {iconName, tooltip} = this.props;
 
-    const tooltipElement = <Tooltip>{tooltip}</Tooltip>;
+    const tooltipElement = <Tooltip id={iconName}>{tooltip}</Tooltip>;
 
     return (
       <OverlayTrigger placement="top" overlay={tooltipElement}>
