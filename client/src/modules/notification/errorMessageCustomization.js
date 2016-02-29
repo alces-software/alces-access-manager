@@ -5,11 +5,13 @@
  *
  * All rights reserved, see LICENSE.txt.
  *===========================================================================*/
+import _ from 'lodash';
 import React from 'react';
 
 import {ContactCustomerSupport} from 'components/CustomerSupport';
 
 import * as clusterActionTypes from 'clusters/actionTypes';
+import * as sessionActionTypes from 'sessions/actionTypes';
 import MessageGenerator from "./MessageGenerator";
 
 export const unexpectedErrorMessageGenerator = new MessageGenerator(
@@ -51,11 +53,20 @@ export function setupDefaultErrorMessageGenerators(generatorsMap) {
     </div>
   );
 
+  // Any bad gateway response that we have not planned for is an unexpected
+  // error, so display the standard message.
+  // TODO: this is needed in order to override the message for this status code
+  // for particular actions below - maybe it would be better if we were able to
+  // customize error messages without needing to specify a default, and have
+  // the unexpected error message as the default default?
+  const badGatewayErrorMessageGenerator = unexpectedErrorMessageGenerator;
+
   generatorsMap.
     addGeneratorForCode(0,   serverUnavailableErrorMessageGenerator).
     addGeneratorForCode(401, unauthorizedErrorMessageGenerator).
     addGeneratorForCode(422, unprocessableEntityErrorMessageGenerator).
     addGeneratorForCode(500, serverErrorMessageGenerator).
+    addGeneratorForCode(502, badGatewayErrorMessageGenerator).
     addUnexpectedGenerator(unexpectedErrorMessageGenerator);
 }
 
@@ -77,7 +88,28 @@ export function addActionTypeCustomizations(generatorsMap) {
         content: `The provided username and/or password are incorrect for the
           selected cluster. Please correct these and try again.`,
       }
-  );
+    );
+
+    const daemonUnavailableMessage = {
+      title: 'Daemon unavailable',
+      content: (
+        <div>
+          The Alces Access Manager Daemon did not respond, please
+          ensure the daemon is running and accessible to the Alces Access
+          Manager. <ContactCustomerSupport/>
+        </div>
+      ),
+    }
+
+    _.each(
+      [clusterActionTypes.AUTHENTICATE, sessionActionTypes.LOAD_SESSIONS],
+      (action) => {
+        generatorsMap.customizeMessage(
+          502, // bad gateway - i.e. daemon not running/reachable.
+          action,
+          daemonUnavailableMessage
+        );
+    });
 }
 
 

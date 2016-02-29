@@ -100,7 +100,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       mock_authenticate_with_valid_login
 
-      assert_error_response :forbidden, 'daemon_unavailable'
+      assert_error_response :bad_gateway, 'daemon_unavailable'
     end
 
     test "returns error if not configured to authenticate with cluster at given IP" do
@@ -152,6 +152,16 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     test "returns error if unauthenticated" do
       get :sessions, ip: '127.0.0.1'
       assert_response :unauthorized
+    end
+
+    test "returns error when Daemon not available" do
+      @controller.stubs(:sessions_for_response).raises(DaemonClient::ConnError)
+
+      mock_successful_authenticate
+
+      get :sessions, ip: '127.0.0.1'
+
+      assert_error_response :bad_gateway, 'daemon_unavailable'
     end
   end
 
