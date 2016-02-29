@@ -22,7 +22,7 @@ export default class SessionSelectionPage extends React.Component {
 
     const headerMessage = _.isEmpty(sessions) ?
       (
-        <span>
+        <div>
           <p>
             <strong>
               You currently have no sessions running
@@ -33,24 +33,23 @@ export default class SessionSelectionPage extends React.Component {
             You'll need to sign in to your environment and create a session to
             connect to; this can be done with <code>{sessionStartCommand}</code>.
           </p>
-        </span>
+        </div>
     )
     :
       (
-        <span>
+        <p>
           Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
           a session to connect to below.
-        </span>
+        </p>
     );
 
     const reloadIconName = loadingSessions ? "sessions-reloading" : "sessions-reload";
 
     const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
     const header = (
-      <p>
+      <div>
         {headerMessage}
-        &nbsp;
-        <span>
+        <p>
           <Button
             bsStyle="primary"
             className="sessions-reload-button"
@@ -60,8 +59,8 @@ export default class SessionSelectionPage extends React.Component {
             Refresh sessions&nbsp;
             <Icon name={reloadIconName} size="2x"/>
           </Button>
-        </span>
-      </p>
+        </p>
+      </div>
     );
 
     const selectionBoxProps = {cluster};
