@@ -5,8 +5,8 @@ import {createSelector} from 'reselect';
 // const clustersState = (state) => state.clusters;
 const sessionsState = (state) => state.sessions;
 
-function clusterFromRouteSelector(state, props) {
-  const clusterIp = props.routeParams.clusterIp;
+function clusterFromRouteSelector(state) {
+  const clusterIp = state.router.params.clusterIp;
   return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
 }
 
@@ -27,8 +27,8 @@ export const sessionSelectionPageSelector = createSelector(
   }
 );
 
-function sessionFromRouteSelector(state, props) {
-  const {clusterIp, sessionPort} = props.routeParams;
+function sessionFromRouteSelector(state) {
+  const {clusterIp, sessionPort} = state.router.params;
   const clusterSessions = sessionsForClusterWithIp(clusterIp, state.sessions);
   return _.find(clusterSessions, (session) => session.port == sessionPort);
 }
