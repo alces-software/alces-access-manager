@@ -16,23 +16,29 @@ export default class SessionSelectionPage extends React.Component {
     const sessionStartCommand = "alces session start <session type>";
 
     const headerMessage = _.isEmpty(sessions) ?
-      <span>
-        <p>
-          <strong>
-            You currently have no sessions running
-            on <em>{cluster && cluster.name}</em>.
-          </strong>
-        </p>
-        <p>
-          You'll need to sign in to your environment and create a session to
-          connect to; this can be done with <code>{sessionStartCommand}</code>.
-        </p>
-      </span>
+      (
+        <span>
+          <p>
+            <strong>
+              You currently have no sessions running
+              on <em>{cluster && cluster.name}</em>.
+            </strong>
+          </p>
+          <p>
+            You'll need to sign in to your environment and create a session to
+            connect to; this can be done with <code>{sessionStartCommand}</code>.
+          </p>
+        </span>
+    )
     :
-      <span>
-        Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
-        a session to connect to below.
-      </span>
+      (
+        <span>
+          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
+          a session to connect to below.
+        </span>
+    );
+
+    const reloadIconName = ui.loadingSessions ? "sessions-reloading" : "sessions-reload";
 
     const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
     const header = (
