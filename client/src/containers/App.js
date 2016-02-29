@@ -43,16 +43,14 @@ class App extends React.Component {
   }
 
   page() {
-    // const {loading: {loaded}} = this.props;
+    const {ui: {loaded}} = this.props;
 
     let key;
-    // if (loaded) {
-    key = this.props.location.pathname;
-    // } else {
-    //   key = 'loadingPage';
-    // }
-
-    const loaded = true;
+    if (loaded) {
+      key = this.props.location.pathname;
+    } else {
+      key = 'loadingPage';
+    }
 
     return (
       <ReactCSSTransitionGroup

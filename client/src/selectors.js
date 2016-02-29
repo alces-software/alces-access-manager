@@ -4,6 +4,7 @@ import {createSelector} from 'reselect';
 
 // const clustersState = (state) => state.clusters;
 const sessionsState = (state) => state.sessions;
+const uiState = (state) => state.ui;
 
 export function clusterFromRouteSelector(state) {
   const clusterIp = state.router.params.clusterIp;
@@ -55,10 +56,12 @@ const notificationsSelector = createSelector(
 
 export const appSelector = createSelector(
   notificationsSelector,
+  uiState,
 
-  (notifications) => {
+  (notifications, ui) => {
     return {
       notifications,
+      ui,
     }
   }
 );
