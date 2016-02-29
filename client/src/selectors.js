@@ -22,9 +22,14 @@ function sessionsForClusterWithIp(clusterIp, allSessions) {
 export const sessionSelectionPageSelector = createSelector(
   clusterFromRouteSelector,
   sessionsState,
-  (cluster, allSessions) => {
+  uiState,
+  (cluster, allSessions, ui) => {
     const sessions = sessionsForCluster(cluster, allSessions);
-    return {cluster, sessions};
+    return {
+      cluster,
+      sessions,
+      ui,
+    };
   }
 );
 

@@ -13,6 +13,7 @@ const iconNameToFontAwesomeProps = {
   "cluster": {name: "rocket"},
   "cluster-authenticating": {name: "spinner", spin: true},
   "sessions-reload": {name: "refresh"},
+  "sessions-reloading": {name: "refresh", spin: true},
   "vnc-volume-on": {name: "volume-up"},
   "vnc-volume-off": {name: "volume-off"},
   "vnc-copy": {name: "files-o"},
