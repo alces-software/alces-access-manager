@@ -7,11 +7,14 @@ import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class ClusterSelectionBox extends React.Component {
   render() {
-    const {authenticate, form, item} = this.props;
+    const {authenticate, form, item, logout} = this.props;
     const cluster = item;
 
     if (cluster.authenticated_username) {
-      return <AuthenticatedClusterSelectionBox cluster={cluster}/>
+      return <AuthenticatedClusterSelectionBox
+        cluster={cluster}
+        logout={logout}
+      />
     }
     else {
       return <UnauthenticatedClusterSelectionBox
