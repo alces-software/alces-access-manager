@@ -34,7 +34,7 @@ export const sessionSelectionPageSelector = createSelector(
   }
 );
 
-function sessionFromRouteSelector(state) {
+export function sessionFromRouteSelector(state) {
   const {clusterIp, sessionPort} = state.router.params;
   const clusterSessions = sessionsForClusterWithIp(clusterIp, state.sessions);
   return _.find(clusterSessions, (session) => session.port == sessionPort);

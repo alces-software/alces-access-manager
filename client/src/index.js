@@ -12,13 +12,13 @@ import { ReduxRouter } from 'redux-router';
 
 import DevTools from 'containers/DevTools';
 
-import {loadClusters} from 'clusters/actions';
+import {loadSessionData} from 'ui/actions';
 import configureStore from 'store/configureStore';
 import routes from 'routes';
 
 const store = configureStore();
 
-store.dispatch(loadClusters());
+store.dispatch(loadSessionData());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -24,14 +24,16 @@ export function authorize(authorizationFunction, authorizationFailedHandler) {
       this.handleIfUnauthorized();
     }
 
-    componentWillReceiveProps(nextProps) {
-      const authChanged = this.props.auth !== nextProps.auth;
-      const envsChanged = this.props.environments !== nextProps.environments;
+    // TODO: This does not make sense in AAM as refers to Aviator state -
+    // remove or adapt this?
+    // componentWillReceiveProps(nextProps) {
+    //   const authChanged = this.props.auth !== nextProps.auth;
+    //   const envsChanged = this.props.environments !== nextProps.environments;
 
-      if (authChanged || envsChanged) {
-        this.handleIfUnauthorized();
-      }
-    }
+    //   if (authChanged || envsChanged) {
+    //     this.handleIfUnauthorized();
+    //   }
+    // }
 
     handleIfUnauthorized() {
       if (!this.authorized()) {
@@ -51,6 +53,7 @@ export function authorize(authorizationFunction, authorizationFailedHandler) {
   const mapStateToProps = (state) => ({
     clusters: state.clusters,
     router: state.router,
+    sessions: state.sessions,
   });
 
   return connect(mapStateToProps)(AuthorizedComponent);
