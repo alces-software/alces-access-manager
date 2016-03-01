@@ -11,9 +11,9 @@ export default class SessionSelectionPage extends React.Component {
   render() {
     const {
       cluster,
-      loadSessions,
+      reloadSessions,
       sessions,
-      ui: {loadingSessions},
+      ui: {reloadingSessions},
     } = this.props;
 
     // Declare this string separately so don't need to escape angle brackets
@@ -43,9 +43,9 @@ export default class SessionSelectionPage extends React.Component {
         </p>
     );
 
-    const reloadIconName = loadingSessions ? "sessions-reloading" : "sessions-reload";
+    const reloadIconName = reloadingSessions ? "sessions-reloading" : "sessions-reload";
 
-    const loadSessionsForCluster = _.partial(loadSessions, cluster.ip);
+    const reloadSessionsForCluster = _.partial(reloadSessions, cluster.ip);
     const header = (
       <div>
         {headerMessage}
@@ -53,8 +53,8 @@ export default class SessionSelectionPage extends React.Component {
           <Button
             bsStyle="primary"
             className="sessions-reload-button"
-            onClick={loadSessionsForCluster}
-            disabled={loadingSessions}
+            onClick={reloadSessionsForCluster}
+            disabled={reloadingSessions}
             >
             Refresh sessions&nbsp;
             <Icon name={reloadIconName} size="2x"/>
