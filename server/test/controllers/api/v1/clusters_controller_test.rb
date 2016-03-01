@@ -3,6 +3,7 @@ require 'yaml'
 require 'test_helper'
 
 class Api::V1::ClustersControllerTest < ActionController::TestCase
+  # TODO: look through and reduce test duplication.
 
   class IndexTest < Api::V1::ClustersControllerTest
     # TODO: change this, will currently return whole config (is that what we want?)
@@ -125,23 +126,8 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     end
 
     test "can authenticate with multiple clusters and have authentications remembered" do
-      # Stub these methods so config doesn't need to contain these clusters and
-      # no auth request actually made.
-      [:cluster_config, :auth_response].map do |method|
-        @controller.stubs(method).returns(true)
-      end
-
-      auths = [
-        {ip: '10.10.10.1', username: 'user1'},
-        {ip: '10.10.10.2', username: 'user2'},
-      ]
-
-      auths.map do |auth|
-        post :authenticate,
-          ip: auth[:ip],
-          username: auth[:username],
-          password: 'password'
-      end
+      mock_two_successful_auths
+      auths = two_successful_auths_data
 
       assert_equal Hash[
         auths[0][:ip] => auths[0][:username],
@@ -151,12 +137,16 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   class LogoutTest < Api::V1::ClustersControllerTest
-    test "clears session when logout" do
-      mock_successful_authenticate
+    test "clears requested user when logout" do
+      mock_two_successful_auths
+      auths = two_successful_auths_data
 
-      post :logout
+      post :logout, ip: auths[0][:ip]
+
       assert_response :success
-      assert_empty session
+      assert_equal Hash[
+        auths[1][:ip] => auths[1][:username],
+      ], session[:authentications]
     end
   end
 
@@ -178,6 +168,29 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   private
+
+  def mock_two_successful_auths
+    # Stub these methods so config doesn't need to contain these clusters and
+    # no auth request actually made.
+    [:cluster_config, :auth_response].map do |method|
+      @controller.stubs(method).returns(true)
+    end
+
+
+    two_successful_auths_data.map do |auth|
+      post :authenticate,
+        ip: auth[:ip],
+        username: auth[:username],
+        password: 'password'
+    end
+  end
+
+  def two_successful_auths_data
+    [
+      {ip: '10.10.10.1', username: 'user1'},
+      {ip: '10.10.10.2', username: 'user2'},
+    ]
+  end
 
   def mock_config_file
     @controller.stubs(:config_file).returns(sample_config_file_path)

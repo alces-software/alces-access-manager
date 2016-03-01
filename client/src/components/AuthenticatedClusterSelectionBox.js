@@ -1,20 +1,24 @@
 
+import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {Link} from 'react-router';
 
 import Icon from 'components/Icon';
+import {ButtonLink} from 'components/Links';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
-    const {cluster} = this.props;
+    const {cluster, logout} = this.props;
 
-    const buttonText = (
+    const clusterLink = `/cluster/${cluster.ip}`;
+
+    const ButtonContent = ({text, iconName}) => (
       <span>
-        View&nbsp;&nbsp;<Icon name="cluster"/>
+        {text}&nbsp;&nbsp;<Icon name={iconName}/>
       </span>
     );
-    const clusterLink = `/cluster/${cluster.ip}`;
+
+    const logoutCluster = _.partial(logout, cluster.ip);
 
     return (
       <div
@@ -29,15 +33,22 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <Link to={clusterLink}>
-          <Button
-            className="selection-box-button"
-            type="button"
-            bsStyle="success"
-            >
-            {buttonText}
-          </Button>
-        </Link>
+        <ButtonLink
+          bsStyle="success"
+          className="selection-box-button"
+          to={clusterLink}
+          type="button"
+          >
+          <ButtonContent text="View" iconName="cluster"/>
+        </ButtonLink>
+        <Button
+          bsStyle="info"
+          className="selection-box-button"
+          onClick={logoutCluster}
+          type="button"
+          >
+          <ButtonContent text="Change User" iconName="cluster-logout"/>
+        </Button>
       </div>
     );
   }

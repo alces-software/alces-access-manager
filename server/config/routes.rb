@@ -7,11 +7,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
 
-      resources :clusters, only: [:index] do
-        collection do
-          post :logout
-        end
-      end
+      resources :clusters, only: [:index]
+
       post 'cluster/:ip/authenticate',
         to: 'clusters#authenticate',
         constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
@@ -20,6 +17,9 @@ Rails.application.routes.draw do
         to: 'clusters#sessions',
         constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
 
+      post 'cluster/:ip/logout',
+        to: 'clusters#logout',
+        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
     end
   end
 

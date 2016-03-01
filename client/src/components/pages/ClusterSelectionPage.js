@@ -11,12 +11,12 @@ export default class ClusterSelectionPage extends React.Component {
   }
 
   render() {
-    const {clusters, environment, authenticate} = this.props;
+    const {clusters, environment, authenticate, logout} = this.props;
 
     const clusterSelectionBoxProps = (cluster) => {
       const form = `authenticate-cluster-${cluster.ip}`;
       return {
-        authenticate, form,
+        authenticate, form, logout,
       }
     }
 

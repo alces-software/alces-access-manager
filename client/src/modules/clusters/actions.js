@@ -43,3 +43,20 @@ export function authenticate(ip, {username, password}) {
     });
   };
 }
+
+export function logout(ip) {
+  return {
+    type: actionTypes.LOGOUT,
+    payload: {
+      ip,
+    },
+    meta: {
+      apiRequest: {
+        config: {
+          url: `/api/v1/cluster/${ip}/logout`,
+          method: 'post',
+        },
+      },
+    },
+  };
+}

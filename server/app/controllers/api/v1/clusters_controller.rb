@@ -39,7 +39,7 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def logout
-    reset_session
+    authentications.delete(params[:ip])
   end
 
   def sessions
