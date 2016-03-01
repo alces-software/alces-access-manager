@@ -151,12 +151,31 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   end
 
   class LogoutTest < Api::V1::ClustersControllerTest
-    test "clears session when logout" do
-      mock_successful_authenticate
+    test "clears requested user when logout" do
+      # Stub these methods so config doesn't need to contain these clusters and
+      # no auth request actually made.
+      [:cluster_config, :auth_response].map do |method|
+        @controller.stubs(method).returns(true)
+      end
 
-      post :logout
+      auths = [
+        {ip: '10.10.10.1', username: 'user1'},
+        {ip: '10.10.10.2', username: 'user2'},
+      ]
+
+      auths.map do |auth|
+        post :authenticate,
+          ip: auth[:ip],
+          username: auth[:username],
+          password: 'password'
+      end
+
+      post :logout, ip: auths[0][:ip]
+
       assert_response :success
-      assert_empty session
+      assert_equal Hash[
+        auths[1][:ip] => auths[1][:username],
+      ], session[:authentications]
     end
   end
 
