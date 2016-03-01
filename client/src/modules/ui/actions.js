@@ -11,16 +11,35 @@ export function stopSessionReloadAnimation() {
   }
 }
 
+function startLoadSessionData() {
+  return {
+    type: actionTypes.LOAD_SESSION_DATA,
+  }
+}
+
+function finishLoadSessionData() {
+  return {
+    type: actionTypes.LOAD_SESSION_DATA_COMPLETE,
+  }
+}
+
 export function loadSessionData() {
   return (dispatch) => {
-    dispatch(loadClusters()).
-      then( (result) => {
-        const clusters = result.clusters;
-        _.map(clusters, (cluster) => {
-          if (cluster.authenticated_username) {
-            dispatch(loadSessions(cluster.ip));
-          }
-        });
-    });
+    dispatch(startLoadSessionData());
+
+    return dispatch(
+      loadClusters()
+
+    ).then( (result) => {
+      const clusters = result.clusters;
+      const authenticatedClusters = _.filter(clusters, (cluster) => cluster.authenticated_username);
+      return Promise.all(
+        _.map(authenticatedClusters,
+              (cluster) => dispatch(loadSessions(cluster.ip))
+             )
+      );
+
+    }).then( () => dispatch(finishLoadSessionData()));
+    // TODO: error handling?
   }
 }

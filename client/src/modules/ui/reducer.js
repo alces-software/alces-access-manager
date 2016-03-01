@@ -1,8 +1,7 @@
 
-import {resolve, reject} from 'redux-simple-promise';
+import {reject} from 'redux-simple-promise';
 
 import * as actionTypes from './actionTypes';
-import * as clusterActionTypes from 'clusters/actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';
 
 const initialState = {
@@ -12,8 +11,7 @@ const initialState = {
 export default function reducer(state=initialState, action) {
   switch (action.type) {
 
-    case resolve(clusterActionTypes.LOAD_CLUSTERS):
-    case reject(clusterActionTypes.LOAD_CLUSTERS):
+    case actionTypes.LOAD_SESSION_DATA_COMPLETE:
       return {...state, loaded: true};
 
     case sessionActionTypes.RELOAD_SESSIONS:
