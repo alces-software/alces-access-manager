@@ -25,21 +25,24 @@ function finishLoadSessionData() {
 
 export function loadSessionData() {
   return (dispatch) => {
-    dispatch(startLoadSessionData());
-
-    return dispatch(
-      loadClusters()
-
-    ).then( (result) => {
-      const clusters = result.clusters;
+    const loadAuthenticatedClusterSessions = (clusters) => {
       const authenticatedClusters = _.filter(clusters, (cluster) => cluster.authenticated_username);
       return Promise.all(
         _.map(authenticatedClusters,
               (cluster) => dispatch(loadSessions(cluster.ip))
              )
       );
+    }
 
-    }).then( () => dispatch(finishLoadSessionData()));
+    dispatch(startLoadSessionData());
+
+    return dispatch(
+      loadClusters()
+    ).then( ({clusters}) =>
+      loadAuthenticatedClusterSessions(clusters)
+    ).then( () => dispatch(
+      finishLoadSessionData()
+    ));
     // TODO: error handling?
   }
 }
