@@ -9,12 +9,17 @@ class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
     const {cluster} = this.props;
 
-    const buttonText = (
+    const clusterLink = `/cluster/${cluster.ip}`;
+    const submitButtonText = (
       <span>
         View&nbsp;&nbsp;<Icon name="cluster"/>
       </span>
     );
-    const clusterLink = `/cluster/${cluster.ip}`;
+    const logoutButtonText = (
+      <span>
+        Change User&nbsp;&nbsp;<Icon name="cluster-logout"/>
+      </span>
+    );
 
     return (
       <div
@@ -35,9 +40,16 @@ class AuthenticatedClusterSelectionBox extends React.Component {
             type="button"
             bsStyle="success"
             >
-            {buttonText}
+            {submitButtonText}
           </Button>
         </Link>
+        <Button
+          className="selection-box-button"
+          type="button"
+          bsStyle="info"
+          >
+          {logoutButtonText}
+        </Button>
       </div>
     );
   }
