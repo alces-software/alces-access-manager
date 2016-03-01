@@ -53,6 +53,7 @@ export function authorize(authorizationFunction, authorizationFailedHandler) {
   const mapStateToProps = (state) => ({
     clusters: state.clusters,
     router: state.router,
+    sessions: state.sessions,
   });
 
   return connect(mapStateToProps)(AuthorizedComponent);

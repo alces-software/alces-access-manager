@@ -20,6 +20,11 @@ const checkAuthenticatedForCluster = authorize(
   authorization.redirectToClustersPage
 );
 
+const checkSessionExists = authorize(
+  authorization.currentSessionExists,
+  authorization.redirectToSessionsPage
+);
+
 const routes = <Route path="/" component={App}>
   <IndexRoute component={ClusterSelectionPage} />
 
@@ -28,7 +33,9 @@ const routes = <Route path="/" component={App}>
   </Route>
 
   <Route component={checkAuthenticatedForCluster}>
-    <Route path="cluster/:clusterIp/session/:sessionPort" component={VncSessionPage} />
+    <Route component={checkSessionExists}>
+      <Route path="cluster/:clusterIp/session/:sessionPort" component={VncSessionPage} />
+    </Route>
   </Route>
 
   <Redirect from="*" to="/" />
