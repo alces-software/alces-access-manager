@@ -1,23 +1,19 @@
 
 import React from 'react';
 import {Button} from 'react-bootstrap';
-import {Link} from 'react-router';
 
 import Icon from 'components/Icon';
+import {ButtonLink} from 'components/Links';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
     const {cluster} = this.props;
 
     const clusterLink = `/cluster/${cluster.ip}`;
-    const submitButtonText = (
+
+    const ButtonContent = ({text, iconName}) => (
       <span>
-        View&nbsp;&nbsp;<Icon name="cluster"/>
-      </span>
-    );
-    const logoutButtonText = (
-      <span>
-        Change User&nbsp;&nbsp;<Icon name="cluster-logout"/>
+        {text}&nbsp;&nbsp;<Icon name={iconName}/>
       </span>
     );
 
@@ -34,21 +30,20 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <Link to={clusterLink}>
-          <Button
-            className="selection-box-button"
-            type="button"
-            bsStyle="success"
-            >
-            {submitButtonText}
-          </Button>
-        </Link>
+        <ButtonLink
+          bsStyle="success"
+          className="selection-box-button"
+          to={clusterLink}
+          type="button"
+          >
+          <ButtonContent text="View" iconName="cluster"/>
+        </ButtonLink>
         <Button
+          bsStyle="info"
           className="selection-box-button"
           type="button"
-          bsStyle="info"
           >
-          {logoutButtonText}
+          <ButtonContent text="Change User" iconName="cluster-logout"/>
         </Button>
       </div>
     );
