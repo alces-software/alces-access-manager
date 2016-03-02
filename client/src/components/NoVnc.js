@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 import noVNC from 'novnc-node';
 
 class NoVnc extends React.Component {
@@ -63,8 +63,11 @@ class NoVnc extends React.Component {
 
 NoVnc.displayName = 'NoVNC';
 
-// Uncomment properties you need
-// NoVncComponent.propTypes = {};
-// NoVncComponent.defaultProps = {};
+NoVnc.propTypes = {
+  url: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  stateChange: PropTypes.func.isRequired,
+  novnc: PropTypes.object.isRequired, // noVNC Redux store state.
+};
 
 export default NoVnc;
