@@ -13,7 +13,8 @@ export default class LoadingPage extends React.Component {
     return (
       <div className="loading-indicator">
         <p>
-          One moment please &mdash; <em>Alces&nbsp;Flight</em>&nbsp;is&nbsp;starting&nbsp;up.
+          One moment please &mdash; <em>Alces&nbsp;Access&nbsp;Manager</em> is
+          &nbsp;starting&nbsp;up.
         </p>
         <ProgressBar
           active
