@@ -9,15 +9,14 @@ import React from 'react';
 import { Navbar, Nav} from 'react-bootstrap';
 import { Link } from 'react-router';
 
-import {NavItemLink} from 'components/Links';
+// Import these components directly to make Babel optimizations happy.  One of
+// the optimization plugins we use for production builds doesn't like the use
+// of `Navbar.Brand` in JSX elements.
+// TODO: Do same in Aviator.
+import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
+import NavbarHeader from 'react-bootstrap/lib/NavbarHeader';
 
-// Make Babel optimizations happy.  One of the optimization plugins we use for
-// production builds doesn't like the use of `Navbar.Brand` in JSX elements.
-// So we rename them here to `NavbarBrand` for instance.
-const {
-  Brand:    NavbarBrand,
-  Header:   NavbarHeader,
-} = Navbar;
+import {NavItemLink} from 'components/Links';
 
 class Header extends React.Component {
   render() {
