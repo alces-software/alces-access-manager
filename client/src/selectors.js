@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {createSelector} from 'reselect';
 
 // const clustersState = (state) => state.clusters;
+const novncState = (state) => state.novnc;
 const sessionsState = (state) => state.sessions;
 const uiState = (state) => state.ui;
 
@@ -43,8 +44,9 @@ export function sessionFromRouteSelector(state) {
 export const vncSessionPageSelector = createSelector(
   clusterFromRouteSelector,
   sessionFromRouteSelector,
-  (cluster, session) => {
-    return {cluster, session}
+  novncState,
+  (cluster, session, novnc) => {
+    return {cluster, session, novnc};
   }
 );
 

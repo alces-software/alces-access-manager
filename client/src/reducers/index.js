@@ -16,6 +16,7 @@ import clusters from 'clusters/reducer';
 import environment from 'environment/reducer';
 import ui from 'ui/reducer';
 import notifications from 'notification/reducer';
+import novnc from 'novnc/reducer';
 import sessions from 'sessions/reducer';
 
 // import {CLEAN_SESSION} from 'auth/actionTypes';
@@ -28,6 +29,7 @@ const unpreservedStateReducers = {
   form,
   ui,
   notifications,
+  novnc,
   sessions,
 };
 
