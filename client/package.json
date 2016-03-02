@@ -49,6 +49,7 @@
     "react-addons-css-transition-group": "^0.14.2",
     "react-addons-update": "^0.14.5",
     "react-bootstrap": "^0.28.1",
+    "react-css-transition-replace": "^1.1.0",
     "react-data-components": "^0.6.0",
     "react-dom": "^0.14.2",
     "react-flipcard": "^0.2.1",

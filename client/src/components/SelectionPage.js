@@ -3,11 +3,17 @@ import _ from 'lodash';
 import React, {PropTypes} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {elementType} from 'react-prop-types';
+import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 class SelectionPage extends React.Component {
   render() {
-    const {header, items} = this.props;
+    const {header, items, keyProp} = this.props;
     const groupedItems = _.chunk(items, 3);
+
+    // Form a key by concatenating the keyProp of all items, and then we can
+    // fade out all items to the new ones whenever this changes.
+    const keyComponents = _.map(items, keyProp);
+    const key = _.join(keyComponents, '-');
 
     return (
       <div className="container">
@@ -19,7 +25,15 @@ class SelectionPage extends React.Component {
               </div>
             </Col>
           </Row>
-          {this.renderRows(groupedItems)}
+          <ReactCSSTransitionReplace
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+            transitionName="cross-fade"
+            >
+            <div key={key}>
+              {this.renderRows(groupedItems)}
+            </div>
+          </ReactCSSTransitionReplace>
         </Grid>
       </div>
     );

@@ -3773,6 +3773,11 @@
         }
       }
     },
+    "react-css-transition-replace": {
+      "version": "1.1.0",
+      "from": "react-css-transition-replace@*",
+      "resolved": "https://registry.npmjs.org/react-css-transition-replace/-/react-css-transition-replace-1.1.0.tgz"
+    },
     "react-data-components": {
       "version": "0.6.0",
       "from": "https://registry.npmjs.org/react-data-components/-/react-data-components-0.6.0.tgz",
