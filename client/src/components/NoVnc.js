@@ -2,7 +2,6 @@
 
 import React from 'react';
 import noVNC from 'novnc-node';
-import $ from 'jquery';
 
 class NoVnc extends React.Component {
   render() {
@@ -20,10 +19,6 @@ class NoVnc extends React.Component {
 
   componentDidMount() {
     this.canvas = document.getElementById('novnc-canvas');
-    this.$canvas = $(this.canvas);
-
-    // Add event handlers.
-    this.$canvas.on('vnc:connect', this.handleVncConnect.bind(this));
 
     this.rfb = new noVNC.RFB({
       local_cursor: true, // eslint-disable-line camelcase
@@ -35,28 +30,10 @@ class NoVnc extends React.Component {
   }
 
   stateHandler(rfb, state, oldstate, msg) {
-    // TODO: Rather than having custom events, it would be more React-y to
-    // dispatch actions and monitor the state.
-    const statesMap = {
-      loaded: 'load',
-      connect: 'start',
-      failed: 'failure',
-      fatal: 'fatal',
-      normal: 'connect',
-      disconnected: 'disconnect',
-    };
-    const eventState = statesMap[state];
-    if (eventState && this.canvas) {
-      console.log(eventState); // eslint-disable-line no-console
-      const eventName = `vnc:${eventState}`
-      const data = {rfb, state, oldstate, msg};
-      this.$canvas.trigger(eventName, data);
-    }
-  }
-
-  componentWillUnmount() {
-    // TODO: Not actually manually tested yet as component never unmounts.
-    this.$canvas.off();
+    // The stateChange action just takes these two of the onUpdateState
+    // parameters since we don't want to store the rfb object and oldstate is
+    // just the previous state, which is easily obtainable if needed.
+    this.props.stateChange(state, msg);
   }
 
   connect() {

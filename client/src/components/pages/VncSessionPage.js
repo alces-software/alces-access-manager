@@ -7,7 +7,7 @@ import ToolbarButton from 'components/ToolbarButton';
 
 export default class VncSessionPage extends React.Component {
   render() {
-    const {cluster, session} = this.props;
+    const {cluster, novnc, session, stateChange} = this.props;
 
     const url = `ws://${cluster.ip}:${session.websocket}/websockify`;
 
@@ -42,7 +42,12 @@ export default class VncSessionPage extends React.Component {
               />
             </ButtonGroup>
           </ButtonToolbar>
-          <NoVnc url={url} password={session.password}/>
+          <NoVnc
+            url={url}
+            password={session.password}
+            stateChange={stateChange}
+            novnc={novnc}
+          />
         </div>
       </div>
     );
