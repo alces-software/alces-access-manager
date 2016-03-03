@@ -15,12 +15,14 @@ export default class VncSessionPage extends React.Component {
       <div className="container">
         <div className="vnc-container">
           <ButtonToolbar className="vnc-button-toolbar">
+            {/* Sound toggle planned for future iteration.
             <ButtonGroup>
               <ToolbarButton
                 iconName="vnc-volume-on"
                 tooltip="Disable sound (currently ON)"
               />
             </ButtonGroup>
+            */}
             <ButtonGroup>
               <ToolbarButton
                 iconName="vnc-copy"
