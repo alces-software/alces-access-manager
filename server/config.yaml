@@ -6,7 +6,12 @@ clusters:
     ssl: false
     timeout: 5
   - name: Duplicate Clusterware Vagrant
-    ip: 127.0.0.2
+    ip: localhost
+    auth_port: 25269
+    ssl: false
+    timeout: 5
+  - name: Another Cluster
+    ip: 10.10.10.10
     auth_port: 25269
     ssl: false
     timeout: 5
