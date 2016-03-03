@@ -12,7 +12,7 @@ class ToolbarButton extends React.Component {
 
     return (
       <OverlayTrigger placement="top" overlay={tooltipElement}>
-        <Button>
+        <Button {...this.props}>
           <Icon name={iconName}/>
         </Button>
       </OverlayTrigger>

@@ -27,6 +27,8 @@ export default class VncSessionPage extends React.Component {
               <ToolbarButton
                 iconName="vnc-copy"
                 tooltip="Copy"
+                active={novnc.copyMode}
+                onClick={this.handleClickCopyButton.bind(this)}
               />
               <ToolbarButton
                 iconName="vnc-paste"
@@ -53,5 +55,10 @@ export default class VncSessionPage extends React.Component {
         </div>
       </div>
     );
+  }
+
+  handleClickCopyButton() {
+    const {novnc: {copyMode}, startCopyMode, stopCopyMode} = this.props;
+    copyMode ? stopCopyMode() : startCopyMode();
   }
 }

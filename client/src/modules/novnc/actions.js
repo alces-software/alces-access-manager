@@ -10,3 +10,15 @@ export function stateChange(state, msg) {
     },
   }
 }
+
+export function startCopyMode() {
+  return {
+    type: actionTypes.START_COPY_MODE,
+  }
+}
+
+export function stopCopyMode() {
+  return {
+    type: actionTypes.STOP_COPY_MODE,
+  }
+}

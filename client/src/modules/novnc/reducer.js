@@ -29,7 +29,19 @@ export default function reducer(state=initialState, action) {
       state: novncState,
       eventState,
       msg,
-    }
+    };
+
+    case actionTypes.START_COPY_MODE:
+      return {
+      ...state,
+      copyMode: true,
+    };
+
+    case actionTypes.STOP_COPY_MODE:
+      return {
+      ...state,
+      copyMode: false,
+    };
 
     default:
       return state;
