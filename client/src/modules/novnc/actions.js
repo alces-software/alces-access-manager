@@ -11,14 +11,11 @@ export function stateChange(state, msg) {
   }
 }
 
-export function startCopyMode() {
+export function setCopyText(text) {
   return {
-    type: actionTypes.START_COPY_MODE,
-  }
-}
-
-export function stopCopyMode() {
-  return {
-    type: actionTypes.STOP_COPY_MODE,
+    type: actionTypes.SET_COPY_TEXT,
+    payload: {
+      text,
+    },
   }
 }

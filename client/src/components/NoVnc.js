@@ -24,6 +24,7 @@ class NoVnc extends React.Component {
       local_cursor: true, // eslint-disable-line camelcase
       target: this.canvas,
       onUpdateState: this.stateHandler.bind(this),
+      onClipboard: this.clipboardHandler.bind(this),
     });
 
     this.connect();
@@ -34,6 +35,10 @@ class NoVnc extends React.Component {
     // parameters since we don't want to store the rfb object and oldstate is
     // just the previous state, which is easily obtainable if needed.
     this.props.stateChange(state, msg);
+  }
+
+  clipboardHandler(rfb, text) {
+    this.props.setCopyText(text);
   }
 
   connect() {

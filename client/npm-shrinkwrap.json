@@ -1174,32 +1174,6 @@
       "from": "https://registry.npmjs.org/clipboard/-/clipboard-1.5.5.tgz",
       "resolved": "https://registry.npmjs.org/clipboard/-/clipboard-1.5.5.tgz",
       "dependencies": {
-        "good-listener": {
-          "version": "1.1.4",
-          "from": "https://registry.npmjs.org/good-listener/-/good-listener-1.1.4.tgz",
-          "resolved": "https://registry.npmjs.org/good-listener/-/good-listener-1.1.4.tgz",
-          "dependencies": {
-            "delegate": {
-              "version": "3.0.0",
-              "from": "https://registry.npmjs.org/delegate/-/delegate-3.0.0.tgz",
-              "resolved": "https://registry.npmjs.org/delegate/-/delegate-3.0.0.tgz",
-              "dependencies": {
-                "closest": {
-                  "version": "0.0.1",
-                  "from": "https://registry.npmjs.org/closest/-/closest-0.0.1.tgz",
-                  "resolved": "https://registry.npmjs.org/closest/-/closest-0.0.1.tgz",
-                  "dependencies": {
-                    "matches-selector": {
-                      "version": "0.0.1",
-                      "from": "https://registry.npmjs.org/matches-selector/-/matches-selector-0.0.1.tgz",
-                      "resolved": "https://registry.npmjs.org/matches-selector/-/matches-selector-0.0.1.tgz"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "select": {
           "version": "1.0.6",
           "from": "https://registry.npmjs.org/select/-/select-1.0.6.tgz",
@@ -1228,6 +1202,11 @@
       "version": "1.0.2",
       "from": "clone@>=1.0.2 <2.0.0",
       "resolved": "https://registry.npmjs.org/clone/-/clone-1.0.2.tgz"
+    },
+    "closest": {
+      "version": "0.0.1",
+      "from": "closest@0.0.1",
+      "resolved": "https://registry.npmjs.org/closest/-/closest-0.0.1.tgz"
     },
     "coa": {
       "version": "1.0.1",
@@ -1491,6 +1470,11 @@
       "version": "1.0.0",
       "from": "delayed-stream@>=1.0.0 <1.1.0",
       "resolved": "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
+    },
+    "delegate": {
+      "version": "3.0.1",
+      "from": "delegate@>=3.0.0 <4.0.0",
+      "resolved": "https://registry.npmjs.org/delegate/-/delegate-3.0.1.tgz"
     },
     "delegates": {
       "version": "0.1.0",
@@ -2105,6 +2089,11 @@
           "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-0.2.14.tgz"
         }
       }
+    },
+    "good-listener": {
+      "version": "1.1.7",
+      "from": "good-listener@>=1.1.4 <2.0.0",
+      "resolved": "https://registry.npmjs.org/good-listener/-/good-listener-1.1.7.tgz"
     },
     "graceful-fs": {
       "version": "4.1.2",
@@ -3001,6 +2990,11 @@
       "version": "0.3.5",
       "from": "marked@>=0.3.2 <0.4.0",
       "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.5.tgz"
+    },
+    "matches-selector": {
+      "version": "0.0.1",
+      "from": "matches-selector@0.0.1",
+      "resolved": "https://registry.npmjs.org/matches-selector/-/matches-selector-0.0.1.tgz"
     },
     "matchmedia": {
       "version": "0.1.2",

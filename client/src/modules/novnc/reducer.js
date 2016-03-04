@@ -31,17 +31,11 @@ export default function reducer(state=initialState, action) {
       msg,
     };
 
-    case actionTypes.START_COPY_MODE:
+    case actionTypes.SET_COPY_TEXT:
       return {
       ...state,
-      copyMode: true,
-    };
-
-    case actionTypes.STOP_COPY_MODE:
-      return {
-      ...state,
-      copyMode: false,
-    };
+      copyText: action.payload.text,
+    }
 
     default:
       return state;
