@@ -37,6 +37,31 @@ export default function reducer(state=initialState, action) {
       copyText: action.payload.text,
     }
 
+    case actionTypes.SHOW_PASTE_MODAL:
+      return {
+      ...state,
+      showingPasteModal: true,
+    }
+
+    case actionTypes.HIDE_PASTE_MODAL:
+      return {
+      ...state,
+      showingPasteModal: false,
+    }
+
+    case actionTypes.PASTE_TEXT:
+      return {
+      ...state,
+      showingPasteModal: false,
+      pastedText: action.payload.text,
+    }
+
+    case actionTypes.PASTE_COMPLETE:
+      return {
+      ...state,
+      pastedText: undefined,
+    }
+
     default:
       return state;
   }

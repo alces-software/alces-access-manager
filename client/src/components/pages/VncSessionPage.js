@@ -1,10 +1,12 @@
 
 import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
-import {ButtonGroup, ButtonToolbar} from 'react-bootstrap';
+import {Button, ButtonGroup, ButtonToolbar, Input} from 'react-bootstrap';
+import {reduxForm} from 'redux-form';
 
 import {ContactCustomerSupport} from 'components/CustomerSupport';
 import NoVnc from 'components/NoVnc';
+import StandardModal from 'components/StandardModal';
 import ToolbarButton from 'components/ToolbarButton';
 import {infoGeneratorsMap} from "notification/messageGeneration"
 import MessageGenerator from "notification/MessageGenerator";
@@ -32,7 +34,7 @@ infoGeneratorsMap.addGeneratorForCode(
   )
 );
 
-export default class VncSessionPage extends React.Component {
+class VncSessionPage extends React.Component {
   constructor(props) {
     super(props);
     this.emitter = {
@@ -45,9 +47,31 @@ export default class VncSessionPage extends React.Component {
   }
 
   render() {
-    const {cluster, novnc, session, stateChange, setCopyText} = this.props;
+    const {
+      cluster,
+      hidePasteModal,
+      fields: {
+        pastedText,
+      },
+      novnc,
+      pasteComplete,
+      pasteText,
+      session,
+      setCopyText,
+      showPasteModal,
+      stateChange,
+    } = this.props;
+
 
     const url = `ws://${cluster.ip}:${session.websocket}/websockify`;
+    const pasteModalButtons = (
+      <Button
+        onClick={pasteText}
+        bsStyle="success"
+      >
+        Paste
+      </Button>
+    );
 
     return (
       <div className="container">
@@ -71,6 +95,7 @@ export default class VncSessionPage extends React.Component {
               <ToolbarButton
                 iconName="vnc-paste"
                 tooltip="Paste"
+                onClick={showPasteModal}
               />
             </ButtonGroup>
             <ButtonGroup>
@@ -89,9 +114,23 @@ export default class VncSessionPage extends React.Component {
             password={session.password}
             stateChange={stateChange}
             setCopyText={setCopyText}
+            pasteComplete={pasteComplete}
             novnc={novnc}
           />
         </div>
+        <StandardModal
+          show={novnc.showingPasteModal}
+          title="Paste text to VNC session"
+          onHide={hidePasteModal}
+          buttons={pasteModalButtons}
+        >
+          <form>
+            <p>
+              Enter some text to be sent to the VNC session below.
+            </p>
+            <Input type="textarea" {...pastedText}/>
+          </form>
+        </StandardModal>
       </div>
     );
   }
@@ -114,3 +153,10 @@ export default class VncSessionPage extends React.Component {
     });
   }
 }
+
+VncSessionPage = reduxForm({
+  fields: ['pastedText'],
+  form: 'vnc-paste-modal',
+})(VncSessionPage);
+
+export default VncSessionPage;

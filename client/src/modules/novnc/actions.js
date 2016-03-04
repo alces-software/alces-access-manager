@@ -19,3 +19,34 @@ export function setCopyText(text) {
     },
   }
 }
+
+export function showPasteModal() {
+  return {
+    type: actionTypes.SHOW_PASTE_MODAL,
+  }
+}
+
+export function hidePasteModal() {
+  return {
+    type: actionTypes.HIDE_PASTE_MODAL,
+  }
+}
+
+export function pasteText() {
+  return (dispatch, getState) => {
+    const text = getState().form['vnc-paste-modal'].pastedText.value;
+
+    dispatch({
+      type: actionTypes.PASTE_TEXT,
+      payload: {
+        text,
+      },
+    });
+  }
+}
+
+export function pasteComplete() {
+  return {
+    type: actionTypes.PASTE_COMPLETE,
+  }
+}

@@ -30,6 +30,24 @@ class NoVnc extends React.Component {
     this.connect();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {novnc: {pastedText}} = nextProps;
+
+    if (pastedText) {
+      // Send text to session clipboard.
+      this.rfb.clipboardPasteFrom(pastedText)
+
+      // Send all keys of pasted text to session directly.
+      for (let i=0; i<pastedText.length; i++) {
+        this.rfb.sendKey(pastedText.charCodeAt(i));
+      }
+
+      // Dispatch that paste is complete; will set pastedText to undefined so
+      // we don't receive the same pastedText in future prop updates.
+      this.props.pasteComplete();
+    }
+  }
+
   stateHandler(rfb, state, oldstate, msg) {
     // The stateChange action just takes these two of the onUpdateState
     // parameters since we don't want to store the rfb object and oldstate is
