@@ -1,54 +1,18 @@
 
-import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
 import {Button, ButtonGroup, ButtonToolbar, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
 
-import {ContactCustomerSupport} from 'components/CustomerSupport';
 import NoVnc from 'components/NoVnc';
 import StandardModal from 'components/StandardModal';
 import ToolbarButton from 'components/ToolbarButton';
-import {infoGeneratorsMap} from "notification/messageGeneration"
-import MessageGenerator from "notification/MessageGenerator";
-
-// Set up copy messages.
-const noTextCode = 'vnc-session-no-text';
-const copyFailedCode = 'vnc-session-copy-failed';
-infoGeneratorsMap.addGeneratorForCode(
-  noTextCode,
-  new MessageGenerator(
-    "No text to copy",
-    <p>
-      Select or copy some text within the VNC session to copy to your
-      computer's clipboard.
-    </p>
-  )
-).addGeneratorForCode(
-  copyFailedCode,
-  new MessageGenerator(
-    "Copy failed",
-    <p>
-      The copy of text from the VNC session failed, possibly because your web
-      browser does not support this feature. <ContactCustomerSupport/>
-    </p>
-  )
-);
+import ToolbarCopyButton from 'components/ToolbarCopyButton';
 
 class VncSessionPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.emitter = {
-      emit: (event) => {
-        if (event !== 'success') {
-          this.props.displayInfoModal(copyFailedCode);
-        }
-      },
-    }
-  }
-
   render() {
     const {
       cluster,
+      displayInfoModal,
       hidePasteModal,
       fields: {
         pastedText,
@@ -63,7 +27,6 @@ class VncSessionPage extends React.Component {
     } = this.props;
 
 
-    const url = `ws://${cluster.ip}:${session.websocket}/websockify`;
     const pasteModalButtons = (
       <Button
         onClick={pasteText}
@@ -86,11 +49,9 @@ class VncSessionPage extends React.Component {
             </ButtonGroup>
             */}
             <ButtonGroup>
-              <ToolbarButton
-                iconName="vnc-copy"
-                tooltip="Copy"
-                active={novnc.copyMode}
-                onClick={this.handleClickCopyButton.bind(this)}
+              <ToolbarCopyButton
+                novnc={novnc}
+                displayInfoModal={displayInfoModal}
               />
               <ToolbarButton
                 iconName="vnc-paste"
@@ -133,24 +94,6 @@ class VncSessionPage extends React.Component {
         </StandardModal>
       </div>
     );
-  }
-
-  handleClickCopyButton() {
-    const {novnc: {copyText}, displayInfoModal} = this.props;
-
-    // Display modal and do nothing if no text copied within session yet.
-    if (!copyText) {
-      displayInfoModal(noTextCode);
-      return;
-    }
-
-    // This will copy the stored text, received from the session clipboard to
-    // the system clipboard.
-    new ClipboardAction({
-      action: 'copy',
-      emitter: this.emitter,
-      text: copyText,
-    });
   }
 }
 
