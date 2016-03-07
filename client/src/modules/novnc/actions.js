@@ -72,3 +72,15 @@ export function hideSessionFailedModal() {
     })
   }
 }
+
+export function setInteractiveMode() {
+  return {
+    type: actionTypes.SET_INTERACTIVE_MODE,
+  }
+}
+
+export function setDragViewportMode() {
+  return {
+    type: actionTypes.SET_DRAG_VIEWPORT_MODE,
+  }
+}

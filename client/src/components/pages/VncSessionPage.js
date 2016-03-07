@@ -67,10 +67,14 @@ class VncSessionPage extends React.Component {
               <ToolbarButton
                 iconName="vnc-interactive"
                 tooltip="Interactive mode"
+                onClick={novncActions.setInteractiveMode}
+                active={!novnc.viewportDrag}
               />
               <ToolbarButton
                 iconName="vnc-drag-viewport"
                 tooltip="Drag viewport mode"
+                onClick={novncActions.setDragViewportMode}
+                active={novnc.viewportDrag}
               />
             </ButtonGroup>
           </ButtonToolbar>

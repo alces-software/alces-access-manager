@@ -76,6 +76,18 @@ export default function reducer(state=initialState, action) {
       sessionFailedOnInitialConnect: undefined,
     }
 
+    case actionTypes.SET_INTERACTIVE_MODE:
+      return {
+      ...state,
+      viewportDrag: false,
+    }
+
+    case actionTypes.SET_DRAG_VIEWPORT_MODE:
+      return {
+      ...state,
+      viewportDrag: true,
+    }
+
     default:
       return state;
   }
