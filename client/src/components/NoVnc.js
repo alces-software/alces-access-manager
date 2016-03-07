@@ -1,4 +1,3 @@
-'use strict';
 
 import React, {PropTypes} from 'react';
 import noVNC from 'novnc-node';
@@ -109,8 +108,6 @@ class NoVnc extends React.Component {
     console.log('handling', event, data); // eslint-disable-line no-console
   }
 }
-
-NoVnc.displayName = 'NoVNC';
 
 NoVnc.propTypes = {
   url: PropTypes.string.isRequired,
