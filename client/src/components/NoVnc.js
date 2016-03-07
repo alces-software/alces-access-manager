@@ -1,4 +1,3 @@
-'use strict';
 
 import React, {PropTypes} from 'react';
 import noVNC from 'novnc-node';
@@ -24,16 +23,65 @@ class NoVnc extends React.Component {
       local_cursor: true, // eslint-disable-line camelcase
       target: this.canvas,
       onUpdateState: this.stateHandler.bind(this),
+      onClipboard: this.clipboardHandler.bind(this),
     });
 
     this.connect();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      formActions,
+      novnc: {pastedText},
+      novncActions,
+    } = nextProps;
+
+    const currentlyPasting = this.state && this.state.pastingText;
+    const startingPaste = pastedText && !currentlyPasting;
+    const finishedPaste = !pastedText && currentlyPasting
+
+    // We monitor when we receive new text to paste and set a flag in the
+    // component's state until the paste has completed; this ensures that the
+    // paste doesn't occur multiple times if the component receives props again
+    // while the initial paste has yet to complete.
+    if (startingPaste) {
+      this.setPastingText(true);
+
+      // Send text to session clipboard.
+      this.rfb.clipboardPasteFrom(pastedText)
+
+      // Send all keys of pasted text to session directly.
+      for (let i=0; i<pastedText.length; i++) {
+        this.rfb.sendKey(pastedText.charCodeAt(i));
+      }
+
+      // Dispatch that paste is complete; will set pastedText to undefined so
+      // we don't receive the same pastedText in future prop updates.
+      novncActions.pasteComplete();
+
+      // Clear the form.
+      formActions.reset('vnc-paste-modal');
+    }
+    else if (finishedPaste) {
+      this.setPastingText(false);
+    }
+  }
+
+  setPastingText(pastingText) {
+    this.setState({
+      pastingText,
+    })
   }
 
   stateHandler(rfb, state, oldstate, msg) {
     // The stateChange action just takes these two of the onUpdateState
     // parameters since we don't want to store the rfb object and oldstate is
     // just the previous state, which is easily obtainable if needed.
-    this.props.stateChange(state, msg);
+    this.props.novncActions.stateChange(state, msg);
+  }
+
+  clipboardHandler(rfb, text) {
+    this.props.novncActions.setCopyText(text);
   }
 
   connect() {
@@ -55,19 +103,14 @@ class NoVnc extends React.Component {
     // Don't send keys to canvas any more when mouse leaves.
     this.rfb.get_keyboard().set_focused(false);
   }
-
-  handleVncConnect(event, data) {
-    console.log('handling', event, data); // eslint-disable-line no-console
-  }
 }
-
-NoVnc.displayName = 'NoVNC';
 
 NoVnc.propTypes = {
   url: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  stateChange: PropTypes.func.isRequired,
   novnc: PropTypes.object.isRequired, // noVNC Redux store state.
+  novncActions: PropTypes.object.isRequired,
+  formActions: PropTypes.object.isRequired,
 };
 
 export default NoVnc;
