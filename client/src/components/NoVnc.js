@@ -33,7 +33,7 @@ class NoVnc extends React.Component {
     const {
       formActions,
       novnc: {pastedText},
-      pasteComplete,
+      novncActions,
     } = nextProps;
 
     const currentlyPasting = this.state && this.state.pastingText;
@@ -57,7 +57,7 @@ class NoVnc extends React.Component {
 
       // Dispatch that paste is complete; will set pastedText to undefined so
       // we don't receive the same pastedText in future prop updates.
-      pasteComplete();
+      novncActions.pasteComplete();
 
       // Clear the form.
       formActions.reset('vnc-paste-modal');
@@ -77,11 +77,11 @@ class NoVnc extends React.Component {
     // The stateChange action just takes these two of the onUpdateState
     // parameters since we don't want to store the rfb object and oldstate is
     // just the previous state, which is easily obtainable if needed.
-    this.props.stateChange(state, msg);
+    this.props.novncActions.stateChange(state, msg);
   }
 
   clipboardHandler(rfb, text) {
-    this.props.setCopyText(text);
+    this.props.novncActions.setCopyText(text);
   }
 
   connect() {
@@ -112,8 +112,9 @@ class NoVnc extends React.Component {
 NoVnc.propTypes = {
   url: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  stateChange: PropTypes.func.isRequired,
   novnc: PropTypes.object.isRequired, // noVNC Redux store state.
+  novncActions: PropTypes.object.isRequired,
+  formActions: PropTypes.object.isRequired,
 };
 
 export default NoVnc;

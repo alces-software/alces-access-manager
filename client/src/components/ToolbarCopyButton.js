@@ -36,7 +36,7 @@ export default class ToolbarCopyButton extends React.Component {
     this.emitter = {
       emit: (event) => {
         if (event !== 'success') {
-          this.props.displayInfoModal(copyFailedCode);
+          this.props.notificationActions.displayInfoModal(copyFailedCode);
         }
       },
     }
@@ -56,7 +56,10 @@ export default class ToolbarCopyButton extends React.Component {
   }
 
   handleClick() {
-    const {novnc: {copyText}, displayInfoModal} = this.props;
+    const {
+      novnc: {copyText},
+      notificationActions: {displayInfoModal},
+    } = this.props;
 
     // Display modal and do nothing if no text copied within session yet.
     if (!copyText) {

@@ -8,8 +8,8 @@ import * as notificationActions from 'notification/actions';
 import * as novncActions from 'novnc/actions';
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators(notificationActions, dispatch),
-  ...bindActionCreators(novncActions, dispatch),
+  notificationActions: bindActionCreators(notificationActions, dispatch),
+  novncActions: bindActionCreators(novncActions, dispatch),
   formActions: bindActionCreators({reset}, dispatch),
 });
 

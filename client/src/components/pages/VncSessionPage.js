@@ -12,25 +12,20 @@ class VncSessionPage extends React.Component {
   render() {
     const {
       cluster,
-      displayInfoModal,
-      hidePasteModal,
       fields: {
         pastedText,
       },
       formActions,
+      notificationActions,
       novnc,
-      pasteComplete,
-      pasteText,
+      novncActions,
       session,
-      setCopyText,
-      showPasteModal,
-      stateChange,
     } = this.props;
 
 
     const pasteModalButtons = (
       <Button
-        onClick={pasteText}
+        onClick={novncActions.pasteText}
         bsStyle="success"
       >
         Paste
@@ -52,12 +47,12 @@ class VncSessionPage extends React.Component {
             <ButtonGroup>
               <ToolbarCopyButton
                 novnc={novnc}
-                displayInfoModal={displayInfoModal}
+                notificationActions={notificationActions}
               />
               <ToolbarButton
                 iconName="vnc-paste"
                 tooltip="Paste"
-                onClick={showPasteModal}
+                onClick={novncActions.showPasteModal}
               />
             </ButtonGroup>
             <ButtonGroup>
@@ -74,17 +69,15 @@ class VncSessionPage extends React.Component {
           <NoVnc
             url={url}
             password={session.password}
-            stateChange={stateChange}
-            setCopyText={setCopyText}
-            pasteComplete={pasteComplete}
             novnc={novnc}
+            novncActions={novncActions}
             formActions={formActions}
           />
         </div>
         <StandardModal
           show={novnc.showingPasteModal}
           title="Paste text to VNC session"
-          onHide={hidePasteModal}
+          onHide={novncActions.hidePasteModal}
           buttons={pasteModalButtons}
         >
           <form>
