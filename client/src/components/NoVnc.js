@@ -31,9 +31,23 @@ class NoVnc extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {novnc: {pastedText}} = nextProps;
+    const {
+      formActions,
+      novnc: {pastedText},
+      pasteComplete,
+    } = nextProps;
 
-    if (pastedText) {
+    const currentlyPasting = this.state && this.state.pastingText;
+    const startingPaste = pastedText && !currentlyPasting;
+    const finishedPaste = !pastedText && currentlyPasting
+
+    // We monitor when we receive new text to paste and set a flag in the
+    // component's state until the paste has completed; this ensures that the
+    // paste doesn't occur multiple times if the component receives props again
+    // while the initial paste has yet to complete.
+    if (startingPaste) {
+      this.setPastingText(true);
+
       // Send text to session clipboard.
       this.rfb.clipboardPasteFrom(pastedText)
 
@@ -44,8 +58,20 @@ class NoVnc extends React.Component {
 
       // Dispatch that paste is complete; will set pastedText to undefined so
       // we don't receive the same pastedText in future prop updates.
-      this.props.pasteComplete();
+      pasteComplete();
+
+      // Clear the form.
+      formActions.reset('vnc-paste-modal');
     }
+    else if (finishedPaste) {
+      this.setPastingText(false);
+    }
+  }
+
+  setPastingText(pastingText) {
+    this.setState({
+      pastingText,
+    })
   }
 
   stateHandler(rfb, state, oldstate, msg) {

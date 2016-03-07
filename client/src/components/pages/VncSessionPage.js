@@ -17,6 +17,7 @@ class VncSessionPage extends React.Component {
       fields: {
         pastedText,
       },
+      formActions,
       novnc,
       pasteComplete,
       pasteText,
@@ -77,6 +78,7 @@ class VncSessionPage extends React.Component {
             setCopyText={setCopyText}
             pasteComplete={pasteComplete}
             novnc={novnc}
+            formActions={formActions}
           />
         </div>
         <StandardModal
