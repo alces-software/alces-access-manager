@@ -103,10 +103,6 @@ class NoVnc extends React.Component {
     // Don't send keys to canvas any more when mouse leaves.
     this.rfb.get_keyboard().set_focused(false);
   }
-
-  handleVncConnect(event, data) {
-    console.log('handling', event, data); // eslint-disable-line no-console
-  }
 }
 
 NoVnc.propTypes = {
