@@ -32,13 +32,13 @@ class NoVnc extends React.Component {
   componentWillReceiveProps(nextProps) {
     const {
       formActions,
-      novnc: {pastedText},
+      novnc,
       novncActions,
     } = nextProps;
 
     const currentlyPasting = this.state && this.state.pastingText;
-    const startingPaste = pastedText && !currentlyPasting;
-    const finishedPaste = !pastedText && currentlyPasting
+    const startingPaste = novnc.pastedText && !currentlyPasting;
+    const finishedPaste = !novnc.pastedText && currentlyPasting
 
     // We monitor when we receive new text to paste and set a flag in the
     // component's state until the paste has completed; this ensures that the
@@ -48,11 +48,11 @@ class NoVnc extends React.Component {
       this.setPastingText(true);
 
       // Send text to session clipboard.
-      this.rfb.clipboardPasteFrom(pastedText)
+      this.rfb.clipboardPasteFrom(novnc.pastedText)
 
       // Send all keys of pasted text to session directly.
-      for (let i=0; i<pastedText.length; i++) {
-        this.rfb.sendKey(pastedText.charCodeAt(i));
+      for (let i=0; i<novnc.pastedText.length; i++) {
+        this.rfb.sendKey(novnc.pastedText.charCodeAt(i));
       }
 
       // Dispatch that paste is complete; will set pastedText to undefined so
@@ -64,6 +64,13 @@ class NoVnc extends React.Component {
     }
     else if (finishedPaste) {
       this.setPastingText(false);
+    }
+
+    const transitioningToFailedState =
+      novnc.state === 'failed' && this.props.novnc.state !== 'failed';
+
+    if (transitioningToFailedState) {
+      novncActions.showSessionFailedModal();
     }
   }
 
@@ -108,6 +115,7 @@ class NoVnc extends React.Component {
 NoVnc.propTypes = {
   url: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
+  notificationActions: PropTypes.object.isRequired,
   novnc: PropTypes.object.isRequired, // noVNC Redux store state.
   novncActions: PropTypes.object.isRequired,
   formActions: PropTypes.object.isRequired,

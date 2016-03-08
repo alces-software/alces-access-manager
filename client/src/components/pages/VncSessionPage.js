@@ -89,6 +89,22 @@ class VncSessionPage extends React.Component {
             <Input type="textarea" {...pastedText}/>
           </form>
         </StandardModal>
+        <StandardModal
+          show={novnc.showingSessionFailedModal}
+          title="VNC session connection failed"
+          onHide={novncActions.hideSessionFailedModal}
+        >
+          <p>
+            The connection to the VNC session was lost. This can happen because
+            the session has been terminated remotely or because of an issue
+            with your network connection.
+          </p>
+          <p>
+            You can try re-connecting to the session now; contact your
+            environment administrator for assistance if this problem persists
+            unexpectedly.
+          </p>
+        </StandardModal>
       </div>
     );
   }
