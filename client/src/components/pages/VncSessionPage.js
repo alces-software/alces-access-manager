@@ -29,6 +29,7 @@ class VncSessionPage extends React.Component {
       <Button
         onClick={novncActions.pasteText}
         bsStyle="success"
+        disabled={!pastedText.value}
       >
         Paste
       </Button>
