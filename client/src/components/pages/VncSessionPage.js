@@ -22,6 +22,8 @@ class VncSessionPage extends React.Component {
       session,
     } = this.props;
 
+    // TODO: Have different URLs for dev vs production.
+    const url = `ws://${cluster.ip}:${session.websocket}/vnc/${session.host}/${session.websocket}`;
 
     const pasteModalButtons = (
       <Button
