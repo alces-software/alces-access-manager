@@ -8,6 +8,7 @@ class NoVnc extends React.Component {
       <div className="novnc">
         <canvas
           id='novnc-canvas'
+          className={novnc.viewportDrag ? "novnc-canvas--dragEnabled" : ""}
           onMouseOver={this.handleMouseOver.bind(this)}
           onMouseOut={this.handleMouseOut.bind(this)}
           >
