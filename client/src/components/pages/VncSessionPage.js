@@ -95,9 +95,14 @@ class VncSessionPage extends React.Component {
           onHide={novncActions.hideSessionFailedModal}
         >
           <p>
-            The connection to the VNC session was lost. This can happen because
-            the session has been terminated remotely or because of an issue
-            with your network connection.
+            {
+              novnc.sessionFailedOnInitialConnect ?
+              "Unable to connect to the VNC session"
+              :
+              "The connection to the VNC session was lost"
+            }
+            . This can happen because the session has been terminated remotely
+            or because of an issue with your network connection.
           </p>
           <p>
             You can try re-connecting to the session now; contact your

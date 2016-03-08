@@ -70,7 +70,9 @@ class NoVnc extends React.Component {
       novnc.state === 'failed' && this.props.novnc.state !== 'failed';
 
     if (transitioningToFailedState) {
-      novncActions.showSessionFailedModal();
+      const sessionFailedOnInitialConnect =
+        this.props.novnc.state === 'connect';
+      novncActions.showSessionFailedModal(sessionFailedOnInitialConnect);
     }
   }
 

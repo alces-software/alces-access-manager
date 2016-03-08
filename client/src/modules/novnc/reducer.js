@@ -66,12 +66,14 @@ export default function reducer(state=initialState, action) {
       return {
       ...state,
       showingSessionFailedModal: true,
+      sessionFailedOnInitialConnect: action.payload.sessionFailedOnInitialConnect,
     }
 
     case actionTypes.HIDE_SESSION_FAILED_MODAL:
       return {
       ...state,
       showingSessionFailedModal: false,
+      sessionFailedOnInitialConnect: undefined,
     }
 
     default:

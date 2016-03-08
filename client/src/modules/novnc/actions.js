@@ -52,9 +52,12 @@ export function pasteComplete() {
   }
 }
 
-export function showSessionFailedModal() {
+export function showSessionFailedModal(sessionFailedOnInitialConnect) {
   return {
     type: actionTypes.SHOW_SESSION_FAILED_MODAL,
+    payload: {
+      sessionFailedOnInitialConnect,
+    },
   }
 }
 
