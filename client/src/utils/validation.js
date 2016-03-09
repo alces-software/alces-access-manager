@@ -1,10 +1,4 @@
-/*=============================================================================
- * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
- *
- * This file is part of Alces Flight.
- *
- * All rights reserved, see LICENSE.txt.
- *===========================================================================*/
+
 //
 // Based on React Redux Universal Hot Example
 // (https://github.com/erikras/react-redux-universal-hot-example) released

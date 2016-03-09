@@ -31,9 +31,6 @@ module Server
 
     config.api_only = false
 
-    # This require statement must be within the scope of Application
-    require 'targets'
-
     # Custom configuration
     config.x.config_file = File.join(File.dirname(File.expand_path(__FILE__)), '../config.yaml')
   end
