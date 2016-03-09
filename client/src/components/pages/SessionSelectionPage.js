@@ -68,7 +68,7 @@ export default class SessionSelectionPage extends React.Component {
     return (
       <SelectionPage
         items={sessions}
-        keyProp="port"
+        keyProp="uuid"
         header={header}
         selectionBoxComponent={SessionSelectionBox}
         selectionBoxProps={selectionBoxProps}
