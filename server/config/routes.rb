@@ -9,17 +9,21 @@ Rails.application.routes.draw do
 
       resources :clusters, only: [:index]
 
+      cluster_route_params = {
+        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+      }
+
       post 'cluster/:ip/authenticate',
         to: 'clusters#authenticate',
-        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+        **cluster_route_params
 
       get 'cluster/:ip/sessions',
         to: 'clusters#sessions',
-        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+        **cluster_route_params
 
       post 'cluster/:ip/logout',
         to: 'clusters#logout',
-        constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
+        **cluster_route_params
     end
   end
 
