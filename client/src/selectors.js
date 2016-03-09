@@ -36,9 +36,9 @@ export const sessionSelectionPageSelector = createSelector(
 );
 
 export function sessionFromRouteSelector(state) {
-  const {clusterIp, sessionPort} = state.router.params;
+  const {clusterIp, sessionUuid} = state.router.params;
   const clusterSessions = sessionsForClusterWithIp(clusterIp, state.sessions);
-  return _.find(clusterSessions, (session) => session.port == sessionPort);
+  return _.find(clusterSessions, (session) => session.uuid == sessionUuid);
 }
 
 export const vncSessionPageSelector = createSelector(

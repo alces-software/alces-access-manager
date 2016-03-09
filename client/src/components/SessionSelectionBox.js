@@ -10,7 +10,7 @@ class SessionSelectionBox extends React.Component {
     const session = this.props.item;
     const {cluster} = this.props;
 
-    const sessionLink = `/cluster/${cluster.ip}/session/${session.port}`
+    const sessionLink = `/cluster/${cluster.ip}/session/${session.uuid}`
 
     return (
       <div

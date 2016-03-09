@@ -34,7 +34,7 @@ const routes = <Route path="/" component={App}>
 
   <Route component={checkAuthenticatedForCluster}>
     <Route component={checkSessionExists}>
-      <Route path="cluster/:clusterIp/session/:sessionPort" component={VncSessionPage} />
+      <Route path="cluster/:clusterIp/session/:sessionUuid" component={VncSessionPage} />
     </Route>
   </Route>
 
