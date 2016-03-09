@@ -102,7 +102,7 @@ export function addActionTypeCustomizations(generatorsMap) {
     }
 
     _.each(
-      [clusterActionTypes.AUTHENTICATE, sessionActionTypes.LOAD_SESSIONS],
+      [clusterActionTypes.AUTHENTICATE, sessionActionTypes.LOAD_SESSIONS, sessionActionTypes.RELOAD_SESSIONS],
       (action) => {
         generatorsMap.customizeMessage(
           502, // bad gateway - i.e. daemon not running/reachable.

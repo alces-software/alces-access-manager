@@ -1,5 +1,6 @@
 
 import * as actionTypes from './actionTypes';
+import {redirectTo} from 'actions/router';
 
 export function stateChange(state, msg) {
   return {
@@ -48,5 +49,26 @@ export function pasteText() {
 export function pasteComplete() {
   return {
     type: actionTypes.PASTE_COMPLETE,
+  }
+}
+
+export function showSessionFailedModal(sessionFailedOnInitialConnect) {
+  return {
+    type: actionTypes.SHOW_SESSION_FAILED_MODAL,
+    payload: {
+      sessionFailedOnInitialConnect,
+    },
+  }
+}
+
+export function hideSessionFailedModal() {
+  return (dispatch, getState) => {
+    const clusterIp = getState().router.params.clusterIp;
+    const clusterUrl = `/cluster/${clusterIp}`;
+    dispatch(redirectTo(clusterUrl));
+
+    return dispatch({
+      type: actionTypes.HIDE_SESSION_FAILED_MODAL,
+    })
   }
 }

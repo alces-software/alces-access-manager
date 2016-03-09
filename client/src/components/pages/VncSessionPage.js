@@ -22,11 +22,14 @@ class VncSessionPage extends React.Component {
       session,
     } = this.props;
 
+    // TODO: Have different URLs for dev vs production.
+    const url = `ws://${cluster.ip}:${session.websocket}/vnc/${session.host}/${session.websocket}`;
 
     const pasteModalButtons = (
       <Button
         onClick={novncActions.pasteText}
         bsStyle="success"
+        disabled={!pastedText.value}
       >
         Paste
       </Button>
@@ -86,6 +89,27 @@ class VncSessionPage extends React.Component {
             </p>
             <Input type="textarea" {...pastedText}/>
           </form>
+        </StandardModal>
+        <StandardModal
+          show={novnc.showingSessionFailedModal}
+          title="VNC session connection failed"
+          onHide={novncActions.hideSessionFailedModal}
+        >
+          <p>
+            {
+              novnc.sessionFailedOnInitialConnect ?
+              "Unable to connect to the VNC session"
+              :
+              "The connection to the VNC session was lost"
+            }
+            . This can happen because the session has been terminated remotely
+            or because of an issue with your network connection.
+          </p>
+          <p>
+            You can try re-connecting to the session now; contact your
+            environment administrator for assistance if this problem persists
+            unexpectedly.
+          </p>
         </StandardModal>
       </div>
     );

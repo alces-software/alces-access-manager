@@ -84,3 +84,8 @@ $selection-box-color: #eee;
   transition: height .5s ease-in-out;
 }
 
+.pageContainer {
+  // Prevent selection box spinning flashing the scrollbar in
+  // Firefox.
+  overflow: visible;
+}
