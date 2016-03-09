@@ -9,16 +9,9 @@
   "scripts": {
     "dev-server": "NODE_ENV=development node server.js",
     "build": "NODE_ENV=production webpack --colors --progress",
-    "upload-assets": "scripts/upload-to-cloud-storage.sh",
     "build-dev": "NODE_ENV=development webpack --colors --progress",
     "clean": "rm -rf ./dist",
     "uninstall-dependencies": "for package in $( ls node_modules ) ; do npm uninstall $package ; done",
-    "docker-bootstrap": "npm run docker-build && npm run docker-run npm run uninstall-dependencies && npm run docker-run npm install && npm run docker-dev-server",
-    "docker-build": "docker build -t aviator .",
-    "docker-dev-server": "npm run docker-run npm run dev-server",
-    "docker-run": "scripts/docker-run",
-    "docker-test": "npm run docker-run 4001 npm test",
-    "docker-test:watch": "npm run docker-run 4001 npm run test:watch",
     "test": "env NODE_PATH=$NODE_PATH:$PWD/src:$PWD/src/modules NODE_ENV=test mocha --compilers js:babel-register --recursive 'src/**/__tests__/*'  --require src/__tests__/setup.js",
     "test:watch": "npm run test -- --watch"
   },

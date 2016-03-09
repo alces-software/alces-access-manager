@@ -45,35 +45,18 @@ $popover-arrow-outer-color: fade_in($popover-border-color, 0.05);
 
 /* Core application styles */
 @import "./flight";
-@import './flightHeaders';
-@import './flightTasks';
 
 /* Navigation */
 @import "./nav/flightNav";
-@import "./flightTabs";
 
 /* UI components */
-@import "./callout";
-@import "./nav/overlay";
-@import "./flightConfirmation";
-@import "./flightHelpPopover";
-@import "./flightInfoRow";
-@import "./flightPanel";
-@import "./flightTable";
-@import "./flightToast";
-@import "./form";
 @import "./inbox";
 
 /* XXX Consider whether these should be required by their components. They
  * need access to the SASS context (helpers, basic settings, bootstrap
  * settings, others?) to be compiled.
  */
-@import "./pageHeader";
 @import "./footer";
-@import "./homePage";
-@import "./signInPage";
-@import "./signUpPage";
-@import "./connectPage";
 @import "./loadingPage";
 
 @import "./animations";
