@@ -1,10 +1,4 @@
-/*=============================================================================
- * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
- *
- * This file is part of Alces Flight.
- *
- * All rights reserved, see LICENSE.txt.
- *===========================================================================*/
+
 import React from 'react';
 import { Button, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';

@@ -1,10 +1,4 @@
-/*=============================================================================
- * Copyright (C) 2015 Stephen F. Norledge and Alces Software Ltd.
- *
- * This file is part of Alces Flight.
- *
- * All rights reserved, see LICENSE.txt.
- *===========================================================================*/
+
 import * as types from './actionTypes';
 
 export function displayErrorModal(action, response) {

@@ -1,3 +1,4 @@
+
 import { connect } from 'react-redux';
 
 import SessionSelectionPage from 'components/pages/SessionSelectionPage';
