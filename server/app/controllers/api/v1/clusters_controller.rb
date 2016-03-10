@@ -1,6 +1,7 @@
 require 'yaml'
 
 require 'alces/tools/ssl_configurator'
+require 'daemon_client'
 
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
