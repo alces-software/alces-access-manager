@@ -94,7 +94,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       assert connection_opts.respond_to? :[]
       assert_equal '127.0.0.1:25269', connection_opts[:address]
-      assert_equal false, connection_opts[:ssl]
+      assert_not connection_opts[:ssl]
       assert_equal 5, connection_opts[:timeout]
     end
 
