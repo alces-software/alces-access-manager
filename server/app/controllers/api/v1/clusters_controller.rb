@@ -121,7 +121,7 @@ class Api::V1::ClustersController < ApplicationController
 
   def sessions_for_response(username)
     opts = {
-      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
+      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
       :username => username
     }
     wrapper = DaemonClient::Wrapper.new(daemon, opts)
