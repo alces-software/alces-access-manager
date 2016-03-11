@@ -27,6 +27,10 @@ class RoutesTest < ActionController::TestCase
     assert_single_cluster_route 'logout', 'post'
   end
 
+  test "should route to register a cluster" do
+    assert_clusters_route({method: 'post', path: '/api/v1/clusters/register'}, {action: 'register'})
+  end
+
   private
 
   def assert_single_cluster_route(route_suffix, method='get')

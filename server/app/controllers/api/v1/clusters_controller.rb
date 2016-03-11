@@ -18,6 +18,31 @@ class Api::V1::ClustersController < ApplicationController
     render json: overall_config.to_json
   end
 
+  def register
+    # TODO:
+    # - Maybe we should do some more thorough validation of Json params here?
+    #
+    # - The process of loading the config, converting to indifferent access
+    #   hash, and dumping again, leaves values in config file stating that they
+    #   should be instantiated as HashWithIndifferentAccess; which doesn't seem
+    #   to effect anything but looks ugly and potentially confusing.
+    #
+    # - Handle requests for clusters we already have in config; currently this
+    #   causes them to be added to config causing issues for client.
+
+    new_config = load_config.tap do |config|
+      new_cluster_config = Hash[params[:cluster].tap do |cluster|
+        # Convert some parameters to ints; set default values if none given.
+        # TODO: Converting to ints seems to be required to make test pass, even
+        # though requesting in Json format with ints included - I don't
+        # understand why.
+        cluster[:auth_port] = cluster[:auth_port].to_i
+        cluster[:timeout] = cluster[:timeout] ? cluster[:timeout].to_i : 5
+      end]
+      config[:clusters] << new_cluster_config
+    end
+    write_config(new_config)
+  end
 
   def authenticate
     params.require(:username)
@@ -133,6 +158,10 @@ class Api::V1::ClustersController < ApplicationController
 
   def load_config
     @config ||= YAML.load_file(config_file).with_indifferent_access
+  end
+
+  def write_config(new_config)
+    File.write(config_file, YAML.dump(new_config))
   end
 
   def cluster_config

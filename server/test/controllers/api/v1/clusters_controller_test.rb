@@ -1,10 +1,13 @@
 
+require 'tempfile'
 require 'yaml'
 
 require 'test_helper'
 
 class Api::V1::ClustersControllerTest < ActionController::TestCase
   # TODO: look through and reduce test duplication.
+  # TODO: should be more consistent with what is mocked/handling varied configs
+  # too?
 
   class IndexTest < Api::V1::ClustersControllerTest
     # TODO: change this, will currently return whole config (is that what we want?)
@@ -56,6 +59,52 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
 
       expected_response = {clusters: []}.with_indifferent_access
       assert_equal expected_response, json_response
+    end
+  end
+
+  class RegisterTest < Api::V1::ClustersControllerTest
+    test "adds a new cluster to the config file" do
+      current_config = {
+        clusters: [{
+          name: "First cluster",
+          ip: "127.0.0.1",
+          auth_port: 25269,
+          ssl: false,
+          timeout: 5,
+        }],
+        environment: {
+          name: "Test Environment"
+        }
+      }
+
+      # Use a temporary config file for the config during this test, so only
+      # need to mock the single controller method for where the config is.
+      config_file = Tempfile.new('config')
+      @controller.stubs(:config_file).returns(config_file.path)
+      @controller.send(:write_config, current_config)
+
+      cluster = {
+        name: "New Cluster",
+        ip: "10.10.10.1",
+        auth_port: 25269,
+        ssl: true,
+        timeout: 5,
+        ssl_connection: {
+          root: '/path/to/dir',
+          certificate: 'daemon_crt.pem',
+          key: 'daemon_key.pem',
+          ca: 'alces-ca_crt.pem'
+        }
+      }
+
+      post :register, {cluster: cluster}
+
+      expected_config = current_config.tap do |config|
+        config[:clusters] << cluster
+      end.with_indifferent_access
+
+      assert_response :success
+      assert_equal expected_config, @controller.send(:load_config)
     end
   end
 

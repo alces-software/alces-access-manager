@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
 
-      resources :clusters, only: [:index]
+      resources :clusters, only: [:index] do
+        collection do
+          post :register
+        end
+      end
 
       cluster_route_params = {
         constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
