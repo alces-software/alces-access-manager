@@ -18,13 +18,6 @@ class Api::V1::ClustersController < ApplicationController
     render json: overall_config.to_json
   end
 
-  # TODO: From LoginController, need to test and adapt for AM
-
-  # def index
-  #   if session.has_key?(:authenticated_username)
-  #     redirect_to root_url
-  #   end
-  # end
 
   def authenticate
     params.require(:username)
