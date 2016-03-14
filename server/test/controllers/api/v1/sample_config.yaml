@@ -4,11 +4,9 @@ clusters:
     ip: 127.0.0.1
     auth_port: 25269
     ssl: false
-    timeout: 5
 
   - name: "Physics simulation cluster"
     ip: 10.10.10.10
     auth_port: 1234
     ssl: true
-    timeout: 10
 ...

@@ -32,12 +32,11 @@ class Api::V1::ClustersController < ApplicationController
 
     new_config = load_config.tap do |config|
       new_cluster_config = Hash[params[:cluster].tap do |cluster|
-        # Convert some parameters to ints; set default values if none given.
-        # TODO: Converting to ints seems to be required to make test pass, even
+        # Convert auth port to int.
+        # TODO: Converting to int seems to be required to make test pass, even
         # though requesting in Json format with ints included - I don't
         # understand why.
         cluster[:auth_port] = cluster[:auth_port].to_i
-        cluster[:timeout] = cluster[:timeout] ? cluster[:timeout].to_i : 5
       end]
       config[:clusters] << new_cluster_config
     end
@@ -100,7 +99,7 @@ class Api::V1::ClustersController < ApplicationController
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
     {
       address: cluster_daemon_address,
-      timeout: cluster_config[:timeout],
+      timeout: overall_config[:timeout],
       ssl_config: cluster_config[:ssl] ? ssl_config : nil
     }
   end
@@ -110,14 +109,13 @@ class Api::V1::ClustersController < ApplicationController
     Class.new do
       include Alces::Tools::SSLConfigurator
 
-      def initialize(cluster_config)
-        # Make the outer controller's cluster config available within this
-        # class.
-        @cluster_config = cluster_config
+      def initialize(overall_config)
+        # Make the outer controller's SSL config available within this class.
+        @ssl_config = overall_config[:ssl]
       end
 
       def ssl_verify_mode
-        if @cluster_config[:ssl_connection][:verify] == false
+        if @ssl_config[:verify] == false
           OpenSSL::SSL::VERIFY_NONE
         else
           OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
@@ -125,15 +123,9 @@ class Api::V1::ClustersController < ApplicationController
       end
 
       def ssl
-        ssl_opts = @cluster_config[:ssl_connection].dup
-        Alces::Tools::SSLConfigurator::Configuration.new(
-          root: ssl_opts[:root],
-          certificate: ssl_opts[:certificate],
-          key: ssl_opts[:key],
-          ca: ssl_opts[:ca]
-        )
+        Alces::Tools::SSLConfigurator::Configuration.new(@ssl_config)
       end
-    end.new(cluster_config).ssl_config
+    end.new(overall_config).ssl_config
   end
 
 

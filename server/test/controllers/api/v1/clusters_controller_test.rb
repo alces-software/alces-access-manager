@@ -70,7 +70,6 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
           ip: "127.0.0.1",
           auth_port: 25269,
           ssl: false,
-          timeout: 5,
         }],
         environment: {
           name: "Test Environment"
@@ -88,13 +87,6 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
         ip: "10.10.10.1",
         auth_port: 25269,
         ssl: true,
-        timeout: 5,
-        ssl_connection: {
-          root: '/path/to/dir',
-          certificate: 'daemon_crt.pem',
-          key: 'daemon_key.pem',
-          ca: 'alces-ca_crt.pem'
-        }
       }
 
       post :register, {cluster: cluster}
@@ -144,7 +136,6 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
       assert connection_opts.respond_to? :[]
       assert_equal '127.0.0.1:25269', connection_opts[:address]
       assert_not connection_opts[:ssl]
-      assert_equal 5, connection_opts[:timeout]
     end
 
     test "does not authenticate invalid user" do
