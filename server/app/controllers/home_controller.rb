@@ -12,8 +12,8 @@ class HomeController < ActionController::Base
         puts 'ERROR: Please export AAM_ASSETS_HASH to the hash of the current assets.'
       end
       OpenStruct.new(
-        js_bundle_url: "alces-access-manager.#{assets_hash}.min.js",
-        css_bundle_url: "alces-access-manager.#{assets_hash}.css",
+        js_bundle_url: "/alces-access-manager.#{assets_hash}.min.js",
+        css_bundle_url: "/alces-access-manager.#{assets_hash}.css",
         revision: "production-#{assets_hash}"
       )
     else
