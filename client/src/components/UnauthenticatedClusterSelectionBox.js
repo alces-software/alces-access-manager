@@ -43,7 +43,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
               IP: {cluster.ip}
             </p>
             <p>
-              <em>Click to login</em>
+              {cluster.available ? <em>Click to login</em> : ''}
             </p>
           </div>
           <div className="flip-selection-box-back">
