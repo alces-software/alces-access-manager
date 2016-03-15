@@ -21,6 +21,10 @@ Rails.application.routes.draw do
         to: 'clusters#authenticate',
         **cluster_route_params
 
+      get 'cluster/:ip/ping',
+        to: 'clusters#ping',
+        **cluster_route_params
+
       get 'cluster/:ip/sessions',
         to: 'clusters#sessions',
         **cluster_route_params

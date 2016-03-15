@@ -6,6 +6,11 @@ class DaemonConnectionTest < ActionDispatch::IntegrationTest
   # Smoke test to ensure we can communicate with real daemon.
   test "authenticating valid user with real daemon" do
     open_session do |sess|
+      sess.get '/api/v1/cluster/127.0.0.1/ping'
+
+      sess.assert_response :success, "Is the daemon running at the correct address?"
+      sess.assert sess.json_response[:available]
+
       sess.post '/api/v1/cluster/127.0.0.1/authenticate',
         username: 'vagrant',
         password: 'vagrant'
