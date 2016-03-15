@@ -55,7 +55,9 @@ class ClusterSelectionBox extends React.Component {
         form={form}
       />
 
-    if (cluster.available === undefined) {
+    const currentlyPingingCluster = (cluster.available === undefined);
+
+    if (currentlyPingingCluster) {
       return (
         <PingingClusterFilter>
           {selectionBoxElement}
