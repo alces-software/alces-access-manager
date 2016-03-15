@@ -20,6 +20,13 @@ function logoutReducer(state, action) {
   );
 }
 
+function setPingResponse(state, action) {
+  const {ip} = action.meta.payload;
+  return modifyClusterInState(
+    state, ip,
+    (cluster) => cluster.available = action.payload.available);
+}
+
 // Returns new state with cluster with given IP modified by executing modifyFn.
 // TODO: seems convoluted to do this, although this is how we most often want
 // to modify the clusters state - possibly a better way, maybe have clusters
@@ -45,6 +52,9 @@ export default function reducer(state=initialState, action) {
 
     case resolve(actionTypes.LOGOUT):
       return logoutReducer(state, action);
+
+    case resolve(actionTypes.PING):
+      return setPingResponse(state, action);
 
     default:
       return state;

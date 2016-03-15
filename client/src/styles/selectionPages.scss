@@ -89,3 +89,27 @@ $selection-box-color: #eee;
   // Firefox.
   overflow: visible;
 }
+
+.pinging-cluster-filter {
+  position: relative;
+}
+
+.pinging-cluster-element {
+  opacity: 0.5;
+}
+
+.pinging-cluster-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72;
+}
+
+.unavailable-cluster-filter {
+  opacity: 0.5;
+  color: red;
+}
