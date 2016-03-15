@@ -7,30 +7,36 @@ import UnauthenticatedClusterSelectionBox from 'components/UnauthenticatedCluste
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 const PingingClusterFilter = ({children}) => {
+  const filterMessage =
+    <Icon name="cluster-pinging" className="cluster-pinging-icon"/>;
   return (
-    <div className="cluster-filter-container">
-      <div className="cluster-filter-message">
-        <Icon name="cluster-pinging" className="cluster-pinging-icon"></Icon>
-      </div>
-      <div className="cluster-filter">
-        {children}
-      </div>
-    </div>
-  )
+    <ClusterFilter message={filterMessage}>
+      {children}
+    </ClusterFilter>
+  );
 };
 
 const UnavailableClusterFilter = ({children}) => {
+  const filterMessage = <strong>NOT&nbsp;AVAILABLE</strong>;
+  return (
+    <ClusterFilter message={filterMessage}>
+      {children}
+    </ClusterFilter>
+  );
+}
+
+const ClusterFilter = ({message, children}) => {
   return (
     <div className="cluster-filter-container">
       <div className="cluster-filter-message">
-        <strong>NOT&nbsp;AVAILABLE</strong>
+        {message}
       </div>
       <div className="cluster-filter">
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
 class ClusterSelectionBox extends React.Component {
   render() {
