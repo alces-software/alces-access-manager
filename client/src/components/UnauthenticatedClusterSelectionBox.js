@@ -34,7 +34,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
       <div
         className="flip-selection-box"
         >
-        <FlipCard>
+        <FlipCard disabled={!cluster.available}>
           <div className="flip-selection-box-front">
             <p>
               <strong>{cluster.name}</strong>
