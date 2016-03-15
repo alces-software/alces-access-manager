@@ -123,7 +123,8 @@ class Api::V1::ClustersController < ApplicationController
       end
 
       def ssl
-        Alces::Tools::SSLConfigurator::Configuration.new(@ssl_config)
+        Alces::Tools::SSLConfigurator::Configuration
+          .new(@ssl_config.slice(:root, :certificate, :key, :ca))
       end
     end.new(overall_config).ssl_config
   end
