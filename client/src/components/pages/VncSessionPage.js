@@ -22,8 +22,13 @@ class VncSessionPage extends React.Component {
       session,
     } = this.props;
 
-    // TODO: Have different URLs for dev vs production.
-    const url = `ws://${cluster.ip}:${session.websocket}/vnc/${session.host}/${session.websocket}`;
+    const url = __PRODUCTION__ ?
+      // In production we want to use SSL and connect to a proxy to the VNC
+      // session websocket on the AAM appliance.
+      `wss://${window.location.host}/vnc/${session.access_host}/${session.websocket}`
+      :
+      // In development we connect to the websocket directly, and without SSL.
+      `ws://${cluster.ip}:${session.websocket}`;
 
     const pasteModalButtons = (
       <Button

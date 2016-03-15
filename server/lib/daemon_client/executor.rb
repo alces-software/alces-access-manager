@@ -22,7 +22,7 @@ end
 # ASMD can both use -- perhaps alces-tools as
 # Alces::Tools::RemoteServiceError?
 module Alces
-  module StorageManagerDaemon
+  module AccessManagerDaemon
     class HandlerError < RuntimeError; end
   end
 end
@@ -65,7 +65,7 @@ module DaemonClient
       raise DaemonClient::ConnError, "Timeout when communicating with ASM daemon: #{$!.message}"
     rescue DRb::DRbConnError, Errno::ECONNREFUSED
       raise DaemonClient::ConnError, "Could not communicate with ASM daemon: #{$!.message}"
-    rescue Alces::StorageManagerDaemon::HandlerError
+    rescue Alces::AccessManagerDaemon::HandlerError
       raise DaemonClient::RemoteError, "An error occurred during ASM handler execution: #{$!.message}"
     rescue
       STDERR.puts '===== UNCAUGHT DAEMON EXCEPTION DETECTED ====='

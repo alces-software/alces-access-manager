@@ -23,8 +23,8 @@ export function setupDefaultErrorMessageGenerators(generatorsMap) {
   const serverUnavailableErrorMessageGenerator = new MessageGenerator(
     'Unable to communicate with server',
     <div>
-      Flight was unable to complete your action as it was unable to
-      communicate with the Flight web server; please check your
+      Alces Access Manager was unable to complete your action as it was unable
+      to communicate with the Access Manager web server; please check your
       internet connection and try again. <ContactCustomerSupport/>
     </div>
   );
@@ -42,8 +42,8 @@ export function setupDefaultErrorMessageGenerators(generatorsMap) {
   const serverErrorMessageGenerator = new MessageGenerator(
     'Unexpected error',
     <div>
-      The Flight web server errored while attempting to complete your
-      request. <ContactCustomerSupport/>
+      The Alces Access Manager web server errored while attempting to complete
+      your request. <ContactCustomerSupport/>
     </div>
   );
 

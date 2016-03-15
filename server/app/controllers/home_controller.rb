@@ -6,11 +6,23 @@ require 'ostruct'
 
 class HomeController < ActionController::Base
   def index
-    @assets = OpenStruct.new(
-      js_bundle_url: 'http://localhost:3001/alces-access-manager.js',
-      css_bundle_url: 'http://localhost:3001/alces-access-manager.css',
-      revision: 'dev_build'
-    )
+    @assets = if Rails.env.production?
+      assets_hash = ENV["AAM_ASSETS_HASH"]
+      unless assets_hash
+        puts 'ERROR: Please export AAM_ASSETS_HASH to the hash of the current assets.'
+      end
+      OpenStruct.new(
+        js_bundle_url: "/alces-access-manager.#{assets_hash}.min.js",
+        css_bundle_url: "/alces-access-manager.#{assets_hash}.css",
+        revision: "production-#{assets_hash}"
+      )
+    else
+      OpenStruct.new(
+        js_bundle_url: 'http://localhost:3001/alces-access-manager.js',
+        css_bundle_url: 'http://localhost:3001/alces-access-manager.css',
+        revision: 'dev_build'
+      )
+    end
   end
 
   helper_method :body_element_attrs

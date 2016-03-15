@@ -117,7 +117,6 @@ class NoVnc extends React.Component {
 NoVnc.propTypes = {
   url: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  notificationActions: PropTypes.object.isRequired,
   novnc: PropTypes.object.isRequired, // noVNC Redux store state.
   novncActions: PropTypes.object.isRequired,
   formActions: PropTypes.object.isRequired,

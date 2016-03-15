@@ -1,6 +1,7 @@
 require 'yaml'
 
 require 'alces/tools/ssl_configurator'
+require 'daemon_client'
 
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
@@ -17,13 +18,30 @@ class Api::V1::ClustersController < ApplicationController
     render json: overall_config.to_json
   end
 
-  # TODO: From LoginController, need to test and adapt for AM
+  def register
+    # TODO:
+    # - Maybe we should do some more thorough validation of Json params here?
+    #
+    # - The process of loading the config, converting to indifferent access
+    #   hash, and dumping again, leaves values in config file stating that they
+    #   should be instantiated as HashWithIndifferentAccess; which doesn't seem
+    #   to effect anything but looks ugly and potentially confusing.
+    #
+    # - Handle requests for clusters we already have in config; currently this
+    #   causes them to be added to config causing issues for client.
 
-  # def index
-  #   if session.has_key?(:authenticated_username)
-  #     redirect_to root_url
-  #   end
-  # end
+    new_config = load_config.tap do |config|
+      new_cluster_config = Hash[params[:cluster].tap do |cluster|
+        # Convert auth port to int.
+        # TODO: Converting to int seems to be required to make test pass, even
+        # though requesting in Json format with ints included - I don't
+        # understand why.
+        cluster[:auth_port] = cluster[:auth_port].to_i
+      end]
+      config[:clusters] << new_cluster_config
+    end
+    write_config(new_config)
+  end
 
   def authenticate
     params.require(:username)
@@ -81,7 +99,7 @@ class Api::V1::ClustersController < ApplicationController
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
     {
       address: cluster_daemon_address,
-      timeout: cluster_config[:timeout],
+      timeout: overall_config[:timeout],
       ssl_config: cluster_config[:ssl] ? ssl_config : nil
     }
   end
@@ -91,14 +109,13 @@ class Api::V1::ClustersController < ApplicationController
     Class.new do
       include Alces::Tools::SSLConfigurator
 
-      def initialize(cluster_config)
-        # Make the outer controller's cluster config available within this
-        # class.
-        @cluster_config = cluster_config
+      def initialize(overall_config)
+        # Make the outer controller's SSL config available within this class.
+        @ssl_config = overall_config[:ssl]
       end
 
       def ssl_verify_mode
-        if @cluster_config[:ssl_connection][:verify] == false
+        if @ssl_config[:verify] == false
           OpenSSL::SSL::VERIFY_NONE
         else
           OpenSSL::SSL::VERIFY_PEER | OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT
@@ -106,21 +123,16 @@ class Api::V1::ClustersController < ApplicationController
       end
 
       def ssl
-        ssl_opts = @cluster_config[:ssl_connection].dup
-        Alces::Tools::SSLConfigurator::Configuration.new(
-          root: ssl_opts[:root],
-          certificate: ssl_opts[:certificate],
-          key: ssl_opts[:key],
-          ca: ssl_opts[:ca]
-        )
+        Alces::Tools::SSLConfigurator::Configuration
+          .new(@ssl_config.slice(:root, :certificate, :key, :ca))
       end
-    end.new(cluster_config).ssl_config
+    end.new(overall_config).ssl_config
   end
 
 
   def sessions_for_response(username)
     opts = {
-      :handler => 'Alces::StorageManagerDaemon::SessionsHandler',
+      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
       :username => username
     }
     wrapper = DaemonClient::Wrapper.new(daemon, opts)
@@ -139,6 +151,10 @@ class Api::V1::ClustersController < ApplicationController
 
   def load_config
     @config ||= YAML.load_file(config_file).with_indifferent_access
+  end
+
+  def write_config(new_config)
+    File.write(config_file, YAML.dump(new_config))
   end
 
   def cluster_config
