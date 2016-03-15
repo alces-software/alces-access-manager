@@ -58,6 +58,16 @@ class Api::V1::ClustersController < ApplicationController
     end
   end
 
+  def ping
+    responded = begin
+      daemon.ping
+    rescue DaemonClient::ConnError
+      false
+    end
+
+    render json: {available: responded}
+  end
+
   def logout
     authentications.delete(params[:ip])
   end

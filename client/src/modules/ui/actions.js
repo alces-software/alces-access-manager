@@ -2,7 +2,7 @@
 import _ from 'lodash';
 
 import * as actionTypes from './actionTypes';
-import {loadClusters} from 'clusters/actions';
+import * as clusterActionTypes from 'clusters/actions';
 import {loadSessions} from 'sessions/actions';
 
 export function stopSessionReloadAnimation() {
@@ -37,12 +37,14 @@ export function loadSessionData() {
     dispatch(startLoadSessionData());
 
     return dispatch(
-      loadClusters()
+      clusterActionTypes.loadClusters()
     ).then( ({clusters}) =>
       loadAuthenticatedClusterSessions(clusters)
     ).then( () => dispatch(
       finishLoadSessionData()
-    ));
+    )).then( () =>
+      dispatch(clusterActionTypes.pingClusters())
+    );
     // TODO: error handling?
   }
 }

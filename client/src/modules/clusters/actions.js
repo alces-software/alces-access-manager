@@ -1,4 +1,6 @@
 
+import _ from 'lodash';
+
 import * as actionTypes from './actionTypes';
 import {redirectTo} from 'actions/router';
 import {loadSessions} from 'sessions/actions';
@@ -59,4 +61,30 @@ export function logout(ip) {
       },
     },
   };
+}
+
+function ping(ip) {
+  return {
+    type: actionTypes.PING,
+    payload: {
+      ip,
+    },
+    meta: {
+      apiRequest: {
+        config: {
+          url: `/api/v1/cluster/${ip}/ping`,
+          method: 'get',
+        },
+      },
+    },
+  };
+}
+
+export function pingClusters() {
+  return (dispatch, getState) => {
+    const clusterIps = _.map(getState().clusters, (cluster) => cluster.ip);
+    _.map(clusterIps, (ip) => {
+      dispatch(ping(ip));
+    })
+  }
 }

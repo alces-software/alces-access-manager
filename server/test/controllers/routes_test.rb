@@ -23,6 +23,10 @@ class RoutesTest < ActionController::TestCase
     assert_single_cluster_route 'sessions'
   end
 
+  test "should route to ping cluster" do
+    assert_single_cluster_route 'ping'
+  end
+
   test "should route to cluster logout" do
     assert_single_cluster_route 'logout', 'post'
   end
