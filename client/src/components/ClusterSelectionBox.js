@@ -8,16 +8,29 @@ import {selectionBoxPropTypes} from 'utils/propTypes';
 
 const PingingClusterFilter = ({children}) => {
   return (
-    <div className="pinging-cluster-filter">
-      <div className="pinging-cluster-icon">
-        <Icon name="cluster-pinging"></Icon>
+    <div className="cluster-filter-container">
+      <div className="cluster-filter-message">
+        <Icon name="cluster-pinging" className="cluster-pinging-icon"></Icon>
       </div>
-      <div className="pinging-cluster-element">
+      <div className="cluster-filter">
         {children}
       </div>
     </div>
   )
 };
+
+const UnavailableClusterFilter = ({children}) => {
+  return (
+    <div className="cluster-filter-container">
+      <div className="cluster-filter-message">
+        <strong>NOT&nbsp;AVAILABLE</strong>
+      </div>
+      <div className="cluster-filter">
+        {children}
+      </div>
+    </div>
+  )
+}
 
 class ClusterSelectionBox extends React.Component {
   render() {
@@ -45,9 +58,9 @@ class ClusterSelectionBox extends React.Component {
     }
     else if (!cluster.available) {
       return (
-        <div className="unavailable-cluster-filter">
+        <UnavailableClusterFilter>
           {selectionBoxElement}
-        </div>
+        </UnavailableClusterFilter>
       );
     }
     else {
