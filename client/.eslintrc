@@ -1,30 +1,36 @@
 {
-  "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
-  "env": {
-    "browser": true,
-    "amd": true,
-    "es6": true,
-    "node": true
-  },
-  "rules": {
-    "comma-dangle": 1,
-    "quotes": [ 1, "single" ],
-    "no-undef": 1,
-    "global-strict": 0,
-    "no-extra-semi": 1,
-    "no-underscore-dangle": 0,
-    "no-console": 1,
-    "no-unused-vars": 1,
-    "no-trailing-spaces": [1, { "skipBlankLines": true }],
-    "no-unreachable": 1,
-    "no-alert": 0,
-    "react/jsx-uses-react": 1
-  }
+    "extends": "eslint:recommended",
+    "globals": {
+      "__PERSIST_STATE__": true,
+      "__DEVTOOLS__": true,
+      "__DEVELOPMENT__": true,
+      "__PRODUCTION__": true,
+      "__TEST__": true,
+      "__DEMO__": true,
+      "module": true,
+      "require": true
+    },
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "node": false
+    },
+    "settings": {
+        "ecmascript": 6,
+        "jsx": true
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "comma-dangle": [1, "always-multiline"],
+        "strict": 0,
+        "quotes": 0,
+        "no-unused-vars": 1,
+        "camelcase": 1,
+        "no-underscore-dangle": 0,
+        "no-unreachable": 1,
+        "react/jsx-uses-react": 1,
+        "react/react-in-jsx-scope": 1
+    }
 }

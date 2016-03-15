@@ -1,0 +1,91 @@
+
+$selection-box-height: 222px;
+$selection-box-color: #eee;
+
+@mixin selection-box-border() {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 25px;
+}
+
+@mixin selection-box-inside() {
+    margin: 25px;
+    text-align: center;
+}
+
+.selection-box-button {
+  width: 100%;
+  margin-bottom: 5px;
+  input {
+    width: inherit;
+  }
+}
+
+.selection-details-box {
+  @include selection-box-border();
+  @include selection-box-inside();
+
+  background-color: $selection-box-color;
+}
+
+.flip-selection-box {
+  display: inline-block;
+
+  .ReactFlipCard {
+    @include selection-box-inside();
+  }
+
+  .ReactFlipCard,
+  .ReactFlipCard__Front,
+  .ReactFlipCard__Back {
+    height: $selection-box-height;
+    width: 300px; // TODO need to specify width? Just want each to take up a third of header.
+  }
+
+  .ReactFlipCard__Front,
+  .ReactFlipCard__Back {
+    @include selection-box-border();
+  }
+
+  .ReactFlipCard__Front {
+    background-color: $selection-box-color;
+  }
+
+  .ReactFlipCard__Back {
+    background-color: #cef;
+  }
+}
+
+.static-selection-box {
+  @include selection-box-border();
+  @include selection-box-inside();
+
+  height: $selection-box-height;
+  background-color: $selection-box-color;
+}
+
+.cross-fade-leave {
+  opacity: 1;
+}
+.cross-fade-leave.cross-fade-leave-active {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-enter {
+  opacity: 0;
+}
+.cross-fade-enter.cross-fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-height {
+  transition: height .5s ease-in-out;
+}
+
+.pageContainer {
+  // Prevent selection box spinning flashing the scrollbar in
+  // Firefox.
+  overflow: visible;
+}

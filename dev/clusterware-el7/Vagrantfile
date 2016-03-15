@@ -1,0 +1,69 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "hfm4/centos7"
+  config.vm.box_check_update = false
+  config.vm.hostname = "master"
+
+  # Update the below vars to match your configuration
+  #projects = "#{ENV['HOME']}/projects"
+  projects = "#{ENV['HOME']}/projects/alces"
+  hostonly_net = "vboxnet0"
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui = true
+    v.customize ["modifyvm", :id, "--nic2", "hostonly"]
+    v.customize ["modifyvm", :id, "--hostonlyadapter2", hostonly_net]
+  end
+
+  provision_script = <<-RUBY
+  export alces_SOURCE_DIR=/media/host/clusterware
+  export alces_OS=el7
+  export alces_DISABLE_SPINNER=true
+  export alces_BUILD_TMP=tmp/simple-el7
+  #export alces_NAMING_auth="GNjdioBB+c6r2Dkackqt"
+  #export cw_HANDLER_DEFAULT_REPO_URL=/media/host/clusterware-handlers
+  #export cw_SESSION_DEFAULT_REPO_URL=/media/host/clusterware-sessions
+  #export cw_SERVICEWARE_DEFAULT_REPO_URL=/media/host/clusterware-services
+  #export cw_STORAGE_DEFAULT_REPO_URL=/media/host/clusterware-storage
+  /media/host/clusterware/scripts/bootstrap
+  cp /vagrant/config.yml /opt/clusterware/etc/config.yml
+  PATH=/opt/clusterware/bin:$PATH
+  alces handler enable clusterable
+  alces handler enable cluster-gridware
+  alces handler enable cluster-nfs
+  alces handler enable cluster-sge
+  alces handler enable taskable
+  alces handler enable cluster-appliances
+  RUBY
+  config.vm.provision 'shell', inline: provision_script
+
+  config.vm.synced_folder "#{projects}/clusterware", "/media/host/clusterware"
+  #config.vm.synced_folder "#{projects}/metalware", "/media/host/metalware"
+  #config.vm.synced_folder "#{projects}/clusterware-handlers", "/media/host/clusterware-handlers"
+  #config.vm.synced_folder "#{projects}/clusterware-sessions", "/media/host/clusterware-sessions"
+  #config.vm.synced_folder "#{projects}/clusterware-services", "/media/host/clusterware-services"
+  #config.vm.synced_folder "#{projects}/clusterware-storage", "/media/host/clusterware-storage"
+  #config.vm.synced_folder "#{projects}/packager-base", "/media/host/clusterware-packages"
+
+
+  # AAM additions to Clusterware Vagrantfile below this point.
+
+  # Sync in AAM daemon.
+  config.vm.synced_folder "#{projects}/alces-access-manager-daemon", "/media/host/alces-access-manager-daemon"
+
+  # TODO: various setup needed to make AAM daemon run initially - installing
+  # gems, ruby headers, git etc - make this part of provisioning process.
+
+  # TODO: Make below part of provisioning process.
+  #
+  # Note:
+  # - To start daemon:
+  # cd /media/host/alces-access-manager-daemon && rvmsudo bin/alces-access-manager-daemon
+  #
+  # - To forward daemon port:
+  # ssh -L 25269:10.0.2.15:25269 -p 2222 vagrant@localhost
+end
