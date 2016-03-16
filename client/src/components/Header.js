@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 // TODO: Do same in Aviator.
 import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
 import NavbarHeader from 'react-bootstrap/lib/NavbarHeader';
+import NavbarCollapse from 'react-bootstrap/lib/NavbarCollapse';
 
 import {NavItemLink} from 'components/Links';
 
@@ -21,11 +22,13 @@ class Header extends React.Component {
             <Link to="/"/>
           </NavbarBrand>
         </NavbarHeader>
-        <Nav>
-          <NavItemLink to="/">
-            Alces Access Manager
-          </NavItemLink>
-        </Nav>
+        <NavbarCollapse>
+          <Nav>
+            <NavItemLink to="/">
+              Alces Access Manager
+            </NavItemLink>
+          </Nav>
+        </NavbarCollapse>
       </Navbar>
     )
   }
