@@ -165,8 +165,6 @@ class NoVnc extends React.Component {
     // When component moused over make keyboard send keys to canvas and focus
     // the canvas, so keys sent to the VNC session; this does not seem to
     // consistently happen otherwise.
-    // TODO: still need to unfocus and refocus canvas once for this to work at
-    // the moment.
     this.rfb.get_keyboard().set_focused(true);
     this.canvas.focus();
 

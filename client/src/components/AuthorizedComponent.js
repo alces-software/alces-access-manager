@@ -18,17 +18,6 @@ export function authorize(authorizationFunction, authorizationFailedHandler) {
       this.handleIfUnauthorized();
     }
 
-    // TODO: This does not make sense in AAM as refers to Aviator state -
-    // remove or adapt this?
-    // componentWillReceiveProps(nextProps) {
-    //   const authChanged = this.props.auth !== nextProps.auth;
-    //   const envsChanged = this.props.environments !== nextProps.environments;
-
-    //   if (authChanged || envsChanged) {
-    //     this.handleIfUnauthorized();
-    //   }
-    // }
-
     handleIfUnauthorized() {
       if (!this.authorized()) {
         authorizationFailedHandler.bind(this)();
