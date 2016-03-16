@@ -67,6 +67,12 @@ class NoVnc extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.handlePasting(nextProps);
+    this.handleDragViewportModeTransition(nextProps);
+    this.handleNoVncStateTransitions(nextProps);
+  }
+
+  handlePasting(nextProps) {
     const {
       formActions,
       novnc,
@@ -102,10 +108,23 @@ class NoVnc extends React.Component {
     else if (finishedPaste) {
       this.setPastingText(false);
     }
+  }
 
+  setPastingText(pastingText) {
+    this.setState({
+      pastingText,
+    })
+  }
+
+  handleDragViewportModeTransition(nextProps) {
+    const {novnc} = nextProps;
     if (novnc.viewportDrag !== this.props.novnc.viewportDrag) {
       this.rfb.set_viewportDrag(novnc.viewportDrag);
     }
+  }
+
+  handleNoVncStateTransitions(nextProps) {
+    const {novnc, novncActions} = nextProps;
 
     const transitioningToState = (state) =>
       novnc.state === state && this.props.novnc.state !== state;
@@ -121,12 +140,6 @@ class NoVnc extends React.Component {
       display.set_viewport(true);
       this.resizeViewport();
     }
-  }
-
-  setPastingText(pastingText) {
-    this.setState({
-      pastingText,
-    })
   }
 
   stateHandler(rfb, state, oldstate, msg) {
