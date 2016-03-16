@@ -42,7 +42,7 @@ class VncSessionPage extends React.Component {
 
     return (
       <div className="container">
-        <div className="vnc-container">
+        <div className="vnc-container" style={{maxWidth: '1024px'}}>
           <ButtonToolbar className="vnc-button-toolbar">
             {/* Sound toggle planned for future iteration.
             <ButtonGroup>

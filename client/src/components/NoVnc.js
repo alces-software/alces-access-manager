@@ -4,8 +4,10 @@ import noVNC from 'novnc-node';
 
 class NoVnc extends React.Component {
   render() {
+    const {novnc} = this.props;
+
     return (
-      <div className="novnc">
+      <div id="novnc-wrapper" className="novnc">
         <canvas
           id='novnc-canvas'
           className={novnc.viewportDrag ? "novnc-canvas--dragEnabled" : ""}
@@ -15,6 +17,10 @@ class NoVnc extends React.Component {
         </canvas>
       </div>
     );
+  }
+
+  componentWillMount() {
+    this.resizeViewport.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +33,29 @@ class NoVnc extends React.Component {
       onClipboard: this.clipboardHandler.bind(this),
     });
 
+    window.addEventListener("resize", this.resizeViewport.bind(this));
+
     this.connect();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeViewport.bind(this));
+
+    // Reset to interactive mode; more intuitive.
+    // TODO: Reset other parts of interface?
+    this.props.novncActions.setInteractiveMode();
+  }
+
+  // Resize noVNC viewport to dimensions of wrapper div.
+  // TODO: Should this be debounced?
+  resizeViewport() {
+    const novncWrapper = document.getElementById("novnc-wrapper");
+    const width = novncWrapper.clientWidth;
+    const height = novncWrapper.clientHeight;
+    if (width && height) {
+      const display = this.rfb.get_display();
+      display.viewportChangeSize(width, height);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,13 +95,23 @@ class NoVnc extends React.Component {
       this.setPastingText(false);
     }
 
-    const transitioningToFailedState =
-      novnc.state === 'failed' && this.props.novnc.state !== 'failed';
+    if (novnc.viewportDrag !== this.props.novnc.viewportDrag) {
+      this.rfb.set_viewportDrag(novnc.viewportDrag);
+    }
 
-    if (transitioningToFailedState) {
+    const transitioningToState = (state) =>
+      novnc.state === state && this.props.novnc.state !== state;
+
+    if (transitioningToState('failed')) {
       const sessionFailedOnInitialConnect =
         this.props.novnc.state === 'connect';
       novncActions.showSessionFailedModal(sessionFailedOnInitialConnect);
+    }
+    else if (transitioningToState('normal')) {
+      // TODO set dimensions
+      const display = this.rfb.get_display();
+      display.set_viewport(true);
+      this.resizeViewport();
     }
   }
 
