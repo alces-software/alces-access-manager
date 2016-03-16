@@ -44,6 +44,10 @@ class NoVnc extends React.Component {
     // Reset to interactive mode; more intuitive.
     // TODO: Reset other parts of interface?
     this.props.novncActions.setInteractiveMode();
+
+    // Shouldn't be needed but make sure no longer attempting resize at regular
+    // intervals.
+    window.clearInterval(this.intervalResizeId);
   }
 
   // Resize noVNC viewport to dimensions of wrapper div.
@@ -149,12 +153,24 @@ class NoVnc extends React.Component {
     // Not sure if this is needed (done in Portal but can't tell any difference
     // with or without), but no harm in case this is necessary sometimes.
     this.rfb.get_mouse().set_focused(true);
+
+    // Slight hack to make sure resizing is always occurring appropriately.
+    // When dragging the viewport it was being expanded to include the dragged
+    // area rather than just repositioning; for some reason it also doesn't
+    // start with the correct dimensions if the initial window size is too
+    // small. This attempts to fix these issues by frequently resizing the
+    // viewport to the correct dimensions.
+    this.intervalResizeId = window.setInterval(this.resizeViewport.bind(this), 500);
   }
 
   handleMouseOut() {
     // Don't send keys to canvas any more when mouse leaves.
     this.rfb.get_keyboard().set_focused(false);
     this.rfb.get_mouse().set_focused(false);
+
+    // Stop resizing when mouse has left as no possibility viewport could be
+    // incorrect size.
+    window.clearInterval(this.intervalResizeId);
   }
 }
 
