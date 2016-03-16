@@ -145,11 +145,16 @@ class NoVnc extends React.Component {
     // the moment.
     this.rfb.get_keyboard().set_focused(true);
     this.canvas.focus();
+
+    // Not sure if this is needed (done in Portal but can't tell any difference
+    // with or without), but no harm in case this is necessary sometimes.
+    this.rfb.get_mouse().set_focused(true);
   }
 
   handleMouseOut() {
     // Don't send keys to canvas any more when mouse leaves.
     this.rfb.get_keyboard().set_focused(false);
+    this.rfb.get_mouse().set_focused(false);
   }
 }
 
