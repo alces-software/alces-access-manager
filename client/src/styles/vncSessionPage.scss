@@ -51,3 +51,7 @@
     box-sizing: content-box !important;
     overflow: hidden;
 }
+
+.novnc-canvas--dragEnabled {
+    cursor: move !important;
+}

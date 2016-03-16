@@ -6,10 +6,6 @@ import ClusterSelectionBox from 'components/ClusterSelectionBox';
 import SelectionPage from 'components/SelectionPage';
 
 export default class ClusterSelectionPage extends React.Component {
-  componentWillMount() {
-    this.props.loadClusters()
-  }
-
   render() {
     const {clusters, environment, authenticate, logout} = this.props;
 
