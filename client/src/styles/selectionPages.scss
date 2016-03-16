@@ -29,17 +29,13 @@ $selection-box-color: #eee;
 }
 
 .flip-selection-box {
-  display: inline-block;
-
-  .ReactFlipCard {
-    @include selection-box-inside();
-  }
+  @include selection-box-inside();
 
   .ReactFlipCard,
   .ReactFlipCard__Front,
   .ReactFlipCard__Back {
     height: $selection-box-height;
-    width: 300px; // TODO need to specify width? Just want each to take up a third of header.
+    width: 100%;
   }
 
   .ReactFlipCard__Front,
