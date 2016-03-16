@@ -9,8 +9,11 @@ class NoVnc extends React.Component {
   render() {
     const {novnc} = this.props;
 
+    // Ensure the VNC session is displayed at its full height.
+    const novncWrapperStyles = {height: novnc.height};
+
     return (
-      <div id="novnc-wrapper" className="novnc">
+      <div id="novnc-wrapper" className="novnc" styles={novncWrapperStyles}>
         <canvas
           id='novnc-canvas'
           className={novnc.viewportDrag ? "novnc-canvas--dragEnabled" : ""}
@@ -135,8 +138,8 @@ class NoVnc extends React.Component {
       novncActions.showSessionFailedModal(sessionFailedOnInitialConnect);
     }
     else if (transitioningToState('normal')) {
-      // TODO set dimensions
       const display = this.rfb.get_display();
+      novncActions.setDimensions(display.get_width(), display.get_height());
       display.set_viewport(true);
       this.resizeViewport();
     }

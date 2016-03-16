@@ -84,3 +84,13 @@ export function setDragViewportMode() {
     type: actionTypes.SET_DRAG_VIEWPORT_MODE,
   }
 }
+
+export function setDimensions(width, height) {
+  return {
+    type: actionTypes.SET_DIMENSIONS,
+    payload: {
+      width,
+      height,
+    },
+  }
+}

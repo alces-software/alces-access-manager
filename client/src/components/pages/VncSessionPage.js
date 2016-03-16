@@ -22,6 +22,11 @@ class VncSessionPage extends React.Component {
       session,
     } = this.props;
 
+    // We set the maximum width of the overall VNC container to the width of
+    // the VNC session, so the in-browser session will display as wide as
+    // possible.
+    const vncContainerStyles = {maxWidth: novnc.width};
+
     const url = __PRODUCTION__ ?
       // In production we want to use SSL and connect to a proxy to the VNC
       // session websocket on the AAM appliance.
@@ -42,7 +47,7 @@ class VncSessionPage extends React.Component {
 
     return (
       <div className="container">
-        <div className="vnc-container" style={{maxWidth: '1024px'}}>
+        <div className="vnc-container" style={vncContainerStyles}>
           <ButtonToolbar className="vnc-button-toolbar">
             {/* Sound toggle planned for future iteration.
             <ButtonGroup>

@@ -88,6 +88,14 @@ export default function reducer(state=initialState, action) {
       viewportDrag: true,
     }
 
+    case actionTypes.SET_DIMENSIONS:
+      const {width, height} = action.payload;
+      return {
+      ...state,
+      width,
+      height,
+    }
+
     default:
       return state;
   }
