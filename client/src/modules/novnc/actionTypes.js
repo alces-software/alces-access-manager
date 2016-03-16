@@ -10,3 +10,4 @@ export const HIDE_SESSION_FAILED_MODAL = 'novnc/HIDE_SESSION_FAILED_MODAL';
 export const SET_INTERACTIVE_MODE = 'novnc/SET_INTERACTIVE_MODE';
 export const SET_DRAG_VIEWPORT_MODE = 'novnc/SET_DRAG_VIEWPORT_MODE';
 export const SET_DIMENSIONS = 'novnc/SET_DIMENSIONS';
+export const RESET = 'novnc/RESET';

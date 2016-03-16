@@ -94,3 +94,9 @@ export function setDimensions(width, height) {
     },
   }
 }
+
+export function reset() {
+  return {
+    type: actionTypes.RESET,
+  }
+}

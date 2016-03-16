@@ -96,6 +96,9 @@ export default function reducer(state=initialState, action) {
       height,
     }
 
+    case actionTypes.RESET:
+      return initialState;
+
     default:
       return state;
   }

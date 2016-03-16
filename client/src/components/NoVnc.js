@@ -47,9 +47,9 @@ class NoVnc extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeViewport.bind(this));
 
-    // Reset to interactive mode; more intuitive.
-    // TODO: Reset other parts of interface?
-    this.props.novncActions.setInteractiveMode();
+    // Reset noVNC state; we want everything to start fresh for each session
+    // connected to.
+    this.props.novncActions.reset();
 
     // Shouldn't be needed but make sure no longer attempting resize at regular
     // intervals.
