@@ -117,6 +117,16 @@
       "from": "array-index@>=0.1.0 <0.2.0",
       "resolved": "https://registry.npmjs.org/array-index/-/array-index-0.1.1.tgz"
     },
+    "array-map": {
+      "version": "0.0.0",
+      "from": "array-map@0.0.0",
+      "resolved": "https://registry.npmjs.org/array-map/-/array-map-0.0.0.tgz"
+    },
+    "array-reduce": {
+      "version": "0.0.0",
+      "from": "array-reduce@0.0.0",
+      "resolved": "https://registry.npmjs.org/array-reduce/-/array-reduce-0.0.0.tgz"
+    },
     "array-union": {
       "version": "1.0.1",
       "from": "array-union@>=1.0.1 <2.0.0",
@@ -1421,7 +1431,7 @@
     },
     "debug": {
       "version": "2.2.0",
-      "from": "debug@>=2.2.0 <3.0.0",
+      "from": "debug@*",
       "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz"
     },
     "decamelize": {
@@ -2653,6 +2663,11 @@
       "version": "5.0.1",
       "from": "json-stringify-safe@>=5.0.1 <5.1.0",
       "resolved": "https://registry.npmjs.org/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz"
+    },
+    "json3": {
+      "version": "3.3.0",
+      "from": "json3@3.3.0",
+      "resolved": "https://registry.npmjs.org/json3/-/json3-3.3.0.tgz"
     },
     "json5": {
       "version": "0.4.0",
@@ -4053,6 +4068,11 @@
       "from": "redux@3.0.5",
       "resolved": "https://registry.npmjs.org/redux/-/redux-3.0.5.tgz"
     },
+    "redux-debug": {
+      "version": "1.0.3",
+      "from": "redux-debug@*",
+      "resolved": "https://registry.npmjs.org/redux-debug/-/redux-debug-1.0.3.tgz"
+    },
     "redux-devtools-themes": {
       "version": "1.0.0",
       "from": "redux-devtools-themes@>=1.0.0 <2.0.0",
@@ -4647,6 +4667,23 @@
       "version": "1.0.2",
       "from": "util-deprecate@>=1.0.1 <1.1.0",
       "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
+    },
+    "util-inspect": {
+      "version": "0.1.8",
+      "from": "util-inspect@>=0.1.8 <0.2.0",
+      "resolved": "https://registry.npmjs.org/util-inspect/-/util-inspect-0.1.8.tgz",
+      "dependencies": {
+        "foreach": {
+          "version": "2.0.4",
+          "from": "foreach@2.0.4",
+          "resolved": "https://registry.npmjs.org/foreach/-/foreach-2.0.4.tgz"
+        },
+        "object-keys": {
+          "version": "0.5.0",
+          "from": "object-keys@0.5.0",
+          "resolved": "https://registry.npmjs.org/object-keys/-/object-keys-0.5.0.tgz"
+        }
+      }
     },
     "utils-merge": {
       "version": "1.0.0",

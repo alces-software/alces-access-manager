@@ -1,6 +1,9 @@
 
+import debug from 'debug';
 import React, {PropTypes} from 'react';
 import noVNC from 'novnc-node';
+
+const aamDebug = debug('AAM')
 
 class NoVnc extends React.Component {
   render() {
@@ -57,6 +60,7 @@ class NoVnc extends React.Component {
     const width = novncWrapper.clientWidth;
     const height = novncWrapper.clientHeight;
     if (width && height) {
+      aamDebug(`Resizing viewport to: width ${width}, height ${height}`);
       const display = this.rfb.get_display();
       display.viewportChangeSize(width, height);
     }
