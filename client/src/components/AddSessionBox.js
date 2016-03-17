@@ -24,7 +24,7 @@ class AddSessionBox extends React.Component {
         </p>
         <form onSubmit={handleSubmit(launchSession)}>
           <Input type="select" {...sessionType} placeholder="select">
-            <option value={undefined}>Select session type...</option>
+            <option value={""}>Select session type...</option>
             {_.map(sessionTypes, (type, key) => (
             <option value={type} key={key}>{type}</option>
             ))}
