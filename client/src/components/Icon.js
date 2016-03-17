@@ -8,6 +8,7 @@ const iconNameToFontAwesomeProps = {
   "cluster-authenticating": {name: "spinner", spin: true},
   "cluster-logout": {name: "sign-out"},
   "cluster-pinging": {name: "spinner", spin: true},
+  "session-launch": {name: "desktop"},
   "sessions-reload": {name: "refresh"},
   "sessions-reloading": {name: "refresh", spin: true},
   "vnc-volume-on": {name: "volume-up"},

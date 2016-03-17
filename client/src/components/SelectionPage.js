@@ -7,8 +7,21 @@ import ReactCSSTransitionReplace from 'react-css-transition-replace';
 
 class SelectionPage extends React.Component {
   render() {
-    const {header, items, keyProp} = this.props;
-    const groupedItems = _.chunk(items, 3);
+    const {addItemBox, header, items, keyProp} = this.props;
+
+    // Render item columns here so we can group all rendered columns together
+    // (addItemBox is passed in rendered), before splitting these into rows and
+    // rendering these.
+    const renderedItemColumns = _.map(items, (item) => this.renderColumn(item));
+    // TODO reduce duplication with below.
+    const addItemColumn = (
+      <Col md={4} key="add-session">
+        {addItemBox}
+      </Col>
+    );
+    const allRenderedColumns = [...renderedItemColumns, addItemColumn];
+
+    const groupedColumns = _.chunk(allRenderedColumns, 3);
 
     // Form a key by concatenating the keyProp of all items, and then we can
     // fade out all items to the new ones whenever this changes.
@@ -31,7 +44,7 @@ class SelectionPage extends React.Component {
             transitionName="cross-fade"
             >
             <div key={key}>
-              {this.renderRows(groupedItems)}
+              {this.renderRows(groupedColumns)}
             </div>
           </ReactCSSTransitionReplace>
         </Grid>
@@ -48,7 +61,7 @@ class SelectionPage extends React.Component {
   }
 
   renderRow(row) {
-    return _.map(row, (item) => this.renderColumn(item));
+    return _.map(row, (element) => element);
   }
 
   renderColumn(item) {
@@ -84,6 +97,7 @@ SelectionPage.propTypes = {
   selectionBoxProps: PropTypes.oneOfType(
     [PropTypes.object, PropTypes.func]
   ), // Props to pass through to each selection box, or function to generate these for each item.
+  addItemBox: PropTypes.element, // Optional final box to add a new item.
 };
 
 export default SelectionPage;

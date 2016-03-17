@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
+import AddSessionBox from 'components/AddSessionBox';
 import SessionSelectionBox from 'components/SessionSelectionBox';
 import SelectionPage from 'components/SelectionPage';
 import Icon from 'components/Icon';
@@ -65,8 +66,11 @@ export default class SessionSelectionPage extends React.Component {
 
     const selectionBoxProps = {cluster};
 
+    const addSessionBox = <AddSessionBox sessionTypes={cluster.sessionTypes}/>
+
     return (
       <SelectionPage
+        addItemBox={addSessionBox}
         items={sessions}
         keyProp="uuid"
         header={header}

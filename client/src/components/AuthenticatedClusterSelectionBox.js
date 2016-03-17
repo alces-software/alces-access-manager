@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
-import Icon from 'components/Icon';
+import ButtonContent from 'components/ButtonContent';
 import {ButtonLink} from 'components/Links';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
@@ -11,12 +11,6 @@ class AuthenticatedClusterSelectionBox extends React.Component {
     const {cluster, logout} = this.props;
 
     const clusterLink = `/cluster/${cluster.ip}`;
-
-    const ButtonContent = ({text, iconName}) => (
-      <span>
-        {text}&nbsp;&nbsp;<Icon name={iconName}/>
-      </span>
-    );
 
     const logoutCluster = _.partial(logout, cluster.ip);
 
