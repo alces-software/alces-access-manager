@@ -25,7 +25,7 @@ class DaemonConnectionTest < ActionDispatch::IntegrationTest
       sess.assert_response :success
 
       # Check any returned sessions conform to desired format.
-      sessions = sess.json_response
+      sessions = sess.json_response[:sessions]
       sess.assert_respond_to(sessions, :each)
       sessions.each do |session|
         session = session.with_indifferent_access
