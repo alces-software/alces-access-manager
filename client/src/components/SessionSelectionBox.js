@@ -14,9 +14,7 @@ class SessionSelectionBox extends React.Component {
     const sessionLink = `/cluster/${cluster.ip}/session/${session.uuid}`
 
     return (
-      <div
-        className="static-selection-box"
-        >
+      <div className="static-selection-box">
         <p>
           <strong>{session.type}</strong> session running on <strong>{session.hostname}</strong>
         </p>

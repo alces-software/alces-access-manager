@@ -29,7 +29,6 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
       </span>
     );
 
-
     return (
       <div
         className="flip-selection-box"

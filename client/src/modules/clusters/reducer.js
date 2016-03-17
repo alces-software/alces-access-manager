@@ -10,6 +10,7 @@ function authenticateReducer(state, action) {
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.authenticated_username = username // eslint-disable-line camelcase
+    // TODO change auth username to camelcase
   );
 }
 
@@ -25,7 +26,8 @@ function setPingResponse(state, action) {
   const {ip} = action.meta.payload;
   return modifyClusterInState(
     state, ip,
-    (cluster) => cluster.available = action.payload.available);
+    (cluster) => cluster.available = action.payload.available
+  );
 }
 
 function setSessionTypes(state, action) {
