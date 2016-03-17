@@ -1,8 +1,9 @@
 
 import React from 'react';
-import {ButtonInput} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
+import ButtonContent from 'components/ButtonContent';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -26,12 +27,13 @@ class SessionSelectionBox extends React.Component {
           Websocket port: {session.websocket}
         </p>
         <Link to={sessionLink}>
-          <ButtonInput
+          <Button
             className="selection-box-button"
             type="button"
-            value="Connect"
             bsStyle="success"
-          />
+          >
+            <ButtonContent text="Connect" iconName="session-connect"/>
+          </Button>
         </Link>
       </div>
     );
