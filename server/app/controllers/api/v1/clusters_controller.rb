@@ -82,6 +82,19 @@ class Api::V1::ClustersController < ApplicationController
     render json: user_sessions
   end
 
+  def launch_session
+    # TODO:
+    # - reduce duplication with sessions method;
+    # - handle this taking a long time better?
+    username = authentications[params[:ip]]
+    unless username
+      handle_error 'not_authenticated', :unauthorized and return
+    end
+
+    launch_response = launch_session_response(username, params[:session_type])
+    render json: {output: launch_response}
+  end
+
   private
 
   def daemon_connection_error_handler(exception)
@@ -103,6 +116,14 @@ class Api::V1::ClustersController < ApplicationController
 
   def daemon
     DaemonClient::Connection.new(connection_opts)
+  end
+
+  def daemon_sessions_wrapper(username)
+    opts = {
+      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
+      :username => username
+    }
+    DaemonClient::Wrapper.new(daemon, opts)
   end
 
   def connection_opts
@@ -141,12 +162,11 @@ class Api::V1::ClustersController < ApplicationController
 
 
   def sessions_for_response(username)
-    opts = {
-      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
-      :username => username
-    }
-    wrapper = DaemonClient::Wrapper.new(daemon, opts)
-    wrapper.sessions_for(username)
+    daemon_sessions_wrapper(username).sessions_for(username)
+  end
+
+  def launch_session_response(username, type)
+    daemon_sessions_wrapper(username).launch_session(type)
   end
 
   def config_file

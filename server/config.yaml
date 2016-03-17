@@ -19,5 +19,5 @@ ssl:
   key: daemon_key.pem
   ca: alces-ca_crt.pem
 
-timeout: 5
+timeout: 30
 ...
