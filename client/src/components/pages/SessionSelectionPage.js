@@ -12,6 +12,7 @@ export default class SessionSelectionPage extends React.Component {
   render() {
     const {
       cluster,
+      launchSession,
       reloadSessions,
       sessions,
       ui: {reloadingSessions},
@@ -66,7 +67,13 @@ export default class SessionSelectionPage extends React.Component {
 
     const selectionBoxProps = {cluster};
 
-    const addSessionBox = <AddSessionBox sessionTypes={cluster.sessionTypes}/>
+    const launchSessionForCluster = _.partial(launchSession, cluster.ip);
+    const addSessionBox = (
+      <AddSessionBox
+        launchSession={launchSessionForCluster}
+        sessionTypes={cluster.sessionTypes}
+      />
+    )
 
     return (
       <SelectionPage

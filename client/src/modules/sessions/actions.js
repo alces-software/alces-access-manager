@@ -37,3 +37,20 @@ export function reloadSessions(clusterIp) {
     });
   }
 }
+
+export function launchSession(clusterIp, {sessionType}) {
+  return {
+    type: actionTypes.LAUNCH,
+    payload: {
+      clusterIp,
+    },
+    meta: {
+      apiRequest: {
+        config: {
+          url: `/api/v1/cluster/${clusterIp}/launch/${sessionType}`,
+          method: 'post',
+        },
+      },
+    },
+  };
+}
