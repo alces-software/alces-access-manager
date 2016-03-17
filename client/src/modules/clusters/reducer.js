@@ -3,6 +3,7 @@ import _ from 'lodash';
 import {resolve} from 'redux-simple-promise';
 
 import * as actionTypes from './actionTypes';
+import * as sessionActionTypes from 'sessions/actionTypes';
 
 function authenticateReducer(state, action) {
   const {ip, username} = action.meta.payload;
@@ -25,6 +26,14 @@ function setPingResponse(state, action) {
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.available = action.payload.available);
+}
+
+function setSessionTypes(state, action) {
+  const ip = action.meta.payload.clusterIp;
+  return modifyClusterInState(
+    state, ip,
+    (cluster) => cluster.sessionTypes = action.payload.session_types
+  );
 }
 
 // Returns new state with cluster with given IP modified by executing modifyFn.
@@ -55,6 +64,10 @@ export default function reducer(state=initialState, action) {
 
     case resolve(actionTypes.PING):
       return setPingResponse(state, action);
+
+    case resolve(sessionActionTypes.LOAD_SESSIONS):
+    case resolve(sessionActionTypes.RELOAD_SESSIONS):
+      return setSessionTypes(state, action);
 
     default:
       return state;
