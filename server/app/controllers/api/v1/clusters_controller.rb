@@ -6,6 +6,8 @@ require 'daemon_client'
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
 
+  before_action :check_cluster_authentication, only: [:sessions, :launch_session]
+
   def index
     clusters_config = overall_config[:clusters]
     clusters_config.each do |cluster|
@@ -73,26 +75,17 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions
-    username = authentications[params[:ip]]
-    unless username
-      handle_error 'not_authenticated', :unauthorized and return
-    end
-
-    render json: user_sessions(username)
+    render json: user_sessions
   end
 
   def launch_session
     # TODO:
+    # - test this
     # - up timeout just for this method
-    # - reduce duplication with sessions method;
-    username = authentications[params[:ip]]
-    unless username
-      handle_error 'not_authenticated', :unauthorized and return
-    end
 
-    launch_session_for_user(username, params[:session_type])
+    launch_session_for_user(params[:session_type])
 
-    render json: user_sessions(username)
+    render json: user_sessions
   end
 
   private
@@ -103,11 +96,15 @@ class Api::V1::ClustersController < ApplicationController
     handle_error 'daemon_unavailable', :bad_gateway
   end
 
-  def authentications
-    unless session[:authentications]
-      session[:authentications] = {}
+  def check_cluster_authentication
+    @username = authentications[params[:ip]]
+    unless @username
+      handle_error 'not_authenticated', :unauthorized and return
     end
-    session[:authentications]
+  end
+
+  def authentications
+    session[:authentications] ||= {}
   end
 
   def auth_response
@@ -118,10 +115,10 @@ class Api::V1::ClustersController < ApplicationController
     DaemonClient::Connection.new(connection_opts)
   end
 
-  def daemon_sessions_wrapper(username)
+  def daemon_sessions_wrapper
     opts = {
       :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
-      :username => username
+      :username => @username
     }
     DaemonClient::Wrapper.new(daemon, opts)
   end
@@ -160,12 +157,12 @@ class Api::V1::ClustersController < ApplicationController
     end.new(overall_config).ssl_config
   end
 
-  def user_sessions(username)
-    daemon_sessions_wrapper(username).sessions_for(username)
+  def user_sessions
+    daemon_sessions_wrapper.sessions_for(@username)
   end
 
-  def launch_session_for_user(username, type)
-    daemon_sessions_wrapper(username).launch_session(type)
+  def launch_session_for_user(type)
+    daemon_sessions_wrapper.launch_session(type)
   end
 
   def config_file
