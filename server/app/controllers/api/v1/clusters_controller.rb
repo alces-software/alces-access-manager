@@ -84,15 +84,17 @@ class Api::V1::ClustersController < ApplicationController
 
   def launch_session
     # TODO:
+    # - up timeout just for this method
     # - reduce duplication with sessions method;
-    # - handle this taking a long time better?
     username = authentications[params[:ip]]
     unless username
       handle_error 'not_authenticated', :unauthorized and return
     end
 
-    launch_response = launch_session_response(username, params[:session_type])
-    render json: {output: launch_response}
+    launch_session_response(username, params[:session_type])
+
+    user_sessions = sessions_for_response(username)
+    render json: user_sessions
   end
 
   private
