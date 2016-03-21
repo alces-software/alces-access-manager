@@ -78,8 +78,7 @@ class Api::V1::ClustersController < ApplicationController
       handle_error 'not_authenticated', :unauthorized and return
     end
 
-    user_sessions = sessions_for_response(username)
-    render json: user_sessions
+    render json: user_sessions(username)
   end
 
   def launch_session
@@ -91,10 +90,9 @@ class Api::V1::ClustersController < ApplicationController
       handle_error 'not_authenticated', :unauthorized and return
     end
 
-    launch_session_response(username, params[:session_type])
+    launch_session_for_user(username, params[:session_type])
 
-    user_sessions = sessions_for_response(username)
-    render json: user_sessions
+    render json: user_sessions(username)
   end
 
   private
@@ -162,12 +160,11 @@ class Api::V1::ClustersController < ApplicationController
     end.new(overall_config).ssl_config
   end
 
-
-  def sessions_for_response(username)
+  def user_sessions(username)
     daemon_sessions_wrapper(username).sessions_for(username)
   end
 
-  def launch_session_response(username, type)
+  def launch_session_for_user(username, type)
     daemon_sessions_wrapper(username).launch_session(type)
   end
 
