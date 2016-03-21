@@ -9,8 +9,9 @@ export default function reducer(state=initialState, action) {
 
     case resolve(actionTypes.LOAD_SESSIONS):
     case resolve(actionTypes.RELOAD_SESSIONS):
+    case resolve(actionTypes.LAUNCH):
       const clusterIp = action.meta.payload.clusterIp;
-      const sessions = action.payload
+      const sessions = action.payload.sessions;
       return {
         ...state,
         [clusterIp]: sessions,

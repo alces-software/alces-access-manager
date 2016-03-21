@@ -1,5 +1,5 @@
 
-import {reject} from 'redux-simple-promise';
+import {resolve, reject} from 'redux-simple-promise';
 
 import * as actionTypes from './actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';
@@ -23,6 +23,13 @@ export default function reducer(state=initialState, action) {
     case reject(sessionActionTypes.LOAD_SESSIONS):
     case reject(sessionActionTypes.RELOAD_SESSIONS):
       return {...state, reloadingSessions: false}
+
+    case sessionActionTypes.LAUNCH:
+      return {...state, launchingSession: true}
+
+    case resolve(sessionActionTypes.LAUNCH):
+    case reject(sessionActionTypes.LAUNCH):
+      return {...state, launchingSession: false}
 
     default:
       return state;

@@ -6,6 +6,8 @@ require 'daemon_client'
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
 
+  before_action :check_cluster_authentication, only: [:sessions, :launch_session]
+
   def index
     clusters_config = overall_config[:clusters]
     clusters_config.each do |cluster|
@@ -73,12 +75,17 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions
-    username = authentications[params[:ip]]
-    unless username
-      handle_error 'not_authenticated', :unauthorized and return
-    end
+    render json: user_sessions
+  end
 
-    user_sessions = sessions_for_response(username)
+  def launch_session
+    # Override config file timeout with a large value; launching a session can
+    # take a long time but this is OK as this action is only called
+    # asynchronously and we provide UI feedback.
+    @connection_opts = connection_opts.merge({timeout: 60})
+
+    launch_session_for_user(params[:session_type])
+
     render json: user_sessions
   end
 
@@ -90,11 +97,15 @@ class Api::V1::ClustersController < ApplicationController
     handle_error 'daemon_unavailable', :bad_gateway
   end
 
-  def authentications
-    unless session[:authentications]
-      session[:authentications] = {}
+  def check_cluster_authentication
+    @username = authentications[params[:ip]]
+    unless @username
+      handle_error 'not_authenticated', :unauthorized and return
     end
-    session[:authentications]
+  end
+
+  def authentications
+    session[:authentications] ||= {}
   end
 
   def auth_response
@@ -105,9 +116,17 @@ class Api::V1::ClustersController < ApplicationController
     DaemonClient::Connection.new(connection_opts)
   end
 
+  def daemon_sessions_wrapper
+    opts = {
+      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
+      :username => @username
+    }
+    DaemonClient::Wrapper.new(daemon, opts)
+  end
+
   def connection_opts
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
-    {
+    @connection_opts ||= {
       address: cluster_daemon_address,
       timeout: overall_config[:timeout],
       ssl_config: cluster_config[:ssl] ? ssl_config : nil
@@ -139,14 +158,12 @@ class Api::V1::ClustersController < ApplicationController
     end.new(overall_config).ssl_config
   end
 
+  def user_sessions
+    daemon_sessions_wrapper.sessions_for(@username)
+  end
 
-  def sessions_for_response(username)
-    opts = {
-      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
-      :username => username
-    }
-    wrapper = DaemonClient::Wrapper.new(daemon, opts)
-    wrapper.sessions_for(username)
+  def launch_session_for_user(type)
+    daemon_sessions_wrapper.launch_session(type)
   end
 
   def config_file

@@ -29,6 +29,10 @@ Rails.application.routes.draw do
         to: 'clusters#sessions',
         **cluster_route_params
 
+      post 'cluster/:ip/launch/:session_type',
+        to: 'clusters#launch_session',
+        **cluster_route_params
+
       post 'cluster/:ip/logout',
         to: 'clusters#logout',
         **cluster_route_params

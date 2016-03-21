@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
 
+import AddSessionBox from 'components/AddSessionBox';
 import SessionSelectionBox from 'components/SessionSelectionBox';
 import SelectionPage from 'components/SelectionPage';
 import Icon from 'components/Icon';
@@ -11,27 +12,21 @@ export default class SessionSelectionPage extends React.Component {
   render() {
     const {
       cluster,
+      launchSession,
       reloadSessions,
       sessions,
-      ui: {reloadingSessions},
+      ui: {launchingSession, reloadingSessions},
     } = this.props;
-
-    // Declare this string separately so don't need to escape angle brackets
-    // within JSX.
-    const sessionStartCommand = "alces session start <session type>";
 
     const headerMessage = _.isEmpty(sessions) ?
       (
         <div>
           <p>
-            <strong>
-              You currently have no sessions running
-              on <em>{cluster && cluster.name}</em>.
-            </strong>
+            <strong> You currently have no sessions running on <em>{cluster &&
+                cluster.name}</em>.</strong> You can start a new session using
+            the box below.
           </p>
           <p>
-            You'll need to sign in to your environment and create a session to
-            connect to; this can be done with <code>{sessionStartCommand}</code>.
           </p>
         </div>
     )
@@ -39,7 +34,7 @@ export default class SessionSelectionPage extends React.Component {
       (
         <p>
           Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
-          a session to connect to below.
+          a session to connect to below, or create a new session.
         </p>
     );
 
@@ -65,8 +60,18 @@ export default class SessionSelectionPage extends React.Component {
 
     const selectionBoxProps = {cluster};
 
+    const launchSessionForCluster = _.partial(launchSession, cluster.ip);
+    const addSessionBox = (
+      <AddSessionBox
+        launchingSession={launchingSession}
+        launchSession={launchSessionForCluster}
+        sessionTypes={cluster.sessionTypes}
+      />
+    )
+
     return (
       <SelectionPage
+        addItemBox={addSessionBox}
         items={sessions}
         keyProp="uuid"
         header={header}
