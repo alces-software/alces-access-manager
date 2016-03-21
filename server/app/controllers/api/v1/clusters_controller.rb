@@ -81,7 +81,11 @@ class Api::V1::ClustersController < ApplicationController
   def launch_session
     # TODO:
     # - test this
-    # - up timeout just for this method
+
+    # Override config file timeout with a large value; launching a session can
+    # take a long time but this is OK as this action is only called
+    # asynchronously and we provide UI feedback.
+    @connection_opts = connection_opts.merge({timeout: 60})
 
     launch_session_for_user(params[:session_type])
 
@@ -125,7 +129,7 @@ class Api::V1::ClustersController < ApplicationController
 
   def connection_opts
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
-    {
+    @connection_opts ||= {
       address: cluster_daemon_address,
       timeout: overall_config[:timeout],
       ssl_config: cluster_config[:ssl] ? ssl_config : nil
