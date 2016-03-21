@@ -10,6 +10,7 @@ class AddSessionBox extends React.Component {
   render() {
     const {
       fields: {sessionType},
+      launchingSession,
       launchSession,
       handleSubmit,
       sessionTypes,
@@ -33,9 +34,12 @@ class AddSessionBox extends React.Component {
             bsStyle="success"
             className="selection-box-button"
             type="submit"
-            disabled={!sessionType.value}
+            disabled={!sessionType.value || launchingSession}
           >
-            <ButtonContent text="Launch" iconName="session-launch"/>
+            <ButtonContent
+              text="Launch"
+              iconName={launchingSession ? "session-launching" : "session-launch"}
+            />
           </Button>
         </form>
       </div>

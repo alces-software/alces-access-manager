@@ -15,7 +15,7 @@ export default class SessionSelectionPage extends React.Component {
       launchSession,
       reloadSessions,
       sessions,
-      ui: {reloadingSessions},
+      ui: {launchingSession, reloadingSessions},
     } = this.props;
 
     // Declare this string separately so don't need to escape angle brackets
@@ -70,6 +70,7 @@ export default class SessionSelectionPage extends React.Component {
     const launchSessionForCluster = _.partial(launchSession, cluster.ip);
     const addSessionBox = (
       <AddSessionBox
+        launchingSession={launchingSession}
         launchSession={launchSessionForCluster}
         sessionTypes={cluster.sessionTypes}
       />
