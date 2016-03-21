@@ -128,6 +128,13 @@ class VncSessionPage extends React.Component {
       </div>
     );
   }
+
+  shouldComponentUpdate(nextProps) {
+    // session is parsed from URL, so if it is unset we are probably in the
+    // process of navigating away from this page and shouldn't render (or will
+    // get errors).
+    return !!nextProps.session;
+  }
 }
 
 VncSessionPage = reduxForm({
