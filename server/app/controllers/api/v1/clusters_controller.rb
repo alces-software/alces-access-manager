@@ -79,9 +79,6 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def launch_session
-    # TODO:
-    # - test this
-
     # Override config file timeout with a large value; launching a session can
     # take a long time but this is OK as this action is only called
     # asynchronously and we provide UI feedback.

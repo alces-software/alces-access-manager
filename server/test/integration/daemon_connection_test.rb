@@ -2,6 +2,9 @@
 require 'test_helper'
 
 class DaemonConnectionTest < ActionDispatch::IntegrationTest
+  # TODO: Should we test launching sessions? Can take a while + also no way to
+  # kill sessions yet, so should probably wait for this to be possible first,
+  # otherwise testing will leave sessions lying around.
 
   # Smoke test to ensure we can communicate with real daemon.
   test "authenticating valid user with real daemon" do
