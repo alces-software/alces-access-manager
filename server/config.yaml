@@ -4,6 +4,10 @@ clusters:
     ip: 127.0.0.1
     auth_port: 25269
     ssl: true
+  - name: Duplicate Clusterware Vagrant
+    ip: localhost
+    auth_port: 25269
+    ssl: true
   - name: Another Cluster
     ip: 10.10.10.10
     auth_port: 25269

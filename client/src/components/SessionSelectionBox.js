@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import {Link} from 'react-router';
 
 import ButtonContent from 'components/ButtonContent';
+import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -24,15 +25,17 @@ class SessionSelectionBox extends React.Component {
         <p>
           Websocket port: {session.websocket}
         </p>
-        <Link to={sessionLink}>
-          <Button
-            className="selection-box-button"
-            type="button"
-            bsStyle="success"
-          >
-            <ButtonContent text="Connect" iconName="session-connect"/>
-          </Button>
-        </Link>
+        <SelectionBoxButtonContainer>
+          <Link to={sessionLink}>
+            <Button
+              className="selection-box-button"
+              type="button"
+              bsStyle="success"
+            >
+              <ButtonContent text="Connect" iconName="session-connect"/>
+            </Button>
+          </Link>
+        </SelectionBoxButtonContainer>
       </div>
     );
   }
