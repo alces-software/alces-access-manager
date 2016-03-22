@@ -23,7 +23,7 @@ export function authenticate(cluster, {username, password}) {
   const authenticateRequest = {
     type: actionTypes.AUTHENTICATE,
     payload: {
-      ip: cluster.ip,
+      cluster,
       username,
     },
     meta: {
@@ -50,7 +50,7 @@ export function logout(cluster) {
   return {
     type: actionTypes.LOGOUT,
     payload: {
-      ip: cluster.ip,
+      cluster,
     },
     meta: {
       apiRequest: {
@@ -67,7 +67,7 @@ function ping(cluster) {
   return {
     type: actionTypes.PING,
     payload: {
-      ip: cluster.ip,
+      cluster,
     },
     meta: {
       apiRequest: {

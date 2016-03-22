@@ -14,8 +14,7 @@ function sessionLoadAction(cluster, actionType) {
       },
     },
     payload: {
-      clusterIp: cluster.ip,
-      name: cluster.name,
+      cluster,
     },
   };
 }
@@ -43,7 +42,7 @@ export function launchSession(cluster, {sessionType}) {
   return {
     type: actionTypes.LAUNCH,
     payload: {
-      clusterIp: cluster.ip,
+      cluster,
     },
     meta: {
       apiRequest: {
