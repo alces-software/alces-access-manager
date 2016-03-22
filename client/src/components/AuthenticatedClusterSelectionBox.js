@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 
 import ButtonContent from 'components/ButtonContent';
 import {ButtonLink} from 'components/Links';
+import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
@@ -27,26 +28,24 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <div className="selection-box-button-container">
-          <div className="selection-box-button-inner-container">
-            <ButtonLink
-              bsStyle="success"
-              className="selection-box-button"
-              to={clusterLink}
-              type="button"
-            >
-              <ButtonContent text="View" iconName="cluster"/>
-            </ButtonLink>
-            <Button
-              bsStyle="info"
-              className="selection-box-button"
-              onClick={logoutCluster}
-              type="button"
-            >
-              <ButtonContent text="Change User" iconName="cluster-logout"/>
-            </Button>
-          </div>
-        </div>
+        <SelectionBoxButtonContainer>
+          <ButtonLink
+            bsStyle="success"
+            className="selection-box-button"
+            to={clusterLink}
+            type="button"
+          >
+            <ButtonContent text="View" iconName="cluster"/>
+          </ButtonLink>
+          <Button
+            bsStyle="info"
+            className="selection-box-button"
+            onClick={logoutCluster}
+            type="button"
+          >
+            <ButtonContent text="Change User" iconName="cluster-logout"/>
+          </Button>
+        </SelectionBoxButtonContainer>
       </div>
     );
   }

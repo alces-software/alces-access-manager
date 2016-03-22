@@ -5,6 +5,7 @@ import {Button, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
 
 import ButtonContent from 'components/ButtonContent';
+import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 
 class AddSessionBox extends React.Component {
   render() {
@@ -30,21 +31,19 @@ class AddSessionBox extends React.Component {
             <option value={type} key={key}>{type}</option>
             ))}
           </Input>
-          <div className="selection-box-button-container">
-            <div className="selection-box-button-inner-container">
-              <Button
-                bsStyle="success"
-                className="selection-box-button"
-                type="submit"
-                disabled={!sessionType.value || launchingSession}
-              >
-                <ButtonContent
-                  text="Launch"
-                  iconName={launchingSession ? "session-launching" : "session-launch"}
-                />
-              </Button>
-            </div>
-          </div>
+          <SelectionBoxButtonContainer>
+            <Button
+              bsStyle="success"
+              className="selection-box-button"
+              type="submit"
+              disabled={!sessionType.value || launchingSession}
+            >
+              <ButtonContent
+                text="Launch"
+                iconName={launchingSession ? "session-launching" : "session-launch"}
+              />
+            </Button>
+          </SelectionBoxButtonContainer>
         </div>
       </form>
     );
