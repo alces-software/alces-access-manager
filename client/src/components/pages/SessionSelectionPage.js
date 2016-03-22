@@ -40,7 +40,7 @@ export default class SessionSelectionPage extends React.Component {
 
     const reloadIconName = reloadingSessions ? "sessions-reloading" : "sessions-reload";
 
-    const reloadSessionsForCluster = _.partial(reloadSessions, cluster.ip);
+    const reloadSessionsForCluster = _.partial(reloadSessions, cluster);
     const header = (
       <div>
         {headerMessage}
@@ -60,7 +60,7 @@ export default class SessionSelectionPage extends React.Component {
 
     const selectionBoxProps = {cluster};
 
-    const launchSessionForCluster = _.partial(launchSession, cluster.ip);
+    const launchSessionForCluster = _.partial(launchSession, cluster);
     const addSessionBox = (
       <AddSessionBox
         launchingSession={launchingSession}

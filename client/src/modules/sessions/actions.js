@@ -2,33 +2,34 @@
 import * as actionTypes from './actionTypes';
 import * as uiActions from 'ui/actions';
 
-function sessionLoadAction(clusterIp, actionType) {
+function sessionLoadAction(cluster, actionType) {
   return {
     type: actionType,
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${clusterIp}/sessions`,
+          url: `/api/v1/cluster/${cluster.ip}/sessions`,
           method: 'get',
         },
       },
     },
     payload: {
-      clusterIp,
+      clusterIp: cluster.ip,
+      name: cluster.name,
     },
   };
 }
 
-export function loadSessions(clusterIp) {
-  return sessionLoadAction(clusterIp, actionTypes.LOAD_SESSIONS)
+export function loadSessions(cluster) {
+  return sessionLoadAction(cluster, actionTypes.LOAD_SESSIONS)
 }
 
-export function reloadSessions(clusterIp) {
+export function reloadSessions(cluster) {
   // After received response to request, dispatch action to stop animation
   // after a timeout; this stops the animation being jarring if the request and
   // response time is very short.
   return (dispatch) => {
-    return dispatch(sessionLoadAction(clusterIp, actionTypes.RELOAD_SESSIONS)).
+    return dispatch(sessionLoadAction(cluster, actionTypes.RELOAD_SESSIONS)).
       then( () => {
       setTimeout(
         () => dispatch(uiActions.stopSessionReloadAnimation()),
@@ -38,16 +39,16 @@ export function reloadSessions(clusterIp) {
   }
 }
 
-export function launchSession(clusterIp, {sessionType}) {
+export function launchSession(cluster, {sessionType}) {
   return {
     type: actionTypes.LAUNCH,
     payload: {
-      clusterIp,
+      clusterIp: cluster.ip,
     },
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${clusterIp}/launch/${sessionType}`,
+          url: `/api/v1/cluster/${cluster.ip}/launch/${sessionType}`,
           method: 'post',
         },
       },

@@ -19,17 +19,17 @@ export function loadClusters() {
   }
 }
 
-export function authenticate(ip, {username, password}) {
+export function authenticate(cluster, {username, password}) {
   const authenticateRequest = {
     type: actionTypes.AUTHENTICATE,
     payload: {
-      ip,
+      ip: cluster.ip,
       username,
     },
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${ip}/authenticate`,
+          url: `/api/v1/cluster/${cluster.ip}/authenticate`,
           method: 'post',
           data: {username, password},
         },
@@ -40,22 +40,22 @@ export function authenticate(ip, {username, password}) {
   return (dispatch) => {
     return dispatch(authenticateRequest).
       then( () => {
-        dispatch(loadSessions(ip));
-        dispatch(redirectTo(`/cluster/${ip}`));
+        dispatch(loadSessions(cluster));
+        dispatch(redirectTo(`/cluster/${cluster.ip}`));
     });
   };
 }
 
-export function logout(ip) {
+export function logout(cluster) {
   return {
     type: actionTypes.LOGOUT,
     payload: {
-      ip,
+      ip: cluster.ip,
     },
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${ip}/logout`,
+          url: `/api/v1/cluster/${cluster.ip}/logout`,
           method: 'post',
         },
       },
@@ -63,16 +63,16 @@ export function logout(ip) {
   };
 }
 
-function ping(ip) {
+function ping(cluster) {
   return {
     type: actionTypes.PING,
     payload: {
-      ip,
+      ip: cluster.ip,
     },
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${ip}/ping`,
+          url: `/api/v1/cluster/${cluster.ip}/ping`,
           method: 'get',
         },
       },
@@ -82,9 +82,9 @@ function ping(ip) {
 
 export function pingClusters() {
   return (dispatch, getState) => {
-    const clusterIps = _.map(getState().clusters, (cluster) => cluster.ip);
-    _.map(clusterIps, (ip) => {
-      dispatch(ping(ip));
-    })
+    const clusters = getState().clusters;
+    _.map(clusters, cluster => {
+      dispatch(ping(cluster));
+    });
   }
 }
