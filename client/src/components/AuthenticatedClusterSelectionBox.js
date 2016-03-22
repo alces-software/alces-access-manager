@@ -12,7 +12,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
 
     const clusterLink = `/cluster/${cluster.ip}`;
 
-    const logoutCluster = _.partial(logout, cluster.ip);
+    const logoutCluster = _.partial(logout, cluster);
 
     return (
       <div

@@ -18,7 +18,7 @@ class UnauthenticatedClusterSelectionBox extends React.Component {
       submitting,
     } = this.props;
 
-    const authenticateCluster = _.partial(authenticate, cluster.ip);
+    const authenticateCluster = _.partial(authenticate, cluster);
 
     const incomplete = !(username.value && password.value);
 

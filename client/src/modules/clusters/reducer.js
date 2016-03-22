@@ -6,7 +6,7 @@ import * as actionTypes from './actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';
 
 function authenticateReducer(state, action) {
-  const {ip, username} = action.meta.payload;
+  const {cluster: {ip}, username} = action.meta.payload;
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.authenticated_username = username // eslint-disable-line camelcase
@@ -15,7 +15,7 @@ function authenticateReducer(state, action) {
 }
 
 function logoutReducer(state, action) {
-  const {ip} = action.meta.payload;
+  const {cluster: {ip}} = action.meta.payload;
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.authenticated_username = undefined // eslint-disable-line camelcase
@@ -23,7 +23,7 @@ function logoutReducer(state, action) {
 }
 
 function setPingResponse(state, action) {
-  const {ip} = action.meta.payload;
+  const {cluster: {ip}} = action.meta.payload;
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.available = action.payload.available
@@ -31,7 +31,7 @@ function setPingResponse(state, action) {
 }
 
 function setSessionTypes(state, action) {
-  const ip = action.meta.payload.clusterIp;
+  const {cluster: {ip}} = action.meta.payload;
   return modifyClusterInState(
     state, ip,
     (cluster) => cluster.sessionTypes = action.payload.session_types

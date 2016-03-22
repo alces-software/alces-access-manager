@@ -86,17 +86,35 @@ export function addActionTypeCustomizations(generatorsMap) {
 
     const daemonUnavailableMessage = {
       title: 'Daemon unavailable',
-      content: (
-        <div>
-          The Alces Access Manager Daemon did not respond, please
-          ensure the daemon is running and accessible to the Alces Access
-          Manager. <ContactCustomerSupport/>
-        </div>
-      ),
+      content: (message) => {
+        const {cluster} = message.action.payload;
+        return (
+          <div>
+            <p>
+              The Alces Access Manager Daemon for <em>{cluster.name}</em> did
+              not respond.
+            </p>
+            <p>
+              Please ensure the daemon is running at the correct address
+              (<em>{cluster.ip}:{cluster.auth_port}</em>), and is accessible to
+              the Alces Access Manager.
+            </p>
+            <p>
+              <ContactCustomerSupport/>
+            </p>
+          </div>
+        )
+      }
+      ,
     }
 
     _.each(
-      [clusterActionTypes.AUTHENTICATE, sessionActionTypes.LOAD_SESSIONS, sessionActionTypes.RELOAD_SESSIONS],
+      [
+        clusterActionTypes.AUTHENTICATE,
+        sessionActionTypes.LOAD_SESSIONS,
+        sessionActionTypes.RELOAD_SESSIONS,
+        sessionActionTypes.LAUNCH,
+    ],
       (action) => {
         generatorsMap.customizeMessage(
           502, // bad gateway - i.e. daemon not running/reachable.

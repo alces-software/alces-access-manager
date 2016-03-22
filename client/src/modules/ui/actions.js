@@ -29,7 +29,7 @@ export function loadSessionData() {
       const authenticatedClusters = _.filter(clusters, (cluster) => cluster.authenticated_username);
       return Promise.all(
         _.map(authenticatedClusters,
-              (cluster) => dispatch(loadSessions(cluster.ip))
+              (cluster) => dispatch(loadSessions(cluster))
              )
       );
     }
