@@ -24,15 +24,19 @@ class SessionSelectionBox extends React.Component {
         <p>
           Websocket port: {session.websocket}
         </p>
-        <Link to={sessionLink}>
-          <Button
-            className="selection-box-button"
-            type="button"
-            bsStyle="success"
-          >
-            <ButtonContent text="Connect" iconName="session-connect"/>
-          </Button>
-        </Link>
+        <div className="selection-box-button-container">
+          <div className="selection-box-button-inner-container">
+            <Link to={sessionLink}>
+              <Button
+                className="selection-box-button"
+                type="button"
+                bsStyle="success"
+              >
+                <ButtonContent text="Connect" iconName="session-connect"/>
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

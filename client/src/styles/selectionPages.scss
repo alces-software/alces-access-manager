@@ -11,6 +11,30 @@ $selection-box-color: #eee;
 @mixin selection-box-inside() {
     margin: 25px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+// We use flexbox for selection boxes (in selection-box-inside) so we can make
+// this container fill the remaining space, and can then position
+// selection-box-button-inner-container at the bottom of this so the buttons
+// are aligned at the bottom of each selection box.
+//
+// Don't currently use these elements for UnauthenticatedClusterSelectionBox as
+// they do not work for this, as its buttons do not currently have an element
+// using selection-box-inside as their immediate parent; fortunately this
+// doesn't matter as its button lines up by other styling.
+.selection-box-button-container {
+  flex-grow: 1;
+  position: relative;
+}
+
+.selection-box-button-inner-container {
+  // Position this element across the bottom of the outer container.
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
 }
 
 .selection-box-button {
