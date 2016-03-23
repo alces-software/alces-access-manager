@@ -47,6 +47,8 @@ class NoVnc extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeViewport.bind(this));
 
+    this.rfb.disconnect();
+
     // Reset noVNC state; we want everything to start fresh for each session
     // connected to.
     this.props.novncActions.reset();
