@@ -49,14 +49,13 @@ class VncSessionPage extends React.Component {
       <div className="container">
         <div className="vnc-container" style={vncContainerStyles}>
           <ButtonToolbar className="vnc-button-toolbar">
-            {/* Sound toggle planned for future iteration.
             <ButtonGroup>
               <ToolbarButton
-                iconName="vnc-volume-on"
-                tooltip="Disable sound (currently ON)"
+                iconName={novnc.soundEnabled ? "vnc-volume-on" : "vnc-volume-off"}
+                tooltip={novnc.soundEnabled  ? "Disable sound (currently ON)" : "Enable sound (currently OFF)"}
+                onClick={this.handleClickSoundButton.bind(this)}
               />
             </ButtonGroup>
-            */}
             <ButtonGroup>
               <ToolbarCopyButton
                 novnc={novnc}
@@ -127,6 +126,15 @@ class VncSessionPage extends React.Component {
         </StandardModal>
       </div>
     );
+  }
+
+  handleClickSoundButton() {
+    const {
+      novnc: {soundEnabled},
+      novncActions: {enableSound, disableSound},
+    } = this.props;
+
+    soundEnabled ? disableSound() : enableSound();
   }
 
   shouldComponentUpdate(nextProps) {

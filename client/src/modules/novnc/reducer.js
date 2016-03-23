@@ -1,7 +1,9 @@
 
 import * as actionTypes from './actionTypes';
 
-const initialState = {};
+const initialState = {
+  soundEnabled: true,
+};
 export default function reducer(state=initialState, action) {
   switch (action.type) {
 
@@ -22,6 +24,18 @@ export default function reducer(state=initialState, action) {
       state: novncState,
       msg,
     };
+
+    case actionTypes.ENABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: true,
+    }
+
+    case actionTypes.DISABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: false,
+    }
 
     case actionTypes.SET_COPY_TEXT:
       return {

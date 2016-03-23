@@ -12,6 +12,18 @@ export function stateChange(state, msg) {
   }
 }
 
+export function enableSound() {
+  return {
+    type: actionTypes.ENABLE_SOUND,
+  }
+}
+
+export function disableSound() {
+  return {
+    type: actionTypes.DISABLE_SOUND,
+  }
+}
+
 export function setCopyText(text) {
   return {
     type: actionTypes.SET_COPY_TEXT,
