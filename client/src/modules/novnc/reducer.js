@@ -1,10 +1,14 @@
 
 import * as actionTypes from './actionTypes';
 
-const initialState = {
-  soundEnabled: true,
-};
-export default function reducer(state=initialState, action) {
+function initialState() {
+  const soundEnabled = localStorage.soundEnabled === 'true' ||
+    localStorage.soundEnabled === undefined;
+  localStorage.setItem('soundEnabled', soundEnabled);
+  return {soundEnabled};
+}
+
+export default function reducer(state=initialState(), action) {
   switch (action.type) {
 
     case actionTypes.STATE_CHANGE:
@@ -103,7 +107,7 @@ export default function reducer(state=initialState, action) {
     }
 
     case actionTypes.RESET:
-      return initialState;
+      return initialState();
 
     default:
       return state;
