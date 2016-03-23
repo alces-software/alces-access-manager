@@ -8,6 +8,8 @@ class Api::V1::ClustersController < ApplicationController
 
   before_action :check_cluster_authentication, only: [:sessions, :launch_session]
 
+  # Note: currently this action returns everything in the config file, not just
+  # the clusters.
   def index
     clusters_config = overall_config[:clusters]
     clusters_config.each do |cluster|

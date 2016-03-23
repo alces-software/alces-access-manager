@@ -10,7 +10,6 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   # too?
 
   class IndexTest < Api::V1::ClustersControllerTest
-    # TODO: change this, will currently return whole config (is that what we want?)
     test "should return the clusters specified in the config file" do
       mock_config_file
 

@@ -59,7 +59,7 @@ class NoVnc extends React.Component {
   }
 
   // Resize noVNC viewport to dimensions of wrapper div.
-  // TODO: Should this be debounced?
+  // Note: In Portal this is debounced, do we need to do this here?
   resizeViewport() {
     const novncWrapper = document.getElementById("novnc-wrapper");
     const width = novncWrapper.clientWidth;
