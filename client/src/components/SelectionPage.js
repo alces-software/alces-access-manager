@@ -12,13 +12,8 @@ class SelectionPage extends React.Component {
     // Render item columns here so we can group all rendered columns together
     // (addItemBox is passed in rendered), before splitting these into rows and
     // rendering these.
-    const renderedItemColumns = _.map(items, (item) => this.renderColumn(item));
-    // TODO reduce duplication with below.
-    const addItemColumn = (
-      <Col md={4} key="add-session">
-        {addItemBox}
-      </Col>
-    );
+    const renderedItemColumns = _.map(items, (item) => this.renderItemColumn(item));
+    const addItemColumn = this.renderColumn(addItemBox, "add-session");
     const allRenderedColumns = [...renderedItemColumns, addItemColumn];
 
     const groupedColumns = _.chunk(allRenderedColumns, 3);
@@ -55,16 +50,12 @@ class SelectionPage extends React.Component {
   renderRows(rows) {
     return _.map(rows, (row, key) => (
       <Row key={key}>
-        {this.renderRow(row)}
+        {row}
       </Row>
     ));
   }
 
-  renderRow(row) {
-    return _.map(row, (element) => element);
-  }
-
-  renderColumn(item) {
+  renderItemColumn(item) {
     const {keyProp, selectionBoxComponent, selectionBoxProps} = this.props
 
     let finalSelectionBoxProps;
@@ -81,9 +72,13 @@ class SelectionPage extends React.Component {
       {item, ...finalSelectionBoxProps}
     );
 
+    return this.renderColumn(selectionBoxElement, key);
+  }
+
+  renderColumn(element, key) {
     return (
       <Col md={4} key={key}>
-        {selectionBoxElement}
+        {element}
       </Col>
     )
   }

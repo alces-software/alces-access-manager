@@ -17,8 +17,6 @@ class AddSessionBox extends React.Component {
       sessionTypes,
     } = this.props;
 
-    // TODO: make buttons in different boxes line up.
-
     return (
       <form onSubmit={handleSubmit(launchSession)}>
         <div className="static-selection-box add-item-box">

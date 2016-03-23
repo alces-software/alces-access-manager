@@ -1,9 +1,6 @@
 
 require 'ostruct'
 
-# TODO: This file is adapted from the equivalent in Alces Flight, further work
-# will be needed for a production build.
-
 class HomeController < ActionController::Base
   def index
     @assets = if Rails.env.production?

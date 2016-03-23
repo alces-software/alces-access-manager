@@ -8,6 +8,15 @@ export default function reducer(state=initialState, action) {
     case actionTypes.STATE_CHANGE:
       const novncState = action.payload.state;
       const {msg} = action.payload;
+      if (novncState === 'failed' && msg === 'Disconnect timeout') {
+        // Disconnect is called when NoVNC component unmounts, even if not
+        // connected (e.g. if this has failed). The disconnect will then
+        // timeout; this is fine but we don't want to update the state with
+        // this failure as will already have reset the noVNC state for this
+        // connection.
+        return state;
+      }
+
       return {
       ...state,
       state: novncState,
