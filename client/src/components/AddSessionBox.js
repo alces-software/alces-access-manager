@@ -25,7 +25,7 @@ class AddSessionBox extends React.Component {
           <p>
             <strong>Launch new session</strong>
           </p>
-          <Input type="select" {...sessionType} placeholder="select">
+          <Input type="select" {...sessionType}>
             <option value={""}>Select session type...</option>
             {_.map(sessionTypes, (type, key) => (
             <option value={type} key={key}>{type}</option>
