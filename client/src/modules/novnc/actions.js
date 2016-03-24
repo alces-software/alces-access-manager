@@ -12,6 +12,20 @@ export function stateChange(state, msg) {
   }
 }
 
+export function enableSound() {
+  localStorage.setItem('soundEnabled', true);
+  return {
+    type: actionTypes.ENABLE_SOUND,
+  }
+}
+
+export function disableSound() {
+  localStorage.setItem('soundEnabled', false);
+  return {
+    type: actionTypes.DISABLE_SOUND,
+  }
+}
+
 export function setCopyText(text) {
   return {
     type: actionTypes.SET_COPY_TEXT,

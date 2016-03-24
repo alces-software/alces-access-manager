@@ -1,8 +1,14 @@
 
 import * as actionTypes from './actionTypes';
 
-const initialState = {};
-export default function reducer(state=initialState, action) {
+function initialState() {
+  const soundEnabled = localStorage.soundEnabled === 'true' ||
+    localStorage.soundEnabled === undefined;
+  localStorage.setItem('soundEnabled', soundEnabled);
+  return {soundEnabled};
+}
+
+export default function reducer(state=initialState(), action) {
   switch (action.type) {
 
     case actionTypes.STATE_CHANGE:
@@ -22,6 +28,18 @@ export default function reducer(state=initialState, action) {
       state: novncState,
       msg,
     };
+
+    case actionTypes.ENABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: true,
+    }
+
+    case actionTypes.DISABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: false,
+    }
 
     case actionTypes.SET_COPY_TEXT:
       return {
@@ -89,7 +107,7 @@ export default function reducer(state=initialState, action) {
     }
 
     case actionTypes.RESET:
-      return initialState;
+      return initialState();
 
     default:
       return state;

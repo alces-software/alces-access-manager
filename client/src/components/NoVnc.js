@@ -1,9 +1,12 @@
 
 import debug from 'debug';
+import _ from 'lodash';
 import React, {PropTypes} from 'react';
 import noVNC from 'novnc-node';
 
 const aamDebug = debug('AAM')
+
+const bellFiles = _.map(_.range(1, 6), number => require(`sounds/bell${number}.ogg`));
 
 class NoVnc extends React.Component {
   render() {
@@ -36,6 +39,7 @@ class NoVnc extends React.Component {
       local_cursor: true, // eslint-disable-line camelcase
       target: this.canvas,
       onUpdateState: this.stateHandler.bind(this),
+      onBell: this.bellHandler.bind(this),
       onClipboard: this.clipboardHandler.bind(this),
     });
 
@@ -152,6 +156,18 @@ class NoVnc extends React.Component {
     // parameters since we don't want to store the rfb object and oldstate is
     // just the previous state, which is easily obtainable if needed.
     this.props.novncActions.stateChange(state, msg);
+  }
+
+  bellHandler() {
+    // Don't sound a bell more often than every 250ms - would be annoying and
+    // noVNC also calls the onBell function 3 times for every 1 bell event.
+    if (this.bellTimer) return;
+    this.bellTimer = setTimeout(() => this.bellTimer = undefined, 250);
+
+    if (this.props.novnc.soundEnabled) {
+      this.currentBell = this.currentBell === undefined ? 0 : ++this.currentBell % 5;
+      new Audio(bellFiles[this.currentBell]).play();
+    }
   }
 
   clipboardHandler(rfb, text) {

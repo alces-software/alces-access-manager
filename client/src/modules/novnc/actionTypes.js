@@ -1,5 +1,7 @@
 
 export const STATE_CHANGE = 'novnc/STATE_CHANGE';
+export const ENABLE_SOUND = 'novnc/ENABLE_SOUND';
+export const DISABLE_SOUND = 'novnc/DISABLE_SOUND';
 export const SET_COPY_TEXT = 'novnc/SET_COPY_TEXT';
 export const SHOW_PASTE_MODAL = 'novnc/SHOW_PASTE_MODAL';
 export const HIDE_PASTE_MODAL = 'novnc/HIDE_PASTE_MODAL';
