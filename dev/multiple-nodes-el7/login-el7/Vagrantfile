@@ -1,0 +1,79 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "hfm4/centos7"
+  config.vm.box_check_update = false
+  config.vm.hostname = "login1.cluster"
+
+  # Update the below vars to match your configuration
+  projects = "#{ENV['HOME']}/projects"
+  hostonly_net = "vboxnet0"
+  # VBoxManage dhcpserver add --netname cluster1 --ip 192.168.25.1 --netmask 255.255.255.0 --lowerip 192.168.25.100 --upperip 192.168.25.200 --enable
+  intnet_net = "cluster1"
+
+  config.vm.provider "virtualbox" do |v|
+    v.gui = true
+    #v.customize ["modifyvm", :id, "--nic2", "hostonly"]
+    #v.customize ["modifyvm", :id, "--hostonlyadapter2", hostonly_net]
+    v.customize ["modifyvm", :id, "--nic2", "intnet"]
+    v.customize ["modifyvm", :id, "--intnet2", intnet_net]
+  end
+
+  provision_script = <<-RUBY
+  bash /vagrant/enable-iptables.sh
+  export cw_DIST=el7
+  export cw_BUILD_noninteractive=true
+  export cw_BUILD_naming_auth="GNjdioBB+c6r2Dkackqt"
+
+  build_type=dev
+
+  if [ "$build_type" == "release" ]; then
+    export cw_BUILD_source_branch=1.4.1
+    curl -sL http://git.io/clusterware-installer | /bin/bash
+  else
+    # Vagrant dev build
+    export cw_BUILD_source_branch=develop
+    export cw_BUILD_tmp=tmp/login-el7
+    export cw_BUILD_source_dir=/media/host/clusterware
+
+    if [ -d /media/host/clusterware-handlers ]; then
+      export cw_HANDLER_DEFAULT_REPO_URL=/media/host/clusterware-handlers
+    fi
+    if [ -d /media/host/clusterware-sessions ]; then
+      export cw_SESSION_DEFAULT_REPO_URL=/media/host/clusterware-sessions
+    fi
+    if [ -d /media/host/clusterware-services ]; then
+      export cw_SERVICEWARE_DEFAULT_REPO_URL=/media/host/clusterware-services
+    fi
+    if [ -d /media/host/clusterware-storage ]; then
+      export cw_STORAGE_DEFAULT_REPO_URL=/media/host/clusterware-storage
+    fi
+    /media/host/clusterware/scripts/bootstrap
+  fi
+
+  cp /vagrant/config.yml /opt/clusterware/etc/config.yml
+  PATH=/opt/clusterware/bin:$PATH
+  alces handler enable clusterable
+  alces handler enable cluster-gridware
+  alces handler enable cluster-nfs
+  alces handler enable cluster-sge
+  alces handler enable cluster-vpn
+  sed -e 's/eth0/enp0s8/g' -i /opt/clusterware/etc/cluster-vpn.rc
+  alces handler enable taskable
+  alces handler enable cluster-appliances
+  alces handler enable session-firewall
+  alces handler enable cluster-firewall
+  RUBY
+  config.vm.provision 'shell', inline: provision_script
+
+  config.vm.synced_folder "#{projects}/clusterware", "/media/host/clusterware"
+  #config.vm.synced_folder "#{projects}/metalware", "/media/host/metalware"
+  #config.vm.synced_folder "#{projects}/clusterware-handlers", "/media/host/clusterware-handlers"
+  #config.vm.synced_folder "#{projects}/clusterware-sessions", "/media/host/clusterware-sessions"
+  #config.vm.synced_folder "#{projects}/clusterware-services", "/media/host/clusterware-services"
+  #config.vm.synced_folder "#{projects}/clusterware-storage", "/media/host/clusterware-storage"
+  #config.vm.synced_folder "#{projects}/packager-base", "/media/host/clusterware-packages"
+end
