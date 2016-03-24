@@ -29,7 +29,7 @@ Rails.application.routes.draw do
         to: 'clusters#sessions',
         **cluster_route_params
 
-      post 'cluster/:ip/launch/:session_type',
+      post 'cluster/:ip/launch/:session_type/on/:node_type',
         to: 'clusters#launch_session',
         **cluster_route_params
 
