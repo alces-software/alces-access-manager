@@ -10,12 +10,14 @@ import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer'
 class AddSessionBox extends React.Component {
   render() {
     const {
-      fields: {sessionType},
+      fields: {sessionType, node},
       launchingSession,
       launchSession,
       handleSubmit,
       sessionTypes,
     } = this.props;
+
+    const launchDisabled = !sessionType.value || !node.value || launchingSession;
 
     return (
       <form onSubmit={handleSubmit(launchSession)}>
@@ -29,12 +31,17 @@ class AddSessionBox extends React.Component {
             <option value={type} key={key}>{type}</option>
             ))}
           </Input>
+          <Input type="select" {...node}>
+            <option value={""}>Select node to launch on...</option>
+            <option value="login">Login node</option>
+            <option value="compute">Request compute node</option>
+          </Input>
           <SelectionBoxButtonContainer>
             <Button
               bsStyle="success"
               className="selection-box-button"
               type="submit"
-              disabled={!sessionType.value || launchingSession}
+              disabled={launchDisabled}
             >
               <ButtonContent
                 text="Launch"
@@ -49,7 +56,7 @@ class AddSessionBox extends React.Component {
 }
 
 AddSessionBox = reduxForm({
-  fields: ['sessionType'],
+  fields: ['sessionType', 'node'],
   form: 'launch-session',
 })(AddSessionBox);
 

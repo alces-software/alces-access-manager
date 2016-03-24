@@ -38,7 +38,7 @@ export function reloadSessions(cluster) {
   }
 }
 
-export function launchSession(cluster, {sessionType}) {
+export function launchSession(cluster, {sessionType, node}) {
   return {
     type: actionTypes.LAUNCH,
     payload: {
@@ -47,7 +47,7 @@ export function launchSession(cluster, {sessionType}) {
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${cluster.ip}/launch/${sessionType}`,
+          url: `/api/v1/cluster/${cluster.ip}/launch/${sessionType}/on/${node}`,
           method: 'post',
         },
       },
