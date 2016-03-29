@@ -29,9 +29,14 @@ Rails.application.routes.draw do
         to: 'clusters#sessions',
         **cluster_route_params
 
+      launch_session_route_params = cluster_route_params.tap do |params|
+        params[:constraints] = params[:constraints].merge({
+          node_type: /login|compute/ # node_type can only be one of these values.
+        })
+      end
       post 'cluster/:ip/launch/:session_type/on/:node_type',
         to: 'clusters#launch_session',
-        **cluster_route_params
+        **launch_session_route_params
 
       post 'cluster/:ip/logout',
         to: 'clusters#logout',

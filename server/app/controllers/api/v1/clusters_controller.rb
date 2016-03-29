@@ -86,15 +86,7 @@ class Api::V1::ClustersController < ApplicationController
     # asynchronously and we provide UI feedback.
     @connection_opts = connection_opts.merge({timeout: 60})
 
-    request_compute_node = case params[:node_type]
-    when 'compute'
-      true
-    when 'login'
-      false
-    else
-      handle_error 'invalid_node_type', :unprocessable_entity and return
-    end
-
+    request_compute_node = params[:node_type] === 'compute'
     launch_session_for_user(params[:session_type], request_compute_node)
 
     render json: user_sessions
