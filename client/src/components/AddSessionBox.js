@@ -68,6 +68,12 @@ class AddSessionBox extends React.Component {
       </div>
     );
   }
+
+  componentWillUnmount() {
+    // Make sure modal is hidden when component unmounts, so it doesn't
+    // reappear when re-navigate to page.
+    this.props.uiActions.closeLaunchFailedModal();
+  }
 }
 
 AddSessionBox = reduxForm({
