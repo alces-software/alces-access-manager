@@ -86,7 +86,16 @@ class Api::V1::ClustersController < ApplicationController
     # asynchronously and we provide UI feedback.
     @connection_opts = connection_opts.merge({timeout: 60})
 
-    launch_session_for_user(params[:session_type])
+    request_compute_node = case params[:node_type]
+    when 'compute'
+      true
+    when 'login'
+      false
+    else
+      handle_error 'invalid_node_type', :unprocessable_entity and return
+    end
+
+    launch_session_for_user(params[:session_type], request_compute_node)
 
     render json: user_sessions
   end
@@ -164,8 +173,8 @@ class Api::V1::ClustersController < ApplicationController
     daemon_sessions_wrapper.sessions_for(@username)
   end
 
-  def launch_session_for_user(type)
-    daemon_sessions_wrapper.launch_session(type)
+  def launch_session_for_user(type, request_compute_node)
+    daemon_sessions_wrapper.launch_session(type, request_compute_node)
   end
 
   def config_file
