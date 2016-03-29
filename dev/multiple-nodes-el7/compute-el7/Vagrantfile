@@ -1,6 +1,15 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Note: This Vagrantfile failed to create the VM correctly when using Vagrant
+# 1.6.5, however it does work with version 1.8.1 - make sure you're using a
+# recent version of Vagrant (see also:
+# https://alces.slack.com/archives/dev/p1458844175000230 and
+# https://github.com/mitchellh/vagrant/issues/4465).
+
+# Note: Need to run `sudo systemctl start clusterware-configurator` after the
+# VM is created to configure.
+
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -8,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_check_update = false
 
   # Update the below vars to match your configuration
-  projects = "#{ENV['HOME']}/projects"
+  projects = "#{ENV['HOME']}/projects/alces"
   hostonly_net = "vboxnet0"
   # If using it, you should configure an internal network as follows:
   # VBoxManage dhcpserver add --netname cluster1 --ip 192.168.25.1 --netmask 255.255.255.0 --lowerip 192.168.25.100 --upperip 192.168.25.200 --enable
