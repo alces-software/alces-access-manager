@@ -16,6 +16,10 @@ function setLaunchingSession(state, value) {
   return {...state, launchingSession: value}
 }
 
+function setShowingLaunchFailedModal(state, value) {
+  return {...state, showingLaunchFailedModal: value};
+}
+
 const initialState = {
   // Whether the initial app data (currently just the clusters) has loaded.
   loaded: false,
@@ -40,8 +44,21 @@ export default function reducer(state=initialState, action) {
       return setLaunchingSession(state, true);
 
     case resolve(sessionActionTypes.LAUNCH):
+      const newState = setLaunchingSession(state, false);
+      if (action.payload.success !== true) {
+        return {
+          ...newState,
+          showingLaunchFailedModal: true,
+          launchFailedResponse: action.payload.launch_response,
+        }
+      }
+      return newState;
+
     case reject(sessionActionTypes.LAUNCH):
       return setLaunchingSession(state, false);
+
+    case actionTypes.CLOSE_LAUNCH_FAILED_MODAL:
+      return setShowingLaunchFailedModal(state, false);
 
     default:
       return state;
