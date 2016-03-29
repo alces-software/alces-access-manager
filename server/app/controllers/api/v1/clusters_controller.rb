@@ -77,7 +77,7 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions
-    render json: user_sessions
+    render json: {success: true, **user_sessions}
   end
 
   def launch_session
@@ -87,9 +87,13 @@ class Api::V1::ClustersController < ApplicationController
     @connection_opts = connection_opts.merge({timeout: 60})
 
     request_compute_node = params[:node_type] === 'compute'
-    launch_session_for_user(params[:session_type], request_compute_node)
+    launch_response = launch_session_for_user(params[:session_type], request_compute_node)
 
-    render json: user_sessions
+    if launch_response === true
+      render json: {success: true, **user_sessions}
+    else
+      render json: {success: false, launch_response: launch_response}
+    end
   end
 
   private
