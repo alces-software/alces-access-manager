@@ -11,7 +11,6 @@ import ToolbarCopyButton from 'components/ToolbarCopyButton';
 class VncSessionPage extends React.Component {
   render() {
     const {
-      cluster,
       fields: {
         pastedText,
       },
@@ -32,8 +31,11 @@ class VncSessionPage extends React.Component {
       // session websocket on the AAM appliance.
       `wss://${window.location.host}/vnc/${session.access_host}/${session.websocket}`
       :
-      // In development we connect to the websocket directly, and without SSL.
-      `ws://${cluster.ip}:${session.websocket}`;
+      // In development we don't use SSL and connect to the websocket directly
+      // on the equivalent localhost port; manually forwarding this port to the
+      // correct port on the node for this session is required for this to
+      // succeed.
+      `ws://localhost:${session.websocket}`;
 
     const pasteModalButtons = (
       <Button
