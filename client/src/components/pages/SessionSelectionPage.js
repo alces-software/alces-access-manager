@@ -22,7 +22,8 @@ export default class SessionSelectionPage extends React.Component {
       (
         <div>
           <p>
-            <strong> You currently have no sessions running on <em>{cluster &&
+            <strong> You currently have no sessions running as <em>{cluster &&
+                cluster.authenticated_username}</em> on <em>{cluster &&
                 cluster.name}</em>.</strong> You can start a new session using
             the box below.
           </p>
@@ -33,8 +34,10 @@ export default class SessionSelectionPage extends React.Component {
     :
       (
         <p>
-          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
-          a session to connect to below, or create a new session.
+          Viewing sessions for <em>{cluster &&
+            cluster.authenticated_username}</em> on <em>{cluster &&
+            cluster.name}</em>. Select a session to connect to below, or create
+          a new session.
         </p>
     );
 
