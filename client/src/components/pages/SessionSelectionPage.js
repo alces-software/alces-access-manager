@@ -67,7 +67,7 @@ export default class SessionSelectionPage extends React.Component {
     const addSessionBox = (
       <AddSessionBox
         launchSession={launchSessionForCluster}
-        sessionTypes={cluster.sessionTypes}
+        cluster={cluster}
         ui={ui}
         uiActions={uiActions}
       />

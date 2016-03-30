@@ -11,10 +11,10 @@ import StandardModal from 'components/StandardModal';
 class AddSessionBox extends React.Component {
   render() {
     const {
+      cluster,
       fields: {sessionType, node},
       launchSession,
       handleSubmit,
-      sessionTypes,
       ui,
       uiActions,
     } = this.props;
@@ -30,14 +30,14 @@ class AddSessionBox extends React.Component {
             </p>
             <Input type="select" {...sessionType}>
               <option value={""}>Select session type...</option>
-              {_.map(sessionTypes, (type, key) => (
+              {_.map(cluster.sessionTypes, (type, key) => (
               <option value={type} key={key}>{type}</option>
               ))}
             </Input>
             <Input type="select" {...node}>
               <option value={""}>Select node to launch on...</option>
               <option value="login">Login node</option>
-              <option value="compute">Request compute node</option>
+              <option value="compute" disabled={!cluster.canLaunchComputeSessions}>Request compute node</option>
             </Input>
             <SelectionBoxButtonContainer>
               <Button

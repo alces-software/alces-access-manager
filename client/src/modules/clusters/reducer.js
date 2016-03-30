@@ -30,11 +30,15 @@ function setPingResponse(state, action) {
   );
 }
 
-function setSessionTypes(state, action) {
+function setSessionsInfo(state, action) {
   const {cluster: {ip}} = action.meta.payload;
+  const {session_types, can_launch_compute_sessions} = action.payload; // eslint-disable-line camelcase
   return modifyClusterInState(
     state, ip,
-    (cluster) => cluster.sessionTypes = action.payload.session_types
+    (cluster) => {
+      cluster.sessionTypes = session_types; // eslint-disable-line camelcase
+      cluster.canLaunchComputeSessions = can_launch_compute_sessions; // eslint-disable-line camelcase
+    }
   );
 }
 
@@ -69,7 +73,7 @@ export default function reducer(state=initialState, action) {
 
     case resolve(sessionActionTypes.LOAD_SESSIONS):
     case resolve(sessionActionTypes.RELOAD_SESSIONS):
-      return setSessionTypes(state, action);
+      return setSessionsInfo(state, action);
 
     default:
       return state;
