@@ -5,7 +5,6 @@ import FlipCard from 'react-flipcard';
 import {Link} from 'react-router';
 
 import ButtonContent from 'components/ButtonContent';
-import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -27,7 +26,8 @@ class SessionSelectionBox extends React.Component {
     // because $USER is still always set to root even if we're acting as
     // another user - does this matter?
 
-    const vncHyperlinkAccess = `vnc://${cluster.authenticated_username}:${session.password}@${session.access_host}:${session.port}`;
+    const vncHyperlinkAccess =
+      `vnc://${cluster.authenticated_username}:${session.password}@${session.access_host}:${session.port}`;
     const vncPortNumberAccess = `${session.access_host}:${session.port}`;
     const vncDisplayNumberAccess = `${session.access_host}:${session.display}`;
 
@@ -54,7 +54,10 @@ class SessionSelectionBox extends React.Component {
                   type="button"
                   bsStyle="success"
                 >
-                  <ButtonContent text="Connect In Browser" iconName="session-connect"/>
+                  <ButtonContent
+                    text="Connect In Browser"
+                    iconName="session-connect"
+                  />
                 </Button>
               </Link>
               <Button
@@ -63,7 +66,10 @@ class SessionSelectionBox extends React.Component {
                 bsStyle="info"
                 onClick={this.handleClickExternalAccessButton.bind(this)}
               >
-                <ButtonContent text="External Access" iconName="session-external-access"/>
+                <ButtonContent
+                  text="External Access"
+                  iconName="session-external-access"
+                />
               </Button>
           </div>
 
@@ -93,7 +99,10 @@ class SessionSelectionBox extends React.Component {
               bsStyle="info"
               onClick={this.handleClickBackButton.bind(this)}
             >
-              <ButtonContent text="Back" iconName="session-external-access-back"/>
+              <ButtonContent
+                text="Back"
+                iconName="session-external-access-back"
+              />
             </Button>
           </div>
         </FlipCard>
