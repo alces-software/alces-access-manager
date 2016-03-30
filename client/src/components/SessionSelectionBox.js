@@ -75,7 +75,9 @@ class SessionSelectionBox extends React.Component {
             <p className="external-access-method">
               For browsers and operating systems that have been configured to
               accept <code>vnc://</code> hyperlinks: <a
-                href={vncHyperlinkAccess}><code>{vncHyperlinkAccess}</code></a>
+                href={vncHyperlinkAccess}>
+                <code>{this.obfuscateVncUri(vncHyperlinkAccess)}</code>
+              </a>
             </p>
             <p className="external-access-method">
               For VNC clients that accept a port
@@ -109,6 +111,15 @@ class SessionSelectionBox extends React.Component {
     this.setState({
       isFlipped: false,
     })
+  }
+
+  obfuscateVncUri(uri) {
+    // Adapted from equivalent hack in Portal.
+    const brokenParse = new URL(uri)
+    const hackedParse = new URL(`http:${brokenParse.pathname}`)
+    hackedParse.password = "******"
+    hackedParse.protocol = brokenParse.protocol
+    return hackedParse.href
   }
 }
 
