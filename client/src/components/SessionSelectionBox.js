@@ -8,6 +8,14 @@ import ButtonContent from 'components/ButtonContent';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      isFlipped: false,
+    }
+  }
+
   render() {
     const session = this.props.item;
     const {cluster} = this.props;
@@ -24,7 +32,10 @@ class SessionSelectionBox extends React.Component {
 
     return (
       <div className="flip-selection-box">
-        <FlipCard>
+        <FlipCard
+          disabled={true}
+          flipped={this.state.isFlipped}
+        >
           <div>
             <p>
               <strong>{session.type}</strong> session running
@@ -49,6 +60,7 @@ class SessionSelectionBox extends React.Component {
                 className="selection-box-button"
                 type="button"
                 bsStyle="info"
+                onClick={this.handleClickExternalAccessButton.bind(this)}
               >
                 <ButtonContent text="External Access" iconName="session-external-access"/>
               </Button>
@@ -65,10 +77,30 @@ class SessionSelectionBox extends React.Component {
             <p>
               <code>{vncDisplayNumberAccess}</code>
             </p>
+            <Button
+              className="selection-box-button"
+              type="button"
+              bsStyle="info"
+              onClick={this.handleClickBackButton.bind(this)}
+            >
+              <ButtonContent text="Back" iconName="session-external-access-back"/>
+            </Button>
           </div>
         </FlipCard>
       </div>
     );
+  }
+
+  handleClickExternalAccessButton() {
+    this.setState({
+      isFlipped: true,
+    });
+  }
+
+  handleClickBackButton() {
+    this.setState({
+      isFlipped: false,
+    })
   }
 }
 

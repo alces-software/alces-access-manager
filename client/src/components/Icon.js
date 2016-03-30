@@ -10,6 +10,7 @@ const iconNameToFontAwesomeProps = {
   "cluster-pinging": {name: "spinner", spin: true},
   "session-connect": {name: "link"},
   "session-external-access": {name: "external-link-square"},
+  "session-external-access-back": {name: "arrow-circle-left"},
   "session-launch": {name: "desktop"},
   "session-launching": {name: "spinner", spin: true},
   "sessions-reload": {name: "refresh"},
