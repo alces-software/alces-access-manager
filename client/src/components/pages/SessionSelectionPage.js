@@ -12,17 +12,18 @@ export default class SessionSelectionPage extends React.Component {
   render() {
     const {
       cluster,
-      launchSession,
-      reloadSessions,
       sessions,
-      ui: {launchingSession, reloadingSessions},
+      sessionActions,
+      ui,
+      uiActions,
     } = this.props;
 
     const headerMessage = _.isEmpty(sessions) ?
       (
         <div>
           <p>
-            <strong> You currently have no sessions running on <em>{cluster &&
+            <strong> You currently have no sessions running as <em>{cluster &&
+                cluster.authenticated_username}</em> on <em>{cluster &&
                 cluster.name}</em>.</strong> You can start a new session using
             the box below.
           </p>
@@ -33,14 +34,16 @@ export default class SessionSelectionPage extends React.Component {
     :
       (
         <p>
-          Viewing sessions on cluster <em>{cluster && cluster.name}</em>. Select
-          a session to connect to below, or create a new session.
+          Viewing sessions for <em>{cluster &&
+            cluster.authenticated_username}</em> on <em>{cluster &&
+            cluster.name}</em>. Select a session to connect to below, or create
+          a new session.
         </p>
     );
 
-    const reloadIconName = reloadingSessions ? "sessions-reloading" : "sessions-reload";
+    const reloadIconName = ui.reloadingSessions ? "sessions-reloading" : "sessions-reload";
 
-    const reloadSessionsForCluster = _.partial(reloadSessions, cluster);
+    const reloadSessionsForCluster = _.partial(sessionActions.reloadSessions, cluster);
     const header = (
       <div>
         {headerMessage}
@@ -49,7 +52,7 @@ export default class SessionSelectionPage extends React.Component {
             bsStyle="primary"
             className="sessions-reload-button"
             onClick={reloadSessionsForCluster}
-            disabled={reloadingSessions}
+            disabled={ui.reloadingSessions}
             >
             Refresh sessions&nbsp;
             <Icon name={reloadIconName} size="2x"/>
@@ -60,12 +63,13 @@ export default class SessionSelectionPage extends React.Component {
 
     const selectionBoxProps = {cluster};
 
-    const launchSessionForCluster = _.partial(launchSession, cluster);
+    const launchSessionForCluster = _.partial(sessionActions.launchSession, cluster);
     const addSessionBox = (
       <AddSessionBox
-        launchingSession={launchingSession}
         launchSession={launchSessionForCluster}
-        sessionTypes={cluster.sessionTypes}
+        cluster={cluster}
+        ui={ui}
+        uiActions={uiActions}
       />
     )
 

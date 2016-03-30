@@ -77,7 +77,7 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions
-    render json: user_sessions
+    render json: {success: true, **sessions_info}
   end
 
   def launch_session
@@ -86,9 +86,14 @@ class Api::V1::ClustersController < ApplicationController
     # asynchronously and we provide UI feedback.
     @connection_opts = connection_opts.merge({timeout: 60})
 
-    launch_session_for_user(params[:session_type])
+    request_compute_node = params[:node_type] === 'compute'
+    launch_response = launch_session_for_user(params[:session_type], request_compute_node)
 
-    render json: user_sessions
+    if launch_response === true
+      render json: {success: true, **sessions_info}
+    else
+      render json: {success: false, launch_response: launch_response}
+    end
   end
 
   private
@@ -160,12 +165,12 @@ class Api::V1::ClustersController < ApplicationController
     end.new(overall_config).ssl_config
   end
 
-  def user_sessions
-    daemon_sessions_wrapper.sessions_for(@username)
+  def sessions_info
+    daemon_sessions_wrapper.sessions_info(@username)
   end
 
-  def launch_session_for_user(type)
-    daemon_sessions_wrapper.launch_session(type)
+  def launch_session_for_user(type, request_compute_node)
+    daemon_sessions_wrapper.launch_session(type, request_compute_node)
   end
 
   def config_file

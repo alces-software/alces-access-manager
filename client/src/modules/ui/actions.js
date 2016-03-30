@@ -48,3 +48,9 @@ export function loadSessionData() {
     // TODO: error handling?
   }
 }
+
+export function closeLaunchFailedModal() {
+  return {
+    type: actionTypes.CLOSE_LAUNCH_FAILED_MODAL,
+  };
+}
