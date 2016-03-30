@@ -11,6 +11,7 @@ const iconNameToFontAwesomeProps = {
   "session-connect": {name: "link"},
   "session-external-access": {name: "external-link-square"},
   "session-external-access-back": {name: "arrow-circle-left"},
+  "session-external-access-info": {name: "info-circle"},
   "session-launch": {name: "desktop"},
   "session-launching": {name: "spinner", spin: true},
   "sessions-reload": {name: "refresh"},

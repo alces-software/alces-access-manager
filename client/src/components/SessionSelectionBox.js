@@ -1,10 +1,11 @@
 
 import React from 'react';
-import {Button} from 'react-bootstrap';
+import {Button, OverlayTrigger, Popover} from 'react-bootstrap';
 import FlipCard from 'react-flipcard';
 import {Link} from 'react-router';
 
 import ButtonContent from 'components/ButtonContent';
+import Icon from 'components/Icon';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -30,6 +31,68 @@ class SessionSelectionBox extends React.Component {
       `vnc://${cluster.authenticated_username}:${session.password}@${session.access_host}:${session.port}`;
     const vncPortNumberAccess = `${session.access_host}:${session.port}`;
     const vncDisplayNumberAccess = `${session.access_host}:${session.display}`;
+
+    const vncHyperlinkAccessPopover = (
+      <Popover
+        title="External VNC access using a hyperlink"
+        id="hyperlink-access-popover"
+      >
+        Example usage:
+        <ul>
+          <li>
+            OS X using <em>OS X Screen Sharing</em>.
+          </li>
+          <li>
+            Windows by configuring a protocol handler in the registry.
+          </li>
+          <li>
+            Linux by configuring a protocol handler using xdg-mime.
+          </li>
+        </ul>
+      </Popover>
+    );
+
+    const vncPortNumberAccessPopover = (
+      <Popover
+        title="External VNC access via port number"
+        id="port-number-access-popover"
+      >
+        VNC clients that accept a port number include:
+        <ul>
+          <li>
+            <a href="http://www.tigervnc.org" target="_blank">
+              TigerVNC</a> (Linux, OS X, Windows).
+          </li>
+          <li>
+            <a href="http://www.tightvnc.com/" target="_blank">
+              TightVNC</a> (Linux, Windows).
+          </li>
+          <li>
+            <a href="http://www.turbovnc.org/" target="_blank">
+              TurboVNC</a> (Linux, OS X, Windows).
+          </li>
+        </ul>
+      </Popover>
+    );
+
+    const vncDisplayNumberAccessPopover = (
+      <Popover
+        title="External VNC access via display number"
+        id="display-number-access-popover"
+      >
+        VNC clients that accept a VNC display include:
+        <ul>
+          <li>
+            <a href="https://www.realvnc.com/" target="_blank">
+              RealVNC</a> (Linux, OS X, Windows).
+          </li>
+          <li>
+            <a href="http://www.uvnc.com/" target="_blank">
+              UltraVNC</a> (Windows only).
+          </li>
+        </ul>
+      </Popover>
+    );
 
     return (
       <div className="flip-selection-box">
@@ -78,21 +141,49 @@ class SessionSelectionBox extends React.Component {
               <strong>Select an appropriate method for external access to your
                 VNC session:</strong>
             </p>
+
             <p className="external-access-method">
               For browsers and operating systems that have been configured to
               accept <code>vnc://</code> hyperlinks: <a
                 href={vncHyperlinkAccess}>
                 <code>{this.obfuscateVncUri(vncHyperlinkAccess)}</code>
               </a>
+              &nbsp;<OverlayTrigger
+                overlay={vncHyperlinkAccessPopover}
+                placement="right"
+                rootClose
+                trigger="click"
+              >
+                <Icon name="session-external-access-info"/>
+              </OverlayTrigger>
             </p>
+
             <p className="external-access-method">
               For VNC clients that accept a port
               number: <code>{vncPortNumberAccess}</code>
+              &nbsp;<OverlayTrigger
+                overlay={vncPortNumberAccessPopover}
+                placement="right"
+                rootClose
+                trigger="click"
+              >
+                <Icon name="session-external-access-info"/>
+              </OverlayTrigger>
             </p>
+
             <p className="external-access-method">
               For VNC clients that accept a VNC display
               number: <code>{vncDisplayNumberAccess}</code>
+              &nbsp;<OverlayTrigger
+                overlay={vncDisplayNumberAccessPopover}
+                placement="right"
+                rootClose
+                trigger="click"
+              >
+                <Icon name="session-external-access-info"/>
+              </OverlayTrigger>
             </p>
+
             <Button
               className="selection-box-button"
               type="button"
