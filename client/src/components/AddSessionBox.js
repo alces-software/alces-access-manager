@@ -37,7 +37,14 @@ class AddSessionBox extends React.Component {
             <Input type="select" {...node}>
               <option value={""}>Select node to launch on...</option>
               <option value="login">Login node</option>
-              <option value="compute" disabled={!cluster.canLaunchComputeSessions}>Request compute node</option>
+              <option
+                value="compute"
+                disabled={!cluster.canLaunchComputeSessions}
+              >
+                Request compute node
+                {!cluster.canLaunchComputeSessions ?
+                ' (feature unavailable for this cluster)' : ''}
+              </option>
             </Input>
             <SelectionBoxButtonContainer>
               <Button
