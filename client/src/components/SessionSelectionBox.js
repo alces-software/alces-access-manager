@@ -5,6 +5,7 @@ import FlipCard from 'react-flipcard';
 import {Link} from 'react-router';
 
 import ButtonContent from 'components/ButtonContent';
+import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -66,16 +67,23 @@ class SessionSelectionBox extends React.Component {
               </Button>
           </div>
 
-          <div>
-            <p>Select a method for external access to your VNC session:</p>
+          <div className="external-access-details">
             <p>
-              <code>{vncHyperlinkAccess}</code>
+              <strong>Select an appropriate method for external access to your
+                VNC session:</strong>
             </p>
-            <p>
-              <code>{vncPortNumberAccess}</code>
+            <p className="external-access-method">
+              For browsers and operating systems that have been configured to
+              accept <code>vnc://</code> hyperlinks: <a
+                href={vncHyperlinkAccess}><code>{vncHyperlinkAccess}</code></a>
             </p>
-            <p>
-              <code>{vncDisplayNumberAccess}</code>
+            <p className="external-access-method">
+              For VNC clients that accept a port
+              number: <code>{vncPortNumberAccess}</code>
+            </p>
+            <p className="external-access-method">
+              For VNC clients that accept a VNC display
+              number: <code>{vncDisplayNumberAccess}</code>
             </p>
             <Button
               className="selection-box-button"

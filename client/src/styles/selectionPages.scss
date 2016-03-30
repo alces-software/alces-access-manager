@@ -1,5 +1,5 @@
 
-$selection-box-height: 222px;
+$selection-box-height: 350px;
 $selection-box-color: #eee;
 
 @mixin selection-box-border() {
@@ -130,4 +130,14 @@ $selection-box-color: #eee;
 
 .add-item-box {
   background-color: #D9F2D0;
+}
+
+.external-access-details {
+  p {
+    padding-bottom: 12px;
+  }
+}
+
+.external-access-method {
+  text-align: left;
 }

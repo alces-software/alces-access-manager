@@ -16,7 +16,7 @@ class SelectionPage extends React.Component {
     const addItemColumn = this.renderColumn(addItemBox, "add-session");
     const allRenderedColumns = [...renderedItemColumns, addItemColumn];
 
-    const groupedColumns = _.chunk(allRenderedColumns, 3);
+    const groupedColumns = _.chunk(allRenderedColumns, 2);
 
     // Form a key by concatenating the keyProp of all items, and then we can
     // fade out all items to the new ones whenever this changes.
@@ -77,7 +77,7 @@ class SelectionPage extends React.Component {
 
   renderColumn(element, key) {
     return (
-      <Col md={4} key={key}>
+      <Col md={6} key={key}>
         {element}
       </Col>
     )
