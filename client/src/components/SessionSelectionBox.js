@@ -83,8 +83,7 @@ class SessionSelectionBox extends React.Component {
             <DisplayNumberVncAccessDetails session={session}/>
 
             <p className="external-access-section">
-              The password to access your VNC session using any of these
-              methods is available below:
+              The password to access your VNC session is available below:
             </p>
             <PasswordRevealer password={session.password}/>
 
