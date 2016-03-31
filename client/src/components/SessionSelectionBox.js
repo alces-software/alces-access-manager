@@ -35,10 +35,11 @@ class SessionSelectionBox extends React.Component {
 
     const vncHyperlinkAccessPopover = (
       <Popover
-        title="External VNC access using a hyperlink"
+        title={<span>External VNC access via a <strong>hyperlink</strong></span>}
         id="hyperlink-access-popover"
       >
-        Example usage:
+        Supported by browsers and operating systems that have been configured
+        to accept <code>vnc://</code> hyperlinks such as:
         <ul>
           <li>
             OS X using <em>OS X Screen Sharing</em>.
@@ -55,10 +56,10 @@ class SessionSelectionBox extends React.Component {
 
     const vncPortNumberAccessPopover = (
       <Popover
-        title="External VNC access via port number"
+        title={<span>External VNC access via <strong>port</strong> number</span>}
         id="port-number-access-popover"
       >
-        VNC clients that accept a port number include:
+        Supported by VNC clients that accept a port number such as:
         <ul>
           <li>
             <a href="http://www.tigervnc.org" target="_blank">
@@ -78,10 +79,10 @@ class SessionSelectionBox extends React.Component {
 
     const vncDisplayNumberAccessPopover = (
       <Popover
-        title="External VNC access via display number"
+        title={<span>External VNC access via <strong>display</strong> number</span>}
         id="display-number-access-popover"
       >
-        VNC clients that accept a VNC display include:
+        Supported by VNC clients that accept a VNC display number such as:
         <ul>
           <li>
             <a href="https://www.realvnc.com/" target="_blank">
@@ -143,9 +144,8 @@ class SessionSelectionBox extends React.Component {
                 VNC session:</strong>
             </p>
 
-            <p className="external-access-method">
-              For browsers and operating systems that have been configured to
-              accept <code>vnc://</code> hyperlinks: <a
+            <p className="external-access-section">
+              Via a <strong>hyperlink</strong>: <a
                 href={vncHyperlinkAccess}>
                 <code>{this.obfuscateVncUri(vncHyperlinkAccess)}</code>
               </a>
@@ -159,9 +159,9 @@ class SessionSelectionBox extends React.Component {
               </OverlayTrigger>
             </p>
 
-            <p className="external-access-method">
-              For VNC clients that accept a port
-              number: <code>{vncPortNumberAccess}</code>
+            <p className="external-access-section">
+              Via <strong>port</strong> number: <code>
+                {vncPortNumberAccess}</code>
               &nbsp;<OverlayTrigger
                 overlay={vncPortNumberAccessPopover}
                 placement="right"
@@ -172,9 +172,9 @@ class SessionSelectionBox extends React.Component {
               </OverlayTrigger>
             </p>
 
-            <p className="external-access-method">
-              For VNC clients that accept a VNC display
-              number: <code>{vncDisplayNumberAccess}</code>
+            <p className="external-access-section">
+              Via <strong>display</strong> number: <code>
+                {vncDisplayNumberAccess}</code>
               &nbsp;<OverlayTrigger
                 overlay={vncDisplayNumberAccessPopover}
                 placement="right"
@@ -185,6 +185,10 @@ class SessionSelectionBox extends React.Component {
               </OverlayTrigger>
             </p>
 
+            <p className="external-access-section">
+              The password to access your VNC session using any of these
+              methods is available below:
+            </p>
             <PasswordRevealer password={session.password}/>
 
             <Button
