@@ -141,3 +141,12 @@ $selection-box-color: #eee;
 .external-access-method {
   text-align: left;
 }
+
+.password-revealer {
+  // Make buttons line up with input exactly - don't know why they don't
+  // otherwise.
+  .btn {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+}

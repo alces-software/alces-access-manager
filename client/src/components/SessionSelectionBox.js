@@ -5,8 +5,8 @@ import FlipCard from 'react-flipcard';
 import {Link} from 'react-router';
 
 import ButtonContent from 'components/ButtonContent';
-import {CopyToClipboardButton} from 'components/Clipboard';
 import Icon from 'components/Icon';
+import PasswordRevealer from 'components/PasswordRevealer';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -185,10 +185,7 @@ class SessionSelectionBox extends React.Component {
               </OverlayTrigger>
             </p>
 
-            <p>
-              Click here to copy the VNC session password to your system
-              clipboard: <CopyToClipboardButton text={session.password}/>
-            </p>
+            <PasswordRevealer password={session.password}/>
 
             <Button
               className="selection-box-button"
