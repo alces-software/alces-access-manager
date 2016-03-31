@@ -8,11 +8,18 @@ const iconNameToFontAwesomeProps = {
   "cluster-authenticating": {name: "spinner", spin: true},
   "cluster-logout": {name: "sign-out"},
   "cluster-pinging": {name: "spinner", spin: true},
+
   "session-connect": {name: "link"},
+  "session-external-access": {name: "external-link-square"},
+  "session-external-access-back": {name: "arrow-circle-left"},
+  "session-external-access-info": {name: "info-circle"},
   "session-launch": {name: "desktop"},
   "session-launching": {name: "spinner", spin: true},
+  "session-password-hide": {name: "eye-slash"},
+  "session-password-reveal": {name: "eye"},
   "sessions-reload": {name: "refresh"},
   "sessions-reloading": {name: "refresh", spin: true},
+
   "vnc-volume-on": {name: "volume-up"},
   "vnc-volume-off": {name: "volume-off"},
   "vnc-copy": {name: "files-o"},

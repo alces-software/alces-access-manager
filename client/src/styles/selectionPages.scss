@@ -1,5 +1,5 @@
 
-$selection-box-height: 222px;
+$selection-box-height: 330px;
 $selection-box-color: #eee;
 
 @mixin selection-box-border() {
@@ -130,4 +130,17 @@ $selection-box-color: #eee;
 
 .add-item-box {
   background-color: #D9F2D0;
+}
+
+.external-access-section {
+  text-align: left;
+}
+
+.password-revealer {
+  // Make buttons line up with input exactly - don't know why they don't
+  // otherwise.
+  .btn {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
 }
