@@ -55,6 +55,7 @@ export class CopyToClipboardButton extends React.Component {
         overlay={tooltip}
         placement="bottom"
         shouldUpdatePosition
+        trigger="hover"
         >
         <CopyToClipboard {...this.props} onCopy={this.handleCopy.bind(this)}>
           <Button><Icon name="clipboard"/></Button>
