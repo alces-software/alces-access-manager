@@ -23,7 +23,11 @@ class PasswordRevealer extends Component {
     const clipboardButton = <CopyToClipboardButton text={password}/>
 
     const revealButtonTooltip = (
-      <Tooltip>{showingPassword ? 'Hide' : 'Show'} password</Tooltip>
+      <Tooltip
+        id={`password-revealer-${password}`}
+      >
+        {showingPassword ? 'Hide' : 'Show'} password
+      </Tooltip>
     );
     const revealButton = (
       <OverlayTrigger overlay={revealButtonTooltip} placement="bottom">
