@@ -20,7 +20,7 @@ class ClusterInformationHeader extends Component {
       ui,
     } = this.props;
 
-    const headerMessage = _.isEmpty(sessions) ?
+    const runningSessionsInfo = _.isEmpty(sessions) ?
       (
         <div>
           <p>
@@ -46,7 +46,11 @@ class ClusterInformationHeader extends Component {
 
     return (
       <div>
-        {headerMessage}
+        {runningSessionsInfo}
+        <p>
+          You can sign into this cluster directly with SSH, using the following
+          command: <code>ssh {cluster.authenticated_username}@{cluster.ip}</code>.
+        </p>
         <p>
           <Button
             bsStyle="primary"
