@@ -29,8 +29,6 @@ class ClusterInformationHeader extends Component {
                 cluster.name}</em>.</strong> You can start a new session using
             the box below.
           </p>
-          <p>
-          </p>
         </div>
     )
     :
