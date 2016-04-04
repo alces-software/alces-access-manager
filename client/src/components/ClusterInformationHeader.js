@@ -52,6 +52,14 @@ class ClusterInformationHeader extends Component {
           command: <code>ssh {cluster.authenticated_username}@{cluster.ip}</code>.
         </p>
         <p>
+          You will need to connect to this cluster's VPN to access the cluster
+          using SSH, or to connect to VNC sessions on the cluster. The VPN
+          configuration files are available to download <a
+            href={`/api/v1/cluster/${cluster.ip}/vpn-config`}>
+            here
+          </a>.
+        </p>
+        <p>
           <Button
             bsStyle="primary"
             className="sessions-reload-button"
