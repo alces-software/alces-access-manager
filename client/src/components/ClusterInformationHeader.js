@@ -43,6 +43,20 @@ class ClusterInformationHeader extends Component {
         </p>
     );
 
+    const vpnAccessInfo = cluster.hasVpn ?
+      (
+        <p>
+          You will need to connect to this cluster's VPN to access the cluster
+          using SSH, or to connect to VNC sessions on the cluster. The VPN
+          configuration files are available to
+          download <VpnConfigDownloadLink cluster={cluster}>
+            here
+          </VpnConfigDownloadLink>.
+        </p>
+    )
+    :
+      null;
+
     const reloadIconName = ui.reloadingSessions ? "sessions-reloading" : "sessions-reload";
     const reloadSessionsForCluster = _.partial(sessionActions.reloadSessions, cluster);
 
@@ -53,14 +67,7 @@ class ClusterInformationHeader extends Component {
           You can sign into this cluster directly with SSH, using the following
           command: <SshAccessCommand cluster={cluster}/>.
         </p>
-        <p>
-          You will need to connect to this cluster's VPN to access the cluster
-          using SSH, or to connect to VNC sessions on the cluster. The VPN
-          configuration files are available to
-          download <VpnConfigDownloadLink cluster={cluster}>
-            here
-          </VpnConfigDownloadLink>.
-        </p>
+        {vpnAccessInfo}
         <p>
           <Button
             bsStyle="primary"

@@ -17,6 +17,18 @@ class AuthenticatedClusterSelectionBox extends React.Component {
 
     const logoutCluster = _.partial(logout, cluster);
 
+    const vpnAccessInfo = cluster.hasVpn ?
+      (
+        <p>
+          VPN configuration: <VpnConfigDownloadLink
+            cluster={cluster}>
+            download
+          </VpnConfigDownloadLink>
+        </p>
+    )
+    :
+      null;
+
     return (
       <div
         className="static-selection-box"
@@ -33,9 +45,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           SSH access: <SshAccessCommand cluster={cluster}/>
         </p>
-        <p>
-          VPN configuration: <VpnConfigDownloadLink cluster={cluster}>download</VpnConfigDownloadLink>
-        </p>
+        {vpnAccessInfo}
         <SelectionBoxButtonContainer>
           <ButtonLink
             bsStyle="success"
