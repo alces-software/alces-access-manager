@@ -38,6 +38,10 @@ Rails.application.routes.draw do
         to: 'clusters#launch_session',
         **launch_session_route_params
 
+      get 'cluster/:ip/vpn-config',
+        to: 'clusters#vpn_config',
+        **cluster_route_params
+
       post 'cluster/:ip/logout',
         to: 'clusters#logout',
         **cluster_route_params

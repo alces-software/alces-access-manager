@@ -6,7 +6,7 @@ require 'daemon_client'
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
 
-  before_action :check_cluster_authentication, only: [:sessions, :launch_session]
+  before_action :check_cluster_authentication, only: [:sessions, :launch_session, :vpn_config]
 
   # Note: currently this action returns everything in the config file, not just
   # the clusters.
@@ -94,6 +94,13 @@ class Api::V1::ClustersController < ApplicationController
     else
       render json: {success: false, launch_response: launch_response}
     end
+  end
+
+  def vpn_config
+    vpn_config_archive = daemon_sessions_wrapper.vpn_config
+    send_data vpn_config_archive,
+      filename: "#{cluster_config[:name]}-vpn.tar.gz",
+      type: 'application/x-tar'
   end
 
   private

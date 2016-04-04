@@ -32,12 +32,17 @@ function setPingResponse(state, action) {
 
 function setSessionsInfo(state, action) {
   const {cluster: {ip}} = action.meta.payload;
-  const {session_types, can_launch_compute_sessions} = action.payload; // eslint-disable-line camelcase
+  const {
+    session_types, // eslint-disable-line camelcase
+    can_launch_compute_sessions, // eslint-disable-line camelcase
+    has_vpn, // eslint-disable-line camelcase
+  } = action.payload;
   return modifyClusterInState(
     state, ip,
     (cluster) => {
       cluster.sessionTypes = session_types; // eslint-disable-line camelcase
       cluster.canLaunchComputeSessions = can_launch_compute_sessions; // eslint-disable-line camelcase
+      cluster.hasVpn = has_vpn; // eslint-disable-line camelcase
     }
   );
 }
