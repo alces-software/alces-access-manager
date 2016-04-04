@@ -9,11 +9,11 @@ function setLoaded(state, value) {
 }
 
 function setReloadingSessions(state, value) {
-  return {...state, reloadingSessions: value}
+  return {...state, reloadingSessions: value};
 }
 
 function setLaunchingSession(state, value) {
-  return {...state, launchingSession: value}
+  return {...state, launchingSession: value};
 }
 
 function setShowingLaunchFailedModal(state, value) {
