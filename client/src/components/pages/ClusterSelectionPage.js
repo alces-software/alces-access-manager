@@ -9,10 +9,10 @@ export default class ClusterSelectionPage extends React.Component {
     const {
       authenticate,
       clusters,
-      singleUserMode,
+      singleClusterMode,
     } = this.props;
 
-    if (singleUserMode) {
+    if (singleClusterMode) {
       const cluster = clusters[0];
       return (
         <SingleClusterPage

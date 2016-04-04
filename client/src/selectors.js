@@ -16,11 +16,11 @@ export const clusterSelectionPageSelector = createSelector(
   clustersState,
   environmentState,
   singleClusterModeSelector,
-  (clusters, environment, singleUserMode) => {
+  (clusters, environment, singleClusterMode) => {
     return {
       clusters,
       environment,
-      singleUserMode,
+      singleClusterMode,
     };
   }
 );
