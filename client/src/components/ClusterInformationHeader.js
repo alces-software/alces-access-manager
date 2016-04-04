@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import {Button} from 'react-bootstrap';
 
 import Icon from 'components/Icon';
+import SshAccessCommand from 'components/SshAccessCommand';
+import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 const propTypes = {
   cluster: PropTypes.object.isRequired,
@@ -49,15 +51,15 @@ class ClusterInformationHeader extends Component {
         {runningSessionsInfo}
         <p>
           You can sign into this cluster directly with SSH, using the following
-          command: <code>ssh {cluster.authenticated_username}@{cluster.ip}</code>.
+          command: <SshAccessCommand cluster={cluster}/>.
         </p>
         <p>
           You will need to connect to this cluster's VPN to access the cluster
           using SSH, or to connect to VNC sessions on the cluster. The VPN
-          configuration files are available to download <a
-            href={`/api/v1/cluster/${cluster.ip}/vpn-config`}>
+          configuration files are available to
+          download <VpnConfigDownloadLink cluster={cluster}>
             here
-          </a>.
+          </VpnConfigDownloadLink>.
         </p>
         <p>
           <Button

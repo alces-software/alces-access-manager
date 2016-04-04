@@ -6,6 +6,8 @@ import {Button} from 'react-bootstrap';
 import ButtonContent from 'components/ButtonContent';
 import {ButtonLink} from 'components/Links';
 import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
+import SshAccessCommand from 'components/SshAccessCommand';
+import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
@@ -27,6 +29,12 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         </p>
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
+        </p>
+        <p>
+          SSH access: <SshAccessCommand cluster={cluster}/>
+        </p>
+        <p>
+          VPN configuration: <VpnConfigDownloadLink cluster={cluster}>download</VpnConfigDownloadLink>
         </p>
         <SelectionBoxButtonContainer>
           <ButtonLink
