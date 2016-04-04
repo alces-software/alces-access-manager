@@ -6,6 +6,13 @@ import {reduxForm} from 'redux-form';
 
 import Icon from 'components/Icon';
 
+// redux-form needs the form name to be passed as a parameter to the component
+// to be wrapped with the reduxForm method (or passed into this method
+// directly, but we can't do that as we have multiple forms with this component
+// so need to create the form names dynamically), this method can be used to
+// create the form name.
+export const clusterLoginFormName = (cluster) => `authenticate-cluster-${cluster.ip}`;
+
 const propTypes = {
   authenticate: PropTypes.func.isRequired,
   cluster: PropTypes.object.isRequired,

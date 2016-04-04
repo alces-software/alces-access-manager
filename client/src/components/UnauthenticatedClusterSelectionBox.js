@@ -3,13 +3,13 @@ import React from 'react';
 import FlipCard from 'react-flipcard';
 
 import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
-import ClusterLoginForm from 'components/ClusterLoginForm';
+import ClusterLoginForm, {clusterLoginFormName} from 'components/ClusterLoginForm';
 
 class UnauthenticatedClusterSelectionBox extends React.Component {
   render() {
     const {authenticate, cluster} = this.props;
 
-    const form = `authenticate-cluster-${cluster.ip}`;
+    const form = clusterLoginFormName(cluster);
 
     return (
       <div

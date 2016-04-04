@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 
-import ClusterLoginForm from 'components/ClusterLoginForm';
+import ClusterLoginForm, {clusterLoginFormName} from 'components/ClusterLoginForm';
 import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
 
 const propTypes = {
@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 function SingleClusterPage({authenticate, cluster}) {
-  const form = `authenticate-cluster-${cluster.ip}`;
+  const form = clusterLoginFormName(cluster);
 
   return (
     <Grid>
