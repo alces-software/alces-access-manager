@@ -102,6 +102,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # - `sudo yum install git pam-devel ruby-devel -y`
   # - `bundle install`
 
+
+  # TODO: adapt this for below
+  # start_daemon = <<-END
+  # sudo systemctl stop clusterware-alces-access-manager-daemon.service # kill existing daemon
+  # cd /media/host/alces-access-manager-daemon && rvmsudo bin/alces-access-manager-daemon # start development daemon
+  # END
+  # config.vm.provision 'shell', inline: start_daemon, run: 'always'
+
   # TODO: Make below part of provisioning process on each vagrant up.
   #
   # Note:
