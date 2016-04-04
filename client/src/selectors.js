@@ -2,7 +2,8 @@
 import _ from 'lodash';
 import {createSelector} from 'reselect';
 
-// const clustersState = (state) => state.clusters;
+const environmentState = (state) => state.environment;
+const clustersState = (state) => state.clusters;
 const novncState = (state) => state.novnc;
 const sessionsState = (state) => state.sessions;
 const uiState = (state) => state.ui;
