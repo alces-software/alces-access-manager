@@ -5,6 +5,7 @@ import {Button} from 'react-bootstrap';
 
 import ButtonContent from 'components/ButtonContent';
 import {ButtonLink} from 'components/Links';
+import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
 import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 import SshAccessCommand from 'components/SshAccessCommand';
 import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
@@ -33,12 +34,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
       <div
         className="static-selection-box"
       >
-        <p>
-          <strong>{cluster.name}</strong>
-        </p>
-        <p>
-          IP: {cluster.ip}
-        </p>
+        <ClusterSelectionInfo cluster={cluster}/>
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
