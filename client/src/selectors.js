@@ -25,11 +25,16 @@ export const clusterSelectionPageSelector = createSelector(
     };
   }
 );
-
-export function clusterFromRouteSelector(state) {
-  const clusterIp = state.router.params.clusterIp;
-  return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
+function clusterFromRouteSelectorWithDefault(noClusterDefault) {
+  return (state) => {
+    const clusterIp = state.router.params.clusterIp;
+    return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || noClusterDefault;
+  }
 }
+
+// When get cluster from the route return {} if no cluster, so things still
+// behave well before clusters are set.
+export const clusterFromRouteSelector = clusterFromRouteSelectorWithDefault({});
 
 function sessionsForCluster(cluster, allSessions) {
   return sessionsForClusterWithIp(cluster.ip, allSessions);
@@ -85,10 +90,14 @@ export const appSelector = createSelector(
   notificationsSelector,
   uiState,
 
-  (notifications, ui) => {
+  // Return null when no cluster so can easily tell this is the case.
+  clusterFromRouteSelectorWithDefault(null),
+
+  (notifications, ui, currentCluster) => {
     return {
       notifications,
       ui,
+      currentCluster,
     }
   }
 );
