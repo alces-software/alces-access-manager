@@ -7,7 +7,9 @@ import ClusterLoginForm from 'components/ClusterLoginForm';
 
 class UnauthenticatedClusterSelectionBox extends React.Component {
   render() {
-    const {authenticate, cluster, form} = this.props;
+    const {authenticate, cluster} = this.props;
+
+    const form = `authenticate-cluster-${cluster.ip}`;
 
     return (
       <div
