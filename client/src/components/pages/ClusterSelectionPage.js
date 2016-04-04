@@ -1,18 +1,14 @@
 
-import _ from 'lodash';
 import React from 'react';
 
-import ClusterSelectionBox from 'components/ClusterSelectionBox';
 import SingleClusterPage from 'components/SingleClusterPage';
-import SelectionPage from 'components/SelectionPage';
+import MultipleClustersPage from 'components/MultipleClustersPage';
 
 export default class ClusterSelectionPage extends React.Component {
   render() {
     const {
       authenticate,
       clusters,
-      environment,
-      logout,
       singleUserMode,
     } = this.props;
 
@@ -26,35 +22,7 @@ export default class ClusterSelectionPage extends React.Component {
       );
     }
     else {
-      const clusterSelectionBoxProps = {authenticate, logout};
-
-      const clustersAvailableMessage = _.isEmpty(clusters) ?
-        <strong>
-          There are no clusters available within this environment, please create
-          a cluster within the environment to connect to.
-        </strong>
-          :
-            `Select a cluster below to get started.`;
-          const header = (
-            <div>
-              <p>
-                Connected to environment <em>{environment.name}</em>.
-              </p>
-              <p>
-                {clustersAvailableMessage}
-              </p>
-            </div>
-          );
-
-      return (
-        <SelectionPage
-          items={clusters}
-          keyProp="ip"
-          header={header}
-          selectionBoxComponent={ClusterSelectionBox}
-          selectionBoxProps={clusterSelectionBoxProps}
-        />
-      );
+      return <MultipleClustersPage {...this.props}/>
     }
   }
 }
