@@ -7,6 +7,24 @@ const novncState = (state) => state.novnc;
 const sessionsState = (state) => state.sessions;
 const uiState = (state) => state.ui;
 
+const singleClusterModeSelector = createSelector(
+  clustersState,
+  (clusters) => clusters.length === 1
+)
+
+export const clusterSelectionPageSelector = createSelector(
+  clustersState,
+  environmentState,
+  singleClusterModeSelector,
+  (clusters, environment, singleUserMode) => {
+    return {
+      clusters,
+      environment,
+      singleUserMode,
+    };
+  }
+);
+
 export function clusterFromRouteSelector(state) {
   const clusterIp = state.router.params.clusterIp;
   return _.find(state.clusters, (cluster) => cluster.ip == clusterIp) || {};
