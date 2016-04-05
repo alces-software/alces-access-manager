@@ -17,11 +17,13 @@ export const clusterSelectionPageSelector = createSelector(
   clustersState,
   environmentState,
   singleClusterModeSelector,
-  (clusters, environment, singleClusterMode) => {
+  uiState,
+  (clusters, environment, singleClusterMode, ui) => {
     return {
       clusters,
       environment,
       singleClusterMode,
+      loggingOut: ui.loggingOut,
     };
   }
 );

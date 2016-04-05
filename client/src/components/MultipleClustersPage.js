@@ -10,9 +10,10 @@ const propTypes = {
   clusters: PropTypes.array.isRequired,
   environment: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired,
+  loggingOut: PropTypes.bool.isRequired,
 };
 
-function MultipleClustersPage({authenticate, clusters, environment, logout}) {
+function MultipleClustersPage({authenticate, clusters, environment, logout, loggingOut}) {
   const clusterSelectionBoxProps = {authenticate, logout};
 
   const clustersAvailableMessage = _.isEmpty(clusters) ?
@@ -43,6 +44,7 @@ function MultipleClustersPage({authenticate, clusters, environment, logout}) {
         header={header}
         selectionBoxComponent={ClusterSelectionBox}
         selectionBoxProps={clusterSelectionBoxProps}
+        loggingOut={loggingOut}
       />
     );
 }
