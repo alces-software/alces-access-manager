@@ -38,8 +38,6 @@ export default class SessionSelectionPage extends React.Component {
       <ClusterInformationHeader
         cluster={cluster}
         sessions={sessions}
-        sessionActions={sessionActions}
-        ui={ui}
       />
     );
 
