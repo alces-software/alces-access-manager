@@ -9,6 +9,11 @@ import SessionSelectionPage from 'containers/SessionSelectionPageContainer';
 import VncSessionPage from 'containers/VncSessionPageContainer';
 import * as authorization from 'utils/authorization';
 
+const checkCanAccessClustersPage = authorize(
+  authorization.canAccessClustersPage,
+  authorization.redirectToSingleClusterSessionsPage
+);
+
 const checkAuthenticatedForCluster = authorize(
   authorization.authenticatedWithCurrentCluster,
   authorization.redirectToClustersPage
@@ -20,7 +25,9 @@ const checkSessionExists = authorize(
 );
 
 const routes = <Route path="/" component={App}>
-  <IndexRoute component={ClusterSelectionPage} />
+  <Route component={checkCanAccessClustersPage}>
+    <IndexRoute component={ClusterSelectionPage} />
+  </Route>
 
   <Route component={checkAuthenticatedForCluster}>
     <Route path="cluster/:clusterIp" component={SessionSelectionPage} />

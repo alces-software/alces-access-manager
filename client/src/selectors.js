@@ -8,9 +8,14 @@ const novncState = (state) => state.novnc;
 const sessionsState = (state) => state.sessions;
 const uiState = (state) => state.ui;
 
-const singleClusterModeSelector = createSelector(
+export const singleClusterModeSelector = createSelector(
   clustersState,
   (clusters) => clusters.length === 1
+)
+
+export const singleClusterSelector = createSelector(
+  clustersState,
+  (clusters) => clusters[0]
 )
 
 export const clusterSelectionPageSelector = createSelector(
