@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import LoadingPage from 'components/LoadingPage';
@@ -17,16 +18,21 @@ if (!__TEST__){
 
 class App extends React.Component {
   render() {
+    const {
+      notifications: {showingModal, currentModal, exitingModal},
+      closeNotificationModal,
+    } = this.props;
+
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
           <NotificationModals
-            showingModal={this.props.notifications.showingModal}
-            onCloseNotification={this.props.closeNotificationModal}
-            currentModal={this.props.notifications.currentModal}
-            exitingModal={this.props.notifications.exitingModal}
+            showingModal={showingModal}
+            onCloseNotification={closeNotificationModal}
+            currentModal={currentModal}
+            exitingModal={exitingModal}
           />
-          <Header/>
+          <Header {...this.props}/>
           <div className="pageContainer">
             {this.page()}
           </div>
@@ -90,5 +96,6 @@ export default connect(
   appSelector,
   {
     closeNotificationModal: notificationActions.closeModal,
+    logout: clusterActions.logout,
   }
 )(App);

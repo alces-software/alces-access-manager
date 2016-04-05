@@ -46,8 +46,14 @@ export function authenticate(cluster, {username, password}) {
   };
 }
 
-export function logout(cluster) {
+function logoutComplete() {
   return {
+    type: actionTypes.LOGOUT_COMPLETE,
+  };
+}
+
+export function logout(cluster) {
+  const logoutRequest = {
     type: actionTypes.LOGOUT,
     payload: {
       cluster,
@@ -61,6 +67,12 @@ export function logout(cluster) {
       },
     },
   };
+
+  return (dispatch) => {
+    return dispatch(logoutRequest).
+      then( () => dispatch(redirectTo(`/`)) ).
+      then( () => dispatch(logoutComplete()) );
+  }
 }
 
 function ping(cluster) {

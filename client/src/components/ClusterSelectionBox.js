@@ -40,7 +40,7 @@ const ClusterFilter = ({message, children}) => {
 
 class ClusterSelectionBox extends React.Component {
   render() {
-    const {authenticate, form, item, logout} = this.props;
+    const {authenticate, item, logout} = this.props;
     const cluster = item;
 
     const selectionBoxElement = cluster.authenticated_username ?
@@ -52,7 +52,6 @@ class ClusterSelectionBox extends React.Component {
       <UnauthenticatedClusterSelectionBox
         authenticate={authenticate}
         cluster={cluster}
-        form={form}
       />
 
     const currentlyPingingCluster = (cluster.available === undefined);
