@@ -18,8 +18,6 @@ if (!__TEST__){
 
 class App extends React.Component {
   render() {
-    const {currentCluster, logout} = this.props;
-
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
@@ -29,7 +27,7 @@ class App extends React.Component {
             currentModal={this.props.notifications.currentModal}
             exitingModal={this.props.notifications.exitingModal}
           />
-          <Header currentCluster={currentCluster} logout={logout}/>
+          <Header {...this.props}/>
           <div className="pageContainer">
             {this.page()}
           </div>

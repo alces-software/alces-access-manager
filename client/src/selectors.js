@@ -100,11 +100,16 @@ export const appSelector = createSelector(
   // Return null when no cluster so can easily tell this is the case.
   clusterFromRouteSelectorWithDefault(null),
 
-  (notifications, ui, currentCluster) => {
+  singleClusterModeSelector,
+  singleClusterSelector,
+
+  (notifications, ui, currentCluster, singleClusterMode, singleCluster) => {
     return {
       notifications,
       ui,
       currentCluster,
+      singleClusterMode,
+      singleCluster,
     }
   }
 );
