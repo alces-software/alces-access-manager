@@ -18,14 +18,19 @@ if (!__TEST__){
 
 class App extends React.Component {
   render() {
+    const {
+      notifications: {showingModal, currentModal, exitingModal},
+      closeNotificationModal,
+    } = this.props;
+
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
           <NotificationModals
-            showingModal={this.props.notifications.showingModal}
-            onCloseNotification={this.props.closeNotificationModal}
-            currentModal={this.props.notifications.currentModal}
-            exitingModal={this.props.notifications.exitingModal}
+            showingModal={showingModal}
+            onCloseNotification={closeNotificationModal}
+            currentModal={currentModal}
+            exitingModal={exitingModal}
           />
           <Header {...this.props}/>
           <div className="pageContainer">
