@@ -25,11 +25,13 @@ function setLoggingOutFlag(state, value) {
   return {...state, loggingOut: value};
 }
 
+const DEFAULT_SESSION_REFRESH_PERIOD = 5;
 const initialState = {
   // Whether the initial app data (currently just the clusters) has loaded.
   loaded: false,
 
   loggingOut: false,
+  sessionRefreshPeriod: DEFAULT_SESSION_REFRESH_PERIOD,
 };
 export default function reducer(state=initialState, action) {
   switch (action.type) {
@@ -76,7 +78,7 @@ export default function reducer(state=initialState, action) {
     case resolve(clusterActionTypes.LOAD_CLUSTERS):
       return {
         ...state,
-        sessionRefreshPeriod: action.payload.session_refresh_period,
+        sessionRefreshPeriod: action.payload.session_refresh_period || DEFAULT_SESSION_REFRESH_PERIOD,
       };
 
     default:
