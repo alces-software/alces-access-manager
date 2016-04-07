@@ -1,14 +1,30 @@
 
+import _ from 'lodash';
 import {resolve} from 'redux-simple-promise';
 
 import * as actionTypes from './actionTypes';
 
 export function handleReceivedSessions(state, action) {
   const clusterIp = action.meta.payload.cluster.ip;
-  const sessions = action.payload.sessions;
-  return {
-    ...state,
-    [clusterIp]: sessions,
+
+  const currentSessions = state[clusterIp];
+  const receivedSessions = action.payload.sessions;
+  const equivalentIds = _.chain().
+    zip(
+      _.map(currentSessions, 'uuid'), _.map(receivedSessions, 'uuid')
+    ).
+    every( ([currentUuid, newUuid]) => currentUuid === newUuid ).
+    value();
+
+    console.log(equivalentIds) // eslint-disable-line no-console
+  if (!equivalentIds) {
+    return {
+      ...state,
+      [clusterIp]: receivedSessions,
+    }
+  }
+  else {
+    return state;
   }
 }
 

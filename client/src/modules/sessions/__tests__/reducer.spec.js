@@ -6,24 +6,32 @@ import * as reducerModule from '../reducer';
 
 describe('sessions reducer', function() {
   describe('handleReceivedSessions', function() {
-    it('sets the sessions under the cluster IP', function() {
-      const ip = '127.0.0.1';
-      const sessions = [{uuid: '1'}, {uuid: '2'}];
-      const action = {
+    beforeEach(function() {
+      this.ip = '127.0.0.1';
+      this.sessions = [{uuid: '1'}, {uuid: '2'}];
+      this.loadSessionsAction = {
         meta: {
           payload: {
             cluster: {
-              ip,
+              ip: this.ip,
             },
           },
         },
         payload: {
-          sessions,
+          sessions: this.sessions,
         },
       };
+    });
 
-      const newState = reducerModule.handleReceivedSessions({}, action)
-      expect(newState).to.deep.equal({[ip]: sessions});
+    it('sets the sessions under the cluster IP', function() {
+      const newState = reducerModule.handleReceivedSessions({}, this.loadSessionsAction)
+      expect(newState).to.deep.equal({[this.ip]: this.sessions});
+    });
+
+    it('only sets sessions if different to existing', function() {
+      const currentState = {[this.ip]: this.sessions};
+      const newState = reducerModule.handleReceivedSessions(currentState, this.loadSessionsAction);
+      expect(newState).to.equal(currentState);
     });
   });
 });
