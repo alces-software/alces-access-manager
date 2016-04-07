@@ -41,9 +41,7 @@ class AddSessionBox extends React.Component {
                 value="compute"
                 disabled={!cluster.canLaunchComputeSessions}
               >
-                Request compute node
-                {!cluster.canLaunchComputeSessions ?
-                ' (feature unavailable for this cluster)' : ''}
+                {this.launchComputeNodeText()}
               </option>
             </Input>
             <SelectionBoxButtonContainer>
@@ -74,6 +72,15 @@ class AddSessionBox extends React.Component {
         </StandardModal>
       </div>
     );
+  }
+
+  launchComputeNodeText() {
+    const ending = !this.props.cluster.canLaunchComputeSessions ?
+      ' (feature unavailable for this cluster)'
+    :
+      '';
+
+    return `Request compute node${ending}`;
   }
 
   componentWillUnmount() {
