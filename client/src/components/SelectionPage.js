@@ -84,33 +84,15 @@ class SelectionPage extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.loggingOutShouldUpdate(nextProps) &&
-      this.itemsDifferentShouldUpdate(nextProps);
-  }
-
-  // Don't update when we are logging out (between dispatching LOGOUT and
-  // dispatching LOGOUT_COMPLETE after transition back to home page), to
-  // avoid FlipCard component children giving errors as they try to render
-  // while we unmount. This may be fixed by
-  // https://github.com/mzabriskie/react-flipcard/pull/3 being merged.
-  // TODO: Could do similar when sign in and transition as well - FlipCard
-  // gives errors then too although these don't appear to affect anything.
-  loggingOutShouldUpdate(nextProps) {
+    // Don't update when we are logging out (between dispatching LOGOUT and
+    // dispatching LOGOUT_COMPLETE after transition back to home page), to
+    // avoid FlipCard component children giving errors as they try to render
+    // while we unmount. This may be fixed by
+    // https://github.com/mzabriskie/react-flipcard/pull/3 being merged.
     return !nextProps.loggingOut;
-  }
 
-  // Only update when receive item IDs that are actually different
-  itemsDifferentShouldUpdate(nextProps) {
-    const {items, keyProp} = this.props;
-    const currentItemIds = _.map(items, keyProp);
-    const newItemIds = _.map(nextProps.items, keyProp);
-
-    const equivalentIds = _.chain().
-      zip(currentItemIds, newItemIds).
-      every( ([currentId, newId]) => currentId === newId ).
-      value();
-
-    return !equivalentIds;
+    // TODO: Could do similar when sign in and transition as well - FlipCard
+    // gives errors then too although these don't appear to affect anything.
   }
 }
 
