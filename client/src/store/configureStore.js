@@ -1,10 +1,8 @@
 
 import { createStore, compose } from 'redux';
-import { persistState } from 'redux-devtools';
 import { reduxReactRouter } from 'redux-router';
 import createHistory from 'history/lib/createBrowserHistory';
 
-import DevTools from '../containers/DevTools';
 import rootReducer from 'reducers';
 import enhanceWithMiddleware from 'middleware';
 import routes from 'routes';
@@ -12,16 +10,8 @@ import routes from 'routes';
 const storeEnhancers = [
   enhanceWithMiddleware,
   reduxReactRouter({routes, createHistory}),
+  window.devToolsExtension ? window.devToolsExtension() : undefined,
 ]
-
-if (__PERSIST_STATE__) {
-  storeEnhancers.push(
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-  );
-}
-if (__DEVTOOLS__) {
-  storeEnhancers.push(DevTools.instrument());
-}
 
 const storeEnhancer  = compose(...storeEnhancers);
 const finalCreateStore = storeEnhancer(createStore);

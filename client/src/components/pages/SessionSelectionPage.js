@@ -8,6 +8,11 @@ import SessionSelectionBox from 'components/SessionSelectionBox';
 import SelectionPage from 'components/SelectionPage';
 
 export default class SessionSelectionPage extends React.Component {
+  componentWillMount() {
+    const {cluster, sessionActions: {pollForSessions}} = this.props;
+    this.sessionPollIntervalId = pollForSessions(cluster);
+  }
+
   render() {
     const {
       cluster,
@@ -33,8 +38,6 @@ export default class SessionSelectionPage extends React.Component {
       <ClusterInformationHeader
         cluster={cluster}
         sessions={sessions}
-        sessionActions={sessionActions}
-        ui={ui}
       />
     );
 
@@ -49,5 +52,9 @@ export default class SessionSelectionPage extends React.Component {
         loggingOut={ui.loggingOut}
       />
     );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.sessionPollIntervalId);
   }
 }

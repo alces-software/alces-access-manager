@@ -29,9 +29,6 @@ if (env === "production") {
       __DEVELOPMENT__: false,
       __TEST__: false,
       __UNIVERSAL__: false,
-      // Which set of development tools are enabled?
-      __DEVTOOLS__: false,
-      __PERSIST_STATE__: false,
     }),
     new ExtractTextPlugin(appName + ".[hash].css"),
     new webpack.optimize.UglifyJsPlugin({
@@ -82,9 +79,6 @@ if (env === "production") {
       __DEVELOPMENT__: true,
       __TEST__: false,
       __UNIVERSAL__: false,
-      // Which set of development tools are enabled?
-      __DEVTOOLS__: true,
-      __PERSIST_STATE__: true,
     })
   ];
 

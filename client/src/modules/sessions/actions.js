@@ -38,6 +38,17 @@ export function reloadSessions(cluster) {
   }
 }
 
+export function pollForSessions(cluster) {
+  return (dispatch, getState) => {
+    const {sessionRefreshPeriod} = getState().ui;
+    const pollIntervalInMs = sessionRefreshPeriod * 1000;
+    return setInterval(
+      () => dispatch(loadSessions(cluster)),
+      pollIntervalInMs
+    );
+  }
+}
+
 export function launchSession(cluster, {sessionType, node}) {
   return {
     type: actionTypes.LAUNCH,

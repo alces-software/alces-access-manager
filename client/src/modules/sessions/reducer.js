@@ -3,7 +3,7 @@ import {resolve} from 'redux-simple-promise';
 
 import * as actionTypes from './actionTypes';
 
-function handleReceivedSessions(state, action) {
+export function handleReceivedSessions(state, action) {
   const clusterIp = action.meta.payload.cluster.ip;
   const sessions = action.payload.sessions;
   return {

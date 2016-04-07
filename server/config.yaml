@@ -24,4 +24,5 @@ ssl:
   ca: alces-ca_crt.pem
 
 timeout: 5
+session_refresh_period: 5
 ...

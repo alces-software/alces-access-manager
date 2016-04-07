@@ -17,8 +17,6 @@ const iconNameToFontAwesomeProps = {
   "session-launching": {name: "spinner", spin: true},
   "session-password-hide": {name: "eye-slash"},
   "session-password-reveal": {name: "eye"},
-  "sessions-reload": {name: "refresh"},
-  "sessions-reloading": {name: "refresh", spin: true},
 
   "vnc-volume-on": {name: "volume-up"},
   "vnc-volume-off": {name: "volume-off"},

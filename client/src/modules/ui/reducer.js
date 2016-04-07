@@ -73,6 +73,12 @@ export default function reducer(state=initialState, action) {
     case clusterActionTypes.LOGOUT_COMPLETE:
       return setLoggingOutFlag(state, false);
 
+    case resolve(clusterActionTypes.LOAD_CLUSTERS):
+      return {
+        ...state,
+        sessionRefreshPeriod: action.payload.session_refresh_period,
+      };
+
     default:
       return state;
   }
