@@ -2,8 +2,6 @@
 import * as actionTypes from './actionTypes';
 import * as uiActions from 'ui/actions';
 
-const SESSIONS_POLL_PERIOD = 3000;
-
 function sessionLoadAction(cluster, actionType) {
   return {
     type: actionType,
@@ -41,10 +39,12 @@ export function reloadSessions(cluster) {
 }
 
 export function pollForSessions(cluster) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const {sessionRefreshPeriod} = getState().ui;
+    const pollIntervalInMs = sessionRefreshPeriod * 1000;
     return setInterval(
       () => dispatch(loadSessions(cluster)),
-      SESSIONS_POLL_PERIOD
+      pollIntervalInMs
     );
   }
 }
