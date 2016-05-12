@@ -10,7 +10,7 @@ import routes from 'routes';
 const storeEnhancers = [
   enhanceWithMiddleware,
   reduxReactRouter({routes, createHistory}),
-  window.devToolsExtension ? window.devToolsExtension() : undefined,
+  window.devToolsExtension ? window.devToolsExtension() : f => f,
 ]
 
 const storeEnhancer  = compose(...storeEnhancers);
