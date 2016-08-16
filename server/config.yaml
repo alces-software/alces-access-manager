@@ -18,7 +18,7 @@ environment:
 
 ssl:
   # Options used for SSL connections
-  root: /home/bob/projects/alces/alces-access-manager-daemon/config/ssl
+  root: /home/bob/projects/alces/access-manager-project/alces-access-manager-daemon/config/ssl
   certificate: daemon_crt.pem
   key: daemon_key.pem
   ca: alces-ca_crt.pem
