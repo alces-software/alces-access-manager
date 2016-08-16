@@ -58,15 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Sync in AAM daemon.
   config.vm.synced_folder "#{access_manager_root}/../access-manager-project/alces-access-manager-daemon", "/media/host/alces-access-manager-daemon"
 
-  # TODO: various setup needed to make AAM daemon run initially - installing
-  # gems, ruby headers, git etc - make this part of provisioning process.
-
-  # TODO: Make below part of provisioning process.
-  #
-  # Note:
-  # - To start daemon:
-  # cd /media/host/alces-access-manager-daemon && rvmsudo bin/alces-access-manager-daemon
-  #
-  # - To forward daemon port:
-  # ssh -L 25269:10.0.2.15:25269 -p 2222 vagrant@localhost
+  # Refer to
+  # `https://github.com/alces-software/alces-access-manager-daemon`
+  # for information on running the daemon.
 end
