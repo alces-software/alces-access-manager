@@ -18,7 +18,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = "login1.cluster"
 
   # Update the below vars to match your configuration
-  projects = "#{ENV['HOME']}/projects/alces"
+  clusterware_root = "#{ENV['HOME']}/projects/alces/clusterware-project"
+  access_manager_root = "#{ENV['HOME']}/projects/alces/access-manager-project"
   hostonly_net = "vboxnet0"
   # VBoxManage dhcpserver add --netname cluster1 --ip 192.168.25.1 --netmask 255.255.255.0 --lowerip 192.168.25.100 --upperip 192.168.25.200 --enable
   intnet_net = "cluster1"
@@ -78,37 +79,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   RUBY
   config.vm.provision 'shell', inline: provision_script
 
-  config.vm.synced_folder "#{projects}/clusterware", "/media/host/clusterware"
-  #config.vm.synced_folder "#{projects}/metalware", "/media/host/metalware"
-  #config.vm.synced_folder "#{projects}/clusterware-handlers", "/media/host/clusterware-handlers"
-  #config.vm.synced_folder "#{projects}/clusterware-sessions", "/media/host/clusterware-sessions"
-  #config.vm.synced_folder "#{projects}/clusterware-services", "/media/host/clusterware-services"
-  #config.vm.synced_folder "#{projects}/clusterware-storage", "/media/host/clusterware-storage"
-  #config.vm.synced_folder "#{projects}/packager-base", "/media/host/clusterware-packages"
+  config.vm.synced_folder "#{clusterware_root}/clusterware", "/media/host/clusterware"
+  #config.vm.synced_folder "#{clusterware_root}/metalware", "/media/host/metalware"
+  #config.vm.synced_folder "#{clusterware_root}/clusterware-handlers", "/media/host/clusterware-handlers"
+  #config.vm.synced_folder "#{clusterware_root}/clusterware-sessions", "/media/host/clusterware-sessions"
+  #config.vm.synced_folder "#{clusterware_root}/clusterware-services", "/media/host/clusterware-services"
+  #config.vm.synced_folder "#{clusterware_root}/clusterware-storage", "/media/host/clusterware-storage"
+  #config.vm.synced_folder "#{clusterware_root}/packager-base", "/media/host/clusterware-packages"
 
 
   # AAM additions to Clusterware Vagrantfile below this point.
 
   # Sync in AAM daemon.
-  config.vm.synced_folder "#{projects}/alces-access-manager-daemon", "/media/host/alces-access-manager-daemon"
+  config.vm.synced_folder "#{access_manager_root}/../access-manager-project/alces-access-manager-daemon", "/media/host/alces-access-manager-daemon"
 
-  # TODO: various setup needed to make development AAM daemon run initially -
-  # make this part of provisioning process:
-  #
-  # - install RVM: https://rvm.io/
-  # - `rvm install ruby-2.2.1`
-  # - `cd /media/host/alces-access-manager-daemon`
-  # - `gem install bundler`
-  # - `sudo yum install git pam-devel ruby-devel -y`
-  # - `bundle install`
-
-  # TODO: Make below part of provisioning process on each vagrant up.
-  #
-  # Note:
-  # - To start development daemon:
-  #     - kill existing daemon: `sudo systemctl stop clusterware-alces-access-manager-daemon.service`
-  #     - start development daemon: `cd /media/host/alces-access-manager-daemon && rvmsudo bin/alces-access-manager-daemon`
-  #
-  # - To forward daemon port:
-  # ssh -L 25269:10.0.2.15:25269 -p 2222 vagrant@localhost
+  # Refer to
+  # `https://github.com/alces-software/alces-access-manager-daemon`
+  # for information on running the daemon.
 end
