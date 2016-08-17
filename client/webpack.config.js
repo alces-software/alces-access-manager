@@ -126,7 +126,7 @@ module.exports = {
   plugins: plugins,
   module: {
     preLoaders: [
-      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
+      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules|flight-common/}
     ],
     loaders: loaders.concat([
       { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
