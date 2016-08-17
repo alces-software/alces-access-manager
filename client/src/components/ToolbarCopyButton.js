@@ -1,8 +1,8 @@
 
 import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
+import {ContactCustomerSupport} from 'flight-common';
 
-import {ContactCustomerSupport} from 'components/CustomerSupport';
 import {infoGeneratorsMap} from "notification/messageGeneration"
 import MessageGenerator from "notification/MessageGenerator";
 import ToolbarButton from 'components/ToolbarButton';
