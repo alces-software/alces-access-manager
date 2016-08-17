@@ -1,8 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
-
-import Icon from 'components/Icon';
+import {Icon} from 'flight-common';
 
 const propTypes = {
   cluster: PropTypes.object.isRequired,
@@ -49,7 +48,7 @@ class HyperlinkVncAccessDetails extends Component {
           rootClose
           trigger="click"
         >
-          <Icon name="session-external-access-info"/>
+          <Icon name="aam-session-external-access-info"/>
         </OverlayTrigger>
       </p>
     );

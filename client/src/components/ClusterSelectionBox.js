@@ -1,14 +1,14 @@
 
 import React from 'react';
+import {Icon} from 'flight-common';
 
 import AuthenticatedClusterSelectionBox from 'components/AuthenticatedClusterSelectionBox';
-import Icon from 'components/Icon';
 import UnauthenticatedClusterSelectionBox from 'components/UnauthenticatedClusterSelectionBox';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 const PingingClusterFilter = ({children}) => {
   const filterMessage =
-    <Icon name="cluster-pinging" className="cluster-pinging-icon"/>;
+    <Icon name="aam-cluster-pinging" className="cluster-pinging-icon"/>;
   return (
     <ClusterFilter message={filterMessage}>
       {children}

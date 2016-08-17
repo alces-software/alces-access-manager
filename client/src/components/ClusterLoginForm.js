@@ -3,8 +3,7 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import {Button, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
-
-import Icon from 'components/Icon';
+import {Icon} from 'flight-common';
 
 // redux-form needs the form name to be passed as a parameter to the component
 // to be wrapped with the reduxForm method (or passed into this method
@@ -32,7 +31,7 @@ class ClusterLoginForm extends Component {
     const authenticateCluster = _.partial(authenticate, cluster);
     const incomplete = !(username.value && password.value);
 
-    const submitButtonIcon = submitting ? "cluster-authenticating" : "cluster";
+    const submitButtonIcon = submitting ? "aam-cluster-authenticating" : "aam-cluster";
     const submitButtonText = (
       <span>
         Login&nbsp;&nbsp;<Icon name={submitButtonIcon}/>

@@ -8,8 +8,7 @@
 import React from 'react';
 import { Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ClipboardAction from 'clipboard/lib/clipboard-action';
-
-import Icon from 'components/Icon';
+import {Icon} from 'flight-common';
 
 export class CopyToClipboardButton extends React.Component {
   constructor(props) {
@@ -58,7 +57,7 @@ export class CopyToClipboardButton extends React.Component {
         trigger="hover"
         >
         <CopyToClipboard {...this.props} onCopy={this.handleCopy.bind(this)}>
-          <Button><Icon name="clipboard"/></Button>
+          <Button><Icon name="aam-clipboard"/></Button>
         </CopyToClipboard>
       </OverlayTrigger>
     )

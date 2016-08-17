@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Navbar, Nav, NavItem} from 'react-bootstrap';
 import { Link } from 'react-router';
+import {Icon} from 'flight-common';
 
 // Import these components directly to make Babel optimizations happy.  One of
 // the optimization plugins we use for production builds doesn't like the use
@@ -12,7 +13,6 @@ import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
 import NavbarHeader from 'react-bootstrap/lib/NavbarHeader';
 import NavbarCollapse from 'react-bootstrap/lib/NavbarCollapse';
 
-import Icon from 'components/Icon';
 import {NavItemLink} from 'components/Links';
 
 class Header extends React.Component {
@@ -32,7 +32,7 @@ class Header extends React.Component {
       navbarRight = (
         <Nav pullRight>
           <NavItem onClick={logoutCluster}>
-            Logout of {currentCluster.name} <Icon name="cluster-logout"/>
+            Logout of {currentCluster.name} <Icon name="aam-cluster-logout"/>
           </NavItem>
         </Nav>
       );
