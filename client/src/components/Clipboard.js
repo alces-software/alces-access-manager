@@ -57,7 +57,7 @@ export class CopyToClipboardButton extends React.Component {
         trigger="hover"
         >
         <CopyToClipboard {...this.props} onCopy={this.handleCopy.bind(this)}>
-          <Button><Icon name="aam-clipboard"/></Button>
+          <Button><Icon name="clipboard"/></Button>
         </CopyToClipboard>
       </OverlayTrigger>
     )
