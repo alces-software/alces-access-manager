@@ -3,10 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {Footer} from 'flight-common';
 
 import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 import LoadingPage from 'components/LoadingPage';
 import * as notificationActions from 'notification/actions';
 import NotificationModals from 'notification/components/NotificationModals';
@@ -37,7 +37,10 @@ class App extends React.Component {
             {this.page()}
           </div>
         </div>
-        <Footer ref={(footer) => this.footer = footer}/>
+        <Footer
+          productName="Alces Access Manager"
+          ref={(footer) => this.footer = footer}
+        />
       </div>
     )
   }
