@@ -3,10 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {Footer} from 'flight-common';
+import {Footer, Header} from 'flight-common';
 
+import NavbarContent from 'components/NavbarContent';
 import * as clusterActions from 'clusters/actions';
-import Header from 'components/Header';
 import LoadingPage from 'components/LoadingPage';
 import * as notificationActions from 'notification/actions';
 import NotificationModals from 'notification/components/NotificationModals';
@@ -21,7 +21,16 @@ class App extends React.Component {
     const {
       notifications: {showingModal, currentModal, exitingModal},
       closeNotificationModal,
+      singleClusterMode,
+      singleCluster,
     } = this.props;
+
+    let homePageLink = '/';
+    if (singleClusterMode && singleCluster.authenticated_username) {
+      // When authed for the single cluster in single cluster mode, we treat
+      // the cluster's sessions page as the home page.
+      homePageLink = `/cluster/${singleCluster.ip}`
+    }
 
     return (
       <div className="stickyFooter-wrapper-wrapper">
@@ -32,14 +41,18 @@ class App extends React.Component {
             currentModal={currentModal}
             exitingModal={exitingModal}
           />
-          <Header {...this.props}/>
+          <Header
+            productName="Alces Access Manager"
+            homePageLink={homePageLink}
+          >
+            <NavbarContent homePageLink={homePageLink}/>
+          </Header>
           <div className="pageContainer">
             {this.page()}
           </div>
         </div>
         <Footer
           productName="Alces Access Manager"
-          ref={(footer) => this.footer = footer}
         />
       </div>
     )
