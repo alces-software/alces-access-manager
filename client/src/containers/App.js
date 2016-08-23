@@ -3,11 +3,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {Footer} from 'flight-common';
+import {Footer, LoadingPage} from 'flight-common';
 
 import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
-import LoadingPage from 'components/LoadingPage';
 import * as notificationActions from 'notification/actions';
 import NotificationModals from 'notification/components/NotificationModals';
 import {appSelector} from 'selectors';
