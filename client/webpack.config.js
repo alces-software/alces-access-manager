@@ -112,13 +112,14 @@ module.exports = {
     root: [
       path.resolve('src'),
       path.resolve('src/modules'),
-      path.resolve('../../flight-common/dist'),
+      // path.resolve('../../flight-common/dist'),
     ],
     extensions: [
       '', '.js',
     ],
     alias: {
       react: path.resolve('./node_modules/react'),
+      "flight-common": path.resolve(__dirname, '../../flight-common'),
     },
   },
   output: {
