@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {Button, Input, OverlayTrigger, Tooltip} from 'react-bootstrap';
-import {Icon} from 'flight-common';
-
-import {CopyToClipboardButton} from 'components/Clipboard';
+import {CopyToClipboardButton, Icon} from 'flight-common';
 
 const propTypes = {
   password: PropTypes.string.isRequired,
