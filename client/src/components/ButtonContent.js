@@ -1,11 +1,11 @@
 
 import React from 'react';
 
-import Icon from 'components/Icon';
+import {Icon} from 'flight-common';
 
 const ButtonContent = ({text, iconName}) => (
   <span>
-    {text}&nbsp;&nbsp;<Icon name={iconName}/>
+    {text}&nbsp;&nbsp;<Icon name={`aam-${iconName}`}/>
   </span>
 );
 

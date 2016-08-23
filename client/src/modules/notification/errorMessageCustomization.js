@@ -1,8 +1,7 @@
 
 import _ from 'lodash';
 import React from 'react';
-
-import {ContactCustomerSupport} from 'components/CustomerSupport';
+import {ContactCustomerSupport} from 'flight-common';
 
 import * as clusterActionTypes from 'clusters/actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';

@@ -8,7 +8,7 @@ var env = process.env.NODE_ENV;
 
 var appName = "alces-access-manager";
 var entries, devServer, devtool, outputFile, pathinfo, plugins, publicPath,
-    loaders;
+    loaders, resolveAlias, resolveRoot;
 
 if (env === "production") {
   devtool = "source-map";
@@ -34,14 +34,14 @@ if (env === "production") {
     new webpack.optimize.UglifyJsPlugin({
       compress : {
         screw_ie8 : true,   // eslint-disable-line camelcase
-        warnings: false
+        warnings: false,
       },
       mangle : {
-        screw_ie8 : true   // eslint-disable-line camelcase
-      }
+        screw_ie8 : true,   // eslint-disable-line camelcase
+      },
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.DedupePlugin(),
   ];
 
   loaders = [
@@ -49,17 +49,20 @@ if (env === "production") {
       test: /\.js$/,
       loader: 'babel',
       exclude: /node_modules/,
-      include: __dirname
+      include: __dirname,
     },
     {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
     },
     {
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract("css!sass")
-    }
+      loader: ExtractTextPlugin.extract("css!sass"),
+    },
   ]
+
+  resolveAlias = [];
+  resolveRoot = [];
 
 } else {
   devtool = "cheap-module-inline-source-map";
@@ -68,7 +71,7 @@ if (env === "production") {
   publicPath = "http://localhost:3001/";
 
   entries = [
-    "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr"
+    "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr",
   ];
 
   plugins = [
@@ -79,7 +82,7 @@ if (env === "production") {
       __DEVELOPMENT__: true,
       __TEST__: false,
       __UNIVERSAL__: false,
-    })
+    }),
   ];
 
   loaders = [
@@ -87,16 +90,31 @@ if (env === "production") {
       test: /\.js$/,
       loader: 'babel',
       exclude: /node_modules/,
-      include: __dirname
+      include: __dirname,
     },
     {
       test: /\.css$/,
-      loader: "style!css?sourceMap"
+      loader: "style!css?sourceMap",
     },
     {
       test: /\.scss$/,
-      loader: "style!css?sourceMap!sass?sourceMap"
-    }
+      loader: "style!css?sourceMap!sass?sourceMap",
+    },
+    // In a development environment we want to build and bundle flight-common.
+    {
+      include: path.resolve(__dirname, '../../flight-common/src'),
+      test: /\.js$/,
+      loader: "babel",
+    },
+  ]
+
+  resolveAlias = {
+    // In a development environment we want to build and bundle flight-common.
+    "flight-common": path.resolve(__dirname, '../../flight-common/src'),
+  }
+  resolveRoot = [
+    // In a development environment we want to build and bundle flight-common.
+    path.resolve(__dirname, '../../flight-common/src'),
   ]
 
 }
@@ -106,27 +124,31 @@ module.exports = {
   devServer: devServer,
   devtool: devtool,
   entry: entries.concat([
-    './index'
+    './index',
   ]),
   resolve: {
     root: [
       path.resolve('src'),
-      path.resolve('src/modules')
-    ],
+      path.resolve('src/modules'),
+    ].concat(resolveRoot),
     extensions: [
-      '', '.js'
-    ]
+      '', '.js',
+    ],
+    alias: Object.assign({
+      react: path.resolve('./node_modules/react'),
+    },
+    resolveAlias),
   },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: publicPath,
     pathinfo: pathinfo,
-    filename: outputFile
+    filename: outputFile,
   },
   plugins: plugins,
   module: {
     preLoaders: [
-      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
+      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules|flight-common/},
     ],
     loaders: loaders.concat([
       { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
@@ -136,7 +158,7 @@ module.exports = {
       { test: /\.svg(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "file-loader" },
       { test: /\.png(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "url-loader?limit=100000" },
       { test: /\.ogg$/, loader: "file-loader" },
-      { test: /\.md$/,     loaders: ["html", "markdown"]}
-    ])
-  }
+      { test: /\.md$/,     loaders: ["html", "markdown"]},
+    ]),
+  },
 };

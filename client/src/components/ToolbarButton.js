@@ -1,8 +1,7 @@
 
 import React, {PropTypes} from 'react';
 import {Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
-
-import Icon from 'components/Icon';
+import {Icon} from 'flight-common';
 
 class ToolbarButton extends React.Component {
   render() {
@@ -13,7 +12,7 @@ class ToolbarButton extends React.Component {
     return (
       <OverlayTrigger placement="top" overlay={tooltipElement}>
         <Button {...this.props}>
-          <Icon name={iconName}/>
+          <Icon name={`aam-${iconName}`}/>
         </Button>
       </OverlayTrigger>
     );

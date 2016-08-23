@@ -1,7 +1,7 @@
 
 import React, {PropTypes} from 'react';
+import {StandardModal} from 'flight-common';
 
-import StandardModal from 'components/StandardModal';
 import {
   generateErrorMessage, generateInformationMessage,
 } from 'notification/messageGeneration';

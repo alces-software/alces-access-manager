@@ -1,13 +1,20 @@
 
 import React from 'react';
 import { Route, IndexRoute, Redirect } from 'react-router';
+import {createAuthorize} from 'flight-common';
 
-import {authorize} from 'components/AuthorizedComponent';
 import App from 'containers/App';
 import ClusterSelectionPage from 'containers/ClusterSelectionPageContainer';
 import SessionSelectionPage from 'containers/SessionSelectionPageContainer';
 import VncSessionPage from 'containers/VncSessionPageContainer';
 import * as authorization from 'utils/authorization';
+
+const mapStateToProps = (state) => ({
+  clusters: state.clusters,
+  router: state.router,
+  sessions: state.sessions,
+});
+const authorize = createAuthorize(mapStateToProps);
 
 const checkCanAccessClustersPage = authorize(
   authorization.canAccessClustersPage,

@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {Button, Input, OverlayTrigger, Tooltip} from 'react-bootstrap';
-
-import {CopyToClipboardButton} from 'components/Clipboard';
-import Icon from 'components/Icon';
+import {CopyToClipboardButton, Icon} from 'flight-common';
 
 const propTypes = {
   password: PropTypes.string.isRequired,
@@ -32,7 +30,7 @@ class PasswordRevealer extends Component {
     const revealButton = (
       <OverlayTrigger overlay={revealButtonTooltip} placement="bottom">
         <Button onClick={this.handleClickRevealButton.bind(this)}>
-          <Icon name={showingPassword ? "session-password-hide" : "session-password-reveal"}/>
+          <Icon name={showingPassword ? "aam-session-password-hide" : "aam-session-password-reveal"}/>
         </Button>
       </OverlayTrigger>
     );
