@@ -2,9 +2,7 @@
 import _ from 'lodash';
 import React, {PropTypes} from 'react';
 import { Nav, NavItem} from 'react-bootstrap';
-import {Header as FlightHeader, Icon} from 'flight-common';
-
-import {NavItemLink} from 'components/Links';
+import {Header as FlightHeader, Icon, NavItemLink} from 'flight-common';
 
 class Header extends React.Component {
   render() {

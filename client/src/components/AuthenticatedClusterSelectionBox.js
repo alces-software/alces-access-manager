@@ -2,9 +2,9 @@
 import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import {ButtonLink} from 'flight-common';
 
 import ButtonContent from 'components/ButtonContent';
-import {ButtonLink} from 'components/Links';
 import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
 import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
 import SshAccessCommand from 'components/SshAccessCommand';
