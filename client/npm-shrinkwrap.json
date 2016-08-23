@@ -1649,8 +1649,8 @@
     },
     "flight-common": {
       "version": "0.0.0",
-      "from": "../../../flight-common",
-      "resolved": "file:../../../flight-common",
+      "from": "../../flight-common/",
+      "resolved": "file:../../flight-common/",
       "dependencies": {
         "history": {
           "version": "2.1.2",
