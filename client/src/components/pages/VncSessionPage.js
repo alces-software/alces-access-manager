@@ -2,9 +2,9 @@
 import React from 'react';
 import {Button, ButtonGroup, ButtonToolbar, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
+import {StandardModal} from 'flight-common';
 
 import NoVnc from 'components/NoVnc';
-import StandardModal from 'components/StandardModal';
 import ToolbarButton from 'components/ToolbarButton';
 import ToolbarCopyButton from 'components/ToolbarCopyButton';
 

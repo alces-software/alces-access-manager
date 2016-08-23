@@ -3,10 +3,10 @@ import _ from 'lodash';
 import React from 'react';
 import {Button, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
+import {StandardModal} from 'flight-common';
 
 import ButtonContent from 'components/ButtonContent';
 import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
-import StandardModal from 'components/StandardModal';
 
 class AddSessionBox extends React.Component {
   render() {
