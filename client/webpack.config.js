@@ -8,7 +8,7 @@ var env = process.env.NODE_ENV;
 
 var appName = "alces-access-manager";
 var entries, devServer, devtool, outputFile, pathinfo, plugins, publicPath,
-    loaders;
+    loaders, resolveAlias, resolveRoot;
 
 if (env === "production") {
   devtool = "source-map";
@@ -61,6 +61,9 @@ if (env === "production") {
     },
   ]
 
+  resolveAlias = [];
+  resolveRoot = [];
+
 } else {
   devtool = "cheap-module-inline-source-map";
   outputFile = appName + ".js";
@@ -97,6 +100,21 @@ if (env === "production") {
       test: /\.scss$/,
       loader: "style!css?sourceMap!sass?sourceMap",
     },
+    // In a development environment we want to build and bundle flight-common.
+    {
+      include: path.resolve(__dirname, '../../flight-common/src'),
+      test: /\.js$/,
+      loader: "babel",
+    },
+  ]
+
+  resolveAlias = {
+    // In a development environment we want to build and bundle flight-common.
+    "flight-common": path.resolve(__dirname, '../../flight-common/src'),
+  }
+  resolveRoot = [
+    // In a development environment we want to build and bundle flight-common.
+    path.resolve(__dirname, '../../flight-common/src'),
   ]
 
 }
@@ -112,15 +130,14 @@ module.exports = {
     root: [
       path.resolve('src'),
       path.resolve('src/modules'),
-      // path.resolve('../../flight-common/dist'),
-    ],
+    ].concat(resolveRoot),
     extensions: [
       '', '.js',
     ],
-    alias: {
+    alias: Object.assign({
       react: path.resolve('./node_modules/react'),
-      "flight-common": path.resolve(__dirname, '../../flight-common'),
     },
+    resolveAlias),
   },
   output: {
     path: path.join(__dirname, 'dist'),
