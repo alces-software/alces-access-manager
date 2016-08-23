@@ -1686,6 +1686,35 @@
       "from": "flatten@1.0.2",
       "resolved": "https://registry.npmjs.org/flatten/-/flatten-1.0.2.tgz"
     },
+    "flight-common": {
+      "version": "0.0.0",
+      "from": "../../flight-common/",
+      "resolved": "file:../../flight-common/",
+      "dependencies": {
+        "history": {
+          "version": "2.1.2",
+          "from": "history@>=2.0.1 <3.0.0",
+          "resolved": "https://registry.npmjs.org/history/-/history-2.1.2.tgz"
+        },
+        "react-router": {
+          "version": "2.7.0",
+          "from": "react-router@>=2.0.1 <3.0.0",
+          "resolved": "https://registry.npmjs.org/react-router/-/react-router-2.7.0.tgz",
+          "dependencies": {
+            "warning": {
+              "version": "3.0.0",
+              "from": "warning@>=3.0.0 <4.0.0",
+              "resolved": "https://registry.npmjs.org/warning/-/warning-3.0.0.tgz"
+            }
+          }
+        },
+        "react-router-bootstrap": {
+          "version": "0.20.1",
+          "from": "react-router-bootstrap@>=0.20.1 <0.21.0",
+          "resolved": "https://registry.npmjs.org/react-router-bootstrap/-/react-router-bootstrap-0.20.1.tgz"
+        }
+      }
+    },
     "flux-standard-action": {
       "version": "0.6.0",
       "from": "flux-standard-action@0.6.0",
