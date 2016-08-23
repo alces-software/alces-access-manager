@@ -23,6 +23,8 @@ class App extends React.Component {
       closeNotificationModal,
     } = this.props;
 
+    const productName = "Alces Access Manager";
+
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
@@ -32,13 +34,16 @@ class App extends React.Component {
             currentModal={currentModal}
             exitingModal={exitingModal}
           />
-          <Header {...this.props}/>
+          <Header
+            productName={productName}
+            {...this.props}
+          />
           <div className="pageContainer">
             {this.page()}
           </div>
         </div>
         <Footer
-          productName="Alces Access Manager"
+          productName={productName}
           ref={(footer) => this.footer = footer}
         />
       </div>
