@@ -686,11 +686,6 @@
       "from": "boom@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/boom/-/boom-2.10.1.tgz"
     },
-    "bootstrap-sass": {
-      "version": "3.3.6",
-      "from": "bootstrap-sass@>=3.2.0 <4.0.0",
-      "resolved": "https://registry.npmjs.org/bootstrap-sass/-/bootstrap-sass-3.3.6.tgz"
-    },
     "bowser": {
       "version": "0.7.3",
       "from": "bowser@>=0.7.2 <0.8.0",
