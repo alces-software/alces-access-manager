@@ -22,8 +22,6 @@ class App extends React.Component {
       closeNotificationModal,
     } = this.props;
 
-    const productName = "Alces Access Manager";
-
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
@@ -34,7 +32,7 @@ class App extends React.Component {
             exitingModal={exitingModal}
           />
           <Header
-            productName={productName}
+            productName={this.productName()}
             {...this.props}
           />
           <div className="pageContainer">
@@ -42,7 +40,7 @@ class App extends React.Component {
           </div>
         </div>
         <Footer
-          productName={productName}
+          productName={this.productName()}
           ref={(footer) => this.footer = footer}
         />
       </div>
@@ -59,6 +57,11 @@ class App extends React.Component {
       key = 'loadingPage';
     }
 
+    const pageOrLoadingPage = loaded ?
+      this.props.children
+    :
+      <LoadingPage productName={this.productName()}/>;
+
     return (
       <ReactCSSTransitionGroup
         transitionEnterTimeout={300}
@@ -66,10 +69,14 @@ class App extends React.Component {
         transitionName="fade-in-out"
         >
         <FadeTransitionHandler key={key} className="page" footer={this.footer}>
-          {loaded ? this.props.children : <LoadingPage/>}
+          {pageOrLoadingPage}
         </FadeTransitionHandler>
       </ReactCSSTransitionGroup>
     )
+  }
+
+  productName() {
+    return "Alces Access Manager";
   }
 }
 
