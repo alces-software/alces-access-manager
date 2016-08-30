@@ -8,6 +8,9 @@ import {loadSessionData} from 'ui/actions';
 import configureStore from 'store/configureStore';
 import routes from 'routes';
 
+// App-specific customizations to flight-common modules go here.
+require('customizations/notification');
+
 const store = configureStore();
 
 store.dispatch(loadSessionData());
