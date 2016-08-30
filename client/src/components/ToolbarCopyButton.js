@@ -2,9 +2,9 @@
 import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
 import {ContactCustomerSupport} from 'flight-common';
+import {infoGeneratorsMap} from "flight-common/modules/notification/messageGeneration"
+import MessageGenerator from "flight-common/modules/notification/MessageGenerator";
 
-import {infoGeneratorsMap} from "notification/messageGeneration"
-import MessageGenerator from "notification/MessageGenerator";
 import ToolbarButton from 'components/ToolbarButton';
 
 // Set up copy messages.
