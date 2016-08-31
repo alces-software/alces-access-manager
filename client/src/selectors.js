@@ -7,6 +7,7 @@ const clustersState = (state) => state.clusters;
 const novncState = (state) => state.novnc;
 const sessionsState = (state) => state.sessions;
 const uiState = (state) => state.ui;
+const notificationsState = (state) => state.notifications;
 
 export const singleClusterModeSelector = createSelector(
   clustersState,
@@ -76,8 +77,10 @@ export const vncSessionPageSelector = createSelector(
   clusterFromRouteSelector,
   sessionFromRouteSelector,
   novncState,
-  (cluster, session, novnc) => {
-    return {cluster, session, novnc};
+  notificationsState,
+
+  (cluster, session, novnc, notifications) => {
+    return {cluster, session, novnc, notifications};
   }
 );
 
