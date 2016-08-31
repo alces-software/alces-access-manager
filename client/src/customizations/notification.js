@@ -7,6 +7,7 @@ import {
 import {
   setupDefaultErrorMessageGenerators,
 } from 'flight-common/modules/notification/errorMessageCustomization'
+import {ContactCustomerSupport} from 'flight-common'
 
 import * as clusterActionTypes from 'clusters/actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';
