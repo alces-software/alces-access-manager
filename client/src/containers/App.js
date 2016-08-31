@@ -4,11 +4,10 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Footer, LoadingPage} from 'flight-common';
+import NotificationModals from 'flight-common/modules/notification/components/NotificationModals';
 
 import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
-import * as notificationActions from 'notification/actions';
-import NotificationModals from 'notification/components/NotificationModals';
 import {appSelector} from 'selectors';
 
 if (!__TEST__){
@@ -19,7 +18,6 @@ class App extends React.Component {
   render() {
     const {
       notifications: {showingModal, currentModal, exitingModal},
-      closeNotificationModal,
     } = this.props;
 
     return (
@@ -27,7 +25,6 @@ class App extends React.Component {
         <div className="flight">
           <NotificationModals
             showingModal={showingModal}
-            onCloseNotification={closeNotificationModal}
             currentModal={currentModal}
             exitingModal={exitingModal}
           />
@@ -109,7 +106,6 @@ class FadeTransitionHandler extends React.Component {
 export default connect(
   appSelector,
   {
-    closeNotificationModal: notificationActions.closeModal,
     logout: clusterActions.logout,
   }
 )(App);

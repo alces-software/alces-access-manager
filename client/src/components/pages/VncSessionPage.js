@@ -18,6 +18,7 @@ class VncSessionPage extends React.Component {
       notificationActions,
       novnc,
       novncActions,
+      notifications: {infoGeneratorsMap},
       session,
     } = this.props;
 
@@ -62,6 +63,7 @@ class VncSessionPage extends React.Component {
               <ToolbarCopyButton
                 novnc={novnc}
                 notificationActions={notificationActions}
+                infoGeneratorsMap={infoGeneratorsMap}
               />
               <ToolbarButton
                 iconName="vnc-paste"

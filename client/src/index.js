@@ -7,10 +7,12 @@ import { ReduxRouter } from 'redux-router';
 import {loadSessionData} from 'ui/actions';
 import configureStore from 'store/configureStore';
 import routes from 'routes';
+import {customizeNotificationMessages} from 'customizations/notification';
 
 const store = configureStore();
 
 store.dispatch(loadSessionData());
+customizeNotificationMessages(store)
 
 ReactDOM.render(
   <Provider store={store}>

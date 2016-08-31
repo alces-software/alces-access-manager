@@ -2,33 +2,12 @@
 import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
 import {ContactCustomerSupport} from 'flight-common';
+import MessageGenerator from "flight-common/modules/notification/MessageGenerator";
 
-import {infoGeneratorsMap} from "notification/messageGeneration"
-import MessageGenerator from "notification/MessageGenerator";
 import ToolbarButton from 'components/ToolbarButton';
 
-// Set up copy messages.
 const noTextCode = 'vnc-session-no-text';
 const copyFailedCode = 'vnc-session-copy-failed';
-infoGeneratorsMap.addGeneratorForCode(
-  noTextCode,
-  new MessageGenerator(
-    "No text to copy",
-    <p>
-      Select or copy some text within the VNC session to copy to your
-      computer's clipboard.
-    </p>
-  )
-).addGeneratorForCode(
-  copyFailedCode,
-  new MessageGenerator(
-    "Copy failed",
-    <p>
-      The copy of text from the VNC session failed, possibly because your web
-      browser does not support this feature. <ContactCustomerSupport/>
-    </p>
-  )
-);
 
 export default class ToolbarCopyButton extends React.Component {
   constructor(props) {
@@ -53,6 +32,35 @@ export default class ToolbarCopyButton extends React.Component {
         onClick={this.handleClick.bind(this)}
       />
     )
+  }
+
+  componentDidMount() {
+    this.setupInfoMessages();
+  }
+
+  setupInfoMessages() {
+    const {infoGeneratorsMap} = this.props;
+
+    infoGeneratorsMap.addGeneratorForCode(
+      noTextCode,
+      new MessageGenerator(
+        "No text to copy",
+        <p>
+          Select or copy some text within the VNC session to copy to your
+          computer's clipboard.
+        </p>
+      )
+    ).
+    addGeneratorForCode(
+      copyFailedCode,
+      new MessageGenerator(
+        "Copy failed",
+        <p>
+          The copy of text from the VNC session failed, possibly because your
+          web browser does not support this feature. <ContactCustomerSupport/>
+        </p>
+      )
+    );
   }
 
   handleClick() {
