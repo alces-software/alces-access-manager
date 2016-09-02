@@ -54,6 +54,16 @@ Rails.application.routes.draw do
     end
   end
 
+  # We have the Rails app serve up assets, including the session screenshots
+  # sent to us by the cluster. If a screenshot exists then requests for it will
+  # be handled by Rails before ever reaching the router; however if a
+  # screenshot does not yet exist we need to explicitly catch this here and
+  # return a 404, otherwise the below route will be matched and a 500 will be
+  # given.
+  scope format: true, constraints: {format: 'png'} do
+    get '*path' => 'home#unavailable_screenshot'
+  end
+
   # For all other GET requests render the index page to load the Access Manager
   # app; this will then show the requested page.
   get '*path' => 'home#index'
