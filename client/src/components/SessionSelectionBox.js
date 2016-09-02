@@ -42,9 +42,7 @@ class SessionSelectionBox extends React.Component {
               <strong>{session.type}</strong> session running
               on <strong>{session.hostname}</strong>
             </p>
-            <p>
-              <SessionScreenshot session={session} />
-            </p>
+            <SessionScreenshot session={session} />
               <Link to={sessionLink}>
                 <Button
                   className="selection-box-button"

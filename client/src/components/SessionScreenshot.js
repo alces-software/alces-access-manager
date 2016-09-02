@@ -14,16 +14,26 @@ class SessionScreenshot extends Component {
     const sessionScreenshot = `/session-screenshots/${session.uuid}.png`;
 
     return (
-      <span>
+      <div className="session-screenshot-container">
+        <div className="session-screenshot-text">
+          {this.state && this.state.text}
+        </div>
         <ImageFallback
           src={sessionScreenshot}
           fallbackImage={fallbackImage}
           initialImage={fallbackImage}
           width="85%"
           className="session-screenshot"
+          onError={this.handleNoScreenshot.bind(this)}
         />
-      </span>
+      </div>
     )
+  }
+
+  handleNoScreenshot() {
+    this.setState({
+      text: 'NO SCREENSHOT AVAILABLE YET',
+    })
   }
 }
 
