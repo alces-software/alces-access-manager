@@ -20,6 +20,7 @@ class SessionScreenshot extends Component {
           fallbackImage={fallbackImage}
           initialImage={fallbackImage}
           width="85%"
+          className="session-screenshot"
         />
       </span>
     )

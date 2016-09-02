@@ -144,3 +144,7 @@ $selection-box-color: #eee;
     padding-bottom: 9px;
   }
 }
+
+.session-screenshot {
+  @include vnc-session-border();
+}
