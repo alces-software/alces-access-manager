@@ -13,6 +13,12 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :sessions, only: [] do
+        member do
+          post :screenshot
+        end
+      end
+
       cluster_route_params = {
         constraints: {ip: /[^\/]+/} # Allow IP to have any chars except '/'.
       }
