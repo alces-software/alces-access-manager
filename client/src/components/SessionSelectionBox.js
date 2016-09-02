@@ -43,29 +43,29 @@ class SessionSelectionBox extends React.Component {
               on <strong>{session.hostname}</strong>
             </p>
             <SessionScreenshot session={session} />
-              <Link to={sessionLink}>
-                <Button
-                  className="selection-box-button"
-                  type="button"
-                  bsStyle="success"
-                >
-                  <ButtonContent
-                    text="Connect In Browser"
-                    iconName="session-connect"
-                  />
-                </Button>
-              </Link>
+            <Link to={sessionLink}>
               <Button
                 className="selection-box-button"
                 type="button"
-                bsStyle="info"
-                onClick={this.handleClickExternalAccessButton.bind(this)}
+                bsStyle="success"
               >
                 <ButtonContent
-                  text="External Access"
-                  iconName="session-external-access"
+                  text="Connect In Browser"
+                  iconName="session-connect"
                 />
               </Button>
+            </Link>
+            <Button
+              className="selection-box-button"
+              type="button"
+              bsStyle="info"
+              onClick={this.handleClickExternalAccessButton.bind(this)}
+            >
+              <ButtonContent
+                text="External Access"
+                iconName="session-external-access"
+              />
+            </Button>
           </div>
 
           <div className="external-access-details">

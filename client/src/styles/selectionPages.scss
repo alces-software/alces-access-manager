@@ -3,16 +3,16 @@ $selection-box-height: 445px;
 $selection-box-color: #eee;
 
 @mixin selection-box-border() {
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 25px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 25px;
 }
 
 @mixin selection-box-inside() {
-    margin: 25px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
+  margin: 25px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin centred-info-text() {
