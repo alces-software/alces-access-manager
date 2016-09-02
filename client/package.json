@@ -44,6 +44,7 @@
     "react-dom": "^0.14.2",
     "react-flipcard": "git+https://github.com/alces-software/react-flipcard.git#build",
     "react-fontawesome": "^0.3.3",
+    "react-image-fallback": "^3.2.0",
     "react-prop-types": "^0.3.0",
     "react-redux": "^4.0.0",
     "react-router": "^2.7.0",

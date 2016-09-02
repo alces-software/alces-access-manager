@@ -9,6 +9,7 @@ import DisplayNumberVncAccessDetails from 'components/DisplayNumberVncAccessDeta
 import HyperlinkVncAccessDetails from 'components/HyperlinkVncAccessDetails';
 import PasswordRevealer from 'components/PasswordRevealer';
 import PortNumberVncAccessDetails from 'components/PortNumberVncAccessDetails';
+import SessionScreenshot from 'components/SessionScreenshot';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -42,10 +43,7 @@ class SessionSelectionBox extends React.Component {
               on <strong>{session.hostname}</strong>
             </p>
             <p>
-              Display: {session.display}
-            </p>
-            <p>
-              Websocket port: {session.websocket}
+              <SessionScreenshot session={session} />
             </p>
               <Link to={sessionLink}>
                 <Button
