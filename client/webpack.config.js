@@ -159,6 +159,16 @@ module.exports = {
       { test: /\.png(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "url-loader?limit=100000" },
       { test: /\.ogg$/, loader: "file-loader" },
       { test: /\.md$/,     loaders: ["html", "markdown"]},
+
+      // We now use a fork of react-flipcard installed from Github (to pull in
+      // a needed bug fix), however since this contains unbuilt ES6 and JSX
+      // sources, and is without its own build instructions, we build this
+      // ourselves using our Babel config, which appears to work fine.
+      {
+        include: path.resolve(__dirname, 'node_modules/react-flipcard/lib'),
+        test: /\.js$/,
+        loader: "babel",
+      },
     ]),
   },
 };
