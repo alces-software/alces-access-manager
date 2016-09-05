@@ -108,8 +108,7 @@ if (env === "production") {
   ]
 
   resolveAlias = {
-    // In a development environment we want to build and bundle flight-common.
-    "flight-common": path.resolve(__dirname, '../../flight-common/src'),
+    "flight-common": path.resolve(__dirname, '../../flight-common'),
   }
 }
 
