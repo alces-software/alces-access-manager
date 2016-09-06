@@ -1,10 +1,9 @@
 
 import * as actionTypes from './actionTypes';
-import * as uiActions from 'ui/actions';
 
-function sessionLoadAction(cluster, actionType) {
+export function loadSessions(cluster) {
   return {
-    type: actionType,
+    type: actionTypes.LOAD_SESSIONS,
     meta: {
       apiRequest: {
         config: {
@@ -17,25 +16,6 @@ function sessionLoadAction(cluster, actionType) {
       cluster,
     },
   };
-}
-
-export function loadSessions(cluster) {
-  return sessionLoadAction(cluster, actionTypes.LOAD_SESSIONS)
-}
-
-export function reloadSessions(cluster) {
-  // After received response to request, dispatch action to stop animation
-  // after a timeout; this stops the animation being jarring if the request and
-  // response time is very short.
-  return (dispatch) => {
-    return dispatch(sessionLoadAction(cluster, actionTypes.RELOAD_SESSIONS)).
-      then( () => {
-      setTimeout(
-        () => dispatch(uiActions.stopSessionReloadAnimation()),
-        1000
-      );
-    });
-  }
 }
 
 export function pollForSessions(cluster) {

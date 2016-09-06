@@ -57,7 +57,6 @@ function addActionTypeCustomizations(generatorsMap) {
       [
         clusterActionTypes.AUTHENTICATE,
         sessionActionTypes.LOAD_SESSIONS,
-        sessionActionTypes.RELOAD_SESSIONS,
         sessionActionTypes.LAUNCH,
     ],
       (action) => {
