@@ -5,6 +5,7 @@ require 'daemon_client'
 
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
+  rescue_from DaemonClient::TimeoutError, with: :daemon_timeout_error_handler
 
   before_action :check_cluster_authentication, only: [:sessions, :launch_session, :vpn_config]
 
@@ -109,6 +110,10 @@ class Api::V1::ClustersController < ApplicationController
     logger.error exception
     exception.backtrace.each { |line| logger.error line }
     handle_error 'daemon_unavailable', :bad_gateway
+  end
+
+  def daemon_timeout_error_handler(exception)
+    handle_error 'daemon_timeout', :gateway_timeout
   end
 
   def check_cluster_authentication

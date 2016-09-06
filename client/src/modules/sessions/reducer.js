@@ -17,7 +17,6 @@ export default function reducer(state=initialState, action) {
   switch (action.type) {
 
     case resolve(actionTypes.LOAD_SESSIONS):
-    case resolve(actionTypes.RELOAD_SESSIONS):
       return handleReceivedSessions(state, action);
 
     case resolve(actionTypes.LAUNCH):

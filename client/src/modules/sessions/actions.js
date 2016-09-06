@@ -1,10 +1,9 @@
 
 import * as actionTypes from './actionTypes';
-import * as uiActions from 'ui/actions';
 
-function sessionLoadAction(cluster, actionType) {
+export function loadSessions(cluster) {
   return {
-    type: actionType,
+    type: actionTypes.LOAD_SESSIONS,
     meta: {
       apiRequest: {
         config: {
@@ -19,31 +18,27 @@ function sessionLoadAction(cluster, actionType) {
   };
 }
 
-export function loadSessions(cluster) {
-  return sessionLoadAction(cluster, actionTypes.LOAD_SESSIONS)
-}
-
-export function reloadSessions(cluster) {
-  // After received response to request, dispatch action to stop animation
-  // after a timeout; this stops the animation being jarring if the request and
-  // response time is very short.
-  return (dispatch) => {
-    return dispatch(sessionLoadAction(cluster, actionTypes.RELOAD_SESSIONS)).
-      then( () => {
-      setTimeout(
-        () => dispatch(uiActions.stopSessionReloadAnimation()),
-        1000
-      );
-    });
-  }
-}
-
 export function pollForSessions(cluster) {
   return (dispatch, getState) => {
     const {sessionRefreshPeriod} = getState().ui;
     const pollIntervalInMs = sessionRefreshPeriod * 1000;
+
+    const pollIfNotPolling = () => {
+      const {pollingSessions} = getState().ui
+
+      // We want to poll every pollIntervalInMs, but only if we are not already
+      // waiting for a load sessions action, to avoid sending numerous requests
+      // to the server; the UI can also break if we receive the results of
+      // multiple load sessions actions in quick succession (I think due to the
+      // ReactCSSTransitionReplace component getting confused by the quick
+      // update).
+      if (!pollingSessions) {
+        dispatch(loadSessions(cluster))
+      }
+    }
+
     return setInterval(
-      () => dispatch(loadSessions(cluster)),
+      pollIfNotPolling,
       pollIntervalInMs
     );
   }

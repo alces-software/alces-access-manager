@@ -77,7 +77,6 @@ export default function reducer(state=initialState, action) {
       return setPingResponse(state, action);
 
     case resolve(sessionActionTypes.LOAD_SESSIONS):
-    case resolve(sessionActionTypes.RELOAD_SESSIONS):
       return setSessionsInfo(state, action);
 
     default:

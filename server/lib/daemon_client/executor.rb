@@ -61,12 +61,12 @@ module DaemonClient
       Timeout.timeout(@timeout) do
         block.call(@remote)
       end
-    rescue TimeoutError
-      raise DaemonClient::ConnError, "Timeout when communicating with ASM daemon: #{$!.message}"
+    rescue Timeout::Error
+      raise DaemonClient::TimeoutError, "Timeout when communicating with AAM daemon: #{$!.message}"
     rescue DRb::DRbConnError, Errno::ECONNREFUSED
-      raise DaemonClient::ConnError, "Could not communicate with ASM daemon: #{$!.message}"
+      raise DaemonClient::ConnError, "Could not communicate with AAM daemon: #{$!.message}"
     rescue Alces::AccessManagerDaemon::HandlerError
-      raise DaemonClient::RemoteError, "An error occurred during ASM handler execution: #{$!.message}"
+      raise DaemonClient::RemoteError, "An error occurred during AAM handler execution: #{$!.message}"
     rescue
       STDERR.puts '===== UNCAUGHT DAEMON EXCEPTION DETECTED ====='
       STDERR.puts "(Logged @#{__FILE__}:#{__LINE__})"

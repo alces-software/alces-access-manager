@@ -42,7 +42,7 @@
     "react-css-transition-replace": "^1.1.0",
     "react-data-components": "^0.6.0",
     "react-dom": "^0.14.2",
-    "react-flipcard": "^0.2.1",
+    "react-flipcard": "git+https://github.com/alces-software/react-flipcard.git#build",
     "react-fontawesome": "^0.3.3",
     "react-prop-types": "^0.3.0",
     "react-redux": "^4.0.0",

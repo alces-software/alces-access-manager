@@ -5,12 +5,6 @@ import * as actionTypes from './actionTypes';
 import * as clusterActionTypes from 'clusters/actions';
 import {loadSessions} from 'sessions/actions';
 
-export function stopSessionReloadAnimation() {
-  return {
-    type: actionTypes.STOP_SESSION_RELOAD_ANIMATION,
-  }
-}
-
 function startLoadSessionData() {
   return {
     type: actionTypes.LOAD_SESSION_DATA,
