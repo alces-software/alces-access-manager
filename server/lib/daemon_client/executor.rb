@@ -62,7 +62,7 @@ module DaemonClient
         block.call(@remote)
       end
     rescue Timeout::Error
-      raise DaemonClient::ConnError, "Timeout when communicating with AAM daemon: #{$!.message}"
+      raise DaemonClient::TimeoutError, "Timeout when communicating with AAM daemon: #{$!.message}"
     rescue DRb::DRbConnError, Errno::ECONNREFUSED
       raise DaemonClient::ConnError, "Could not communicate with AAM daemon: #{$!.message}"
     rescue Alces::AccessManagerDaemon::HandlerError

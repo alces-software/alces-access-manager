@@ -4,7 +4,7 @@ import _ from 'lodash'
 import {
   setupDefaultErrorMessageGenerators,
 } from 'flight-common/modules/notification/errorMessageCustomization'
-import {ContactCustomerSupport} from 'flight-common'
+import {CustomerSupportLink, ContactCustomerSupport} from 'flight-common'
 
 import * as clusterActionTypes from 'clusters/actionTypes';
 import * as sessionActionTypes from 'sessions/actionTypes';
@@ -19,6 +19,7 @@ export function customizeNotificationMessages(store) {
 function addActionTypeCustomizations(generatorsMap) {
   addAuthenticationFailureCustomization(generatorsMap)
   addDaemonUnavailableCustomizations(generatorsMap)
+  addLaunchTimeoutCustomization(generatorsMap)
 }
 
 function addAuthenticationFailureCustomization(generatorsMap) {
@@ -70,4 +71,28 @@ function addDaemonUnavailableCustomizations(generatorsMap) {
       daemonUnavailableMessage
     );
   });
+}
+
+function addLaunchTimeoutCustomization(generatorsMap) {
+  const launchTimeoutMessage = {
+    title: 'Timed out while launching session',
+    content: (
+      <div>
+        <p>
+          Your session is taking an unusually long time to launch; your
+          cluster may be particularly busy.
+        </p>
+        <p>
+          Your session should still launch eventually, please contact the
+          {' '}<CustomerSupportLink /> team if it does not.
+        </p>
+      </div>
+    ),
+  }
+
+  generatorsMap.customizeMessage(
+    504, // gateway timeout
+    sessionActionTypes.LAUNCH,
+    launchTimeoutMessage
+  )
 }
