@@ -46,12 +46,6 @@ export function authenticate(cluster, {username, password}) {
   };
 }
 
-function logoutComplete() {
-  return {
-    type: actionTypes.LOGOUT_COMPLETE,
-  };
-}
-
 export function logout(cluster) {
   const logoutRequest = {
     type: actionTypes.LOGOUT,
@@ -70,8 +64,7 @@ export function logout(cluster) {
 
   return (dispatch) => {
     return dispatch(logoutRequest).
-      then( () => dispatch(redirectTo(`/`)) ).
-      then( () => dispatch(logoutComplete()) );
+      then( () => dispatch(redirectTo(`/`)) );
   }
 }
 

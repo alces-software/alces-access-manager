@@ -82,18 +82,6 @@ class SelectionPage extends React.Component {
       </Col>
     )
   }
-
-  shouldComponentUpdate(nextProps) {
-    // Don't update when we are logging out (between dispatching LOGOUT and
-    // dispatching LOGOUT_COMPLETE after transition back to home page), to
-    // avoid FlipCard component children giving errors as they try to render
-    // while we unmount. This may be fixed by
-    // https://github.com/mzabriskie/react-flipcard/pull/3 being merged.
-    return !nextProps.loggingOut;
-
-    // TODO: Could do similar when sign in and transition as well - FlipCard
-    // gives errors then too although these don't appear to affect anything.
-  }
 }
 
 SelectionPage.propTypes = {
@@ -105,7 +93,6 @@ SelectionPage.propTypes = {
     [PropTypes.object, PropTypes.func]
   ), // Props to pass through to each selection box, or function to generate these for each item.
   addItemBox: PropTypes.element, // Optional final box to add a new item.
-  loggingOut: PropTypes.bool.isRequired,
 };
 
 export default SelectionPage;

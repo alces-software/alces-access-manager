@@ -49,7 +49,6 @@ export default class SessionSelectionPage extends React.Component {
         header={header}
         selectionBoxComponent={SessionSelectionBox}
         selectionBoxProps={selectionBoxProps}
-        loggingOut={ui.loggingOut}
       />
     );
   }

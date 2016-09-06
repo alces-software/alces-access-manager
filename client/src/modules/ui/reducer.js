@@ -17,10 +17,6 @@ function setShowingLaunchFailedModal(state, value) {
   return {...state, showingLaunchFailedModal: value};
 }
 
-function setLoggingOutFlag(state, value) {
-  return {...state, loggingOut: value};
-}
-
 function setPollingForSessionsFlag(state, value) {
   return {...state, pollingSessions: value}
 }
@@ -30,7 +26,6 @@ const initialState = {
   // Whether the initial app data (currently just the clusters) has loaded.
   loaded: false,
 
-  loggingOut: false,
   sessionRefreshPeriod: DEFAULT_SESSION_REFRESH_PERIOD,
 };
 export default function reducer(state=initialState, action) {
@@ -65,12 +60,6 @@ export default function reducer(state=initialState, action) {
 
     case actionTypes.CLOSE_LAUNCH_FAILED_MODAL:
       return setShowingLaunchFailedModal(state, false);
-
-    case clusterActionTypes.LOGOUT:
-      return setLoggingOutFlag(state, true);
-
-    case clusterActionTypes.LOGOUT_COMPLETE:
-      return setLoggingOutFlag(state, false);
 
     case resolve(clusterActionTypes.LOAD_CLUSTERS):
       return {
