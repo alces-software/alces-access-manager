@@ -61,7 +61,7 @@ module DaemonClient
       Timeout.timeout(@timeout) do
         block.call(@remote)
       end
-    rescue TimeoutError
+    rescue Timeout::Error
       raise DaemonClient::ConnError, "Timeout when communicating with AAM daemon: #{$!.message}"
     rescue DRb::DRbConnError, Errno::ECONNREFUSED
       raise DaemonClient::ConnError, "Could not communicate with AAM daemon: #{$!.message}"
