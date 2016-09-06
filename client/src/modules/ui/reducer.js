@@ -21,6 +21,10 @@ function setLoggingOutFlag(state, value) {
   return {...state, loggingOut: value};
 }
 
+function setPollingForSessionsFlag(state, value) {
+  return {...state, pollingSessions: value}
+}
+
 const DEFAULT_SESSION_REFRESH_PERIOD = 5;
 const initialState = {
   // Whether the initial app data (currently just the clusters) has loaded.
@@ -35,7 +39,12 @@ export default function reducer(state=initialState, action) {
     case actionTypes.LOAD_SESSION_DATA_COMPLETE:
       return setLoaded(state, true);
 
+    case sessionActionTypes.LOAD_SESSIONS:
+      return setPollingForSessionsFlag(state, true);
 
+    case resolve(sessionActionTypes.LOAD_SESSIONS):
+    case reject(sessionActionTypes.LOAD_SESSIONS):
+      return setPollingForSessionsFlag(state, false);
 
     case sessionActionTypes.LAUNCH:
       return setLaunchingSession(state, true);
