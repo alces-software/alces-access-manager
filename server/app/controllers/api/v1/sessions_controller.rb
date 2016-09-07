@@ -3,6 +3,7 @@ require 'base64'
 
 class Api::V1::SessionsController < ApplicationController
   def screenshot
+    delete_old_screenshots
     IO.binwrite(screenshot_filename, received_screenshot_png)
   end
 
@@ -25,6 +26,15 @@ class Api::V1::SessionsController < ApplicationController
 
   def screenshot_filename
     session_id = params[:id]
-    "public/session-screenshots/#{session_id}.png"
+    random_suffix = rand(10000000)
+    "public/session-screenshots/#{session_id}-#{random_suffix}.png"
+  end
+
+  def delete_old_screenshots
+    session_id = params[:id]
+    screenshot_glob = Rails.root.join(
+      'public', 'session-screenshots', "#{session_id}-*.png"
+    )
+    FileUtils.rm(Dir[screenshot_glob])
   end
 end

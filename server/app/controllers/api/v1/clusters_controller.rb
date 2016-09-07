@@ -178,7 +178,21 @@ class Api::V1::ClustersController < ApplicationController
   end
 
   def sessions_info
-    daemon_sessions_wrapper.sessions_info(@username)
+    daemon_sessions_wrapper
+    .sessions_info(@username)
+    .tap { |sessions_info| add_screenshots_to_sessions!(sessions_info[:sessions]) }
+  end
+
+  def add_screenshots_to_sessions!(sessions)
+    sessions.map! do |vnc_session|
+      screenshot_glob = Rails.root.join(
+        'public', 'session-screenshots', "#{vnc_session['uuid']}-*.png"
+      )
+      glob_results = Dir.glob(screenshot_glob)
+
+      vnc_session[:screenshot] = glob_results.first && File.basename(glob_results.first)
+      vnc_session
+    end
   end
 
   def launch_session_for_user(type, request_compute_node)

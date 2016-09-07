@@ -1,6 +1,5 @@
 
 import React, { Component, PropTypes } from 'react';
-import ImageFallback from 'react-image-fallback';
 
 const propTypes = {
   session: PropTypes.object.isRequired,
@@ -10,30 +9,28 @@ class SessionScreenshot extends Component {
   render() {
     const {session} = this.props;
 
-    const fallbackImage = '/images/static.jpg'
-    const sessionScreenshot = `/session-screenshots/${session.uuid}.png`;
+    let imageSrc;
+    let imageText;
+    if (session.screenshot) {
+      imageSrc =  `/session-screenshots/${session.screenshot}`
+    }
+    else {
+      imageSrc = '/images/static.jpg'
+      imageText = 'NO SCREENSHOT AVAILABLE YET'
+    }
 
     return (
       <div className="session-screenshot-container">
         <div className="session-screenshot-text">
-          {this.state && this.state.text}
+          {imageText}
         </div>
-        <ImageFallback
-          src={sessionScreenshot}
-          fallbackImage={fallbackImage}
-          initialImage={fallbackImage}
+        <img
+          src={imageSrc}
           width="85%"
           className="session-screenshot"
-          onError={this.handleNoScreenshot.bind(this)}
         />
       </div>
     )
-  }
-
-  handleNoScreenshot() {
-    this.setState({
-      text: 'NO SCREENSHOT AVAILABLE YET',
-    })
   }
 }
 
