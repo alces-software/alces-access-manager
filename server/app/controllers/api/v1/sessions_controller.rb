@@ -4,7 +4,9 @@ require 'base64'
 class Api::V1::SessionsController < ApplicationController
   def screenshot
     delete_old_screenshots
-    IO.binwrite(screenshot_filename, received_screenshot_png)
+    screenshot_file = generate_screenshot_filename
+    FileUtils.mkdir_p(File.dirname(screenshot_file))
+    IO.binwrite(screenshot_file, received_screenshot_png)
   end
 
   private
@@ -24,7 +26,7 @@ class Api::V1::SessionsController < ApplicationController
     request_json['data']['attributes']['content']
   end
 
-  def screenshot_filename
+  def generate_screenshot_filename
     # We save screenshots in a file with a random suffix appended, so that
     # whenever we receive a new screenshot the filename changes and the new
     # filename is passed to the client, and the browser then knows to load the
