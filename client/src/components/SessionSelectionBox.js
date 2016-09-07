@@ -9,6 +9,7 @@ import DisplayNumberVncAccessDetails from 'components/DisplayNumberVncAccessDeta
 import HyperlinkVncAccessDetails from 'components/HyperlinkVncAccessDetails';
 import PasswordRevealer from 'components/PasswordRevealer';
 import PortNumberVncAccessDetails from 'components/PortNumberVncAccessDetails';
+import SessionScreenshot from 'components/SessionScreenshot';
 import {selectionBoxPropTypes} from 'utils/propTypes';
 
 class SessionSelectionBox extends React.Component {
@@ -41,35 +42,30 @@ class SessionSelectionBox extends React.Component {
               <strong>{session.type}</strong> session running
               on <strong>{session.hostname}</strong>
             </p>
-            <p>
-              Display: {session.display}
-            </p>
-            <p>
-              Websocket port: {session.websocket}
-            </p>
-              <Link to={sessionLink}>
-                <Button
-                  className="selection-box-button"
-                  type="button"
-                  bsStyle="success"
-                >
-                  <ButtonContent
-                    text="Connect In Browser"
-                    iconName="session-connect"
-                  />
-                </Button>
-              </Link>
+            <SessionScreenshot session={session} />
+            <Link to={sessionLink}>
               <Button
                 className="selection-box-button"
                 type="button"
-                bsStyle="info"
-                onClick={this.handleClickExternalAccessButton.bind(this)}
+                bsStyle="success"
               >
                 <ButtonContent
-                  text="External Access"
-                  iconName="session-external-access"
+                  text="Connect In Browser"
+                  iconName="session-connect"
                 />
               </Button>
+            </Link>
+            <Button
+              className="selection-box-button"
+              type="button"
+              bsStyle="info"
+              onClick={this.handleClickExternalAccessButton.bind(this)}
+            >
+              <ButtonContent
+                text="External Access"
+                iconName="session-external-access"
+              />
+            </Button>
           </div>
 
           <div className="external-access-details">

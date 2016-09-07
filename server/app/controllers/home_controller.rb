@@ -22,6 +22,10 @@ class HomeController < ActionController::Base
     end
   end
 
+  def unavailable_screenshot
+    head 404
+  end
+
   helper_method :body_element_attrs
   def body_element_attrs
     # Intentionally nil for the moment.
