@@ -185,13 +185,9 @@ class Api::V1::ClustersController < ApplicationController
 
   def add_screenshots_to_sessions!(sessions)
     sessions.map! do |vnc_session|
-      screenshot_glob = Rails.root.join(
-        'public', 'session-screenshots', "#{vnc_session['uuid']}-*.png"
-      )
-      glob_results = Dir.glob(screenshot_glob)
-
-      vnc_session[:screenshot] = glob_results.first && File.basename(glob_results.first)
-      vnc_session
+      vnc_session.tap do
+        vnc_session[:screenshot] = Session.screenshot_filename_for_session(vnc_session['uuid'])
+      end
     end
   end
 
