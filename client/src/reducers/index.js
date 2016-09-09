@@ -5,7 +5,7 @@
 import { combineReducers } from 'redux';
 import {reducer as form} from 'redux-form';
 import { routerStateReducer } from 'redux-router';
-import notifications from 'flight-common/modules/notification/reducer';
+import notifications from 'flight-common/lib/modules/notification/reducer';
 
 import clusters from 'clusters/reducer';
 import environment from 'environment/reducer';

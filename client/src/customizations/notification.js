@@ -3,7 +3,7 @@ import React from 'react';
 import _ from 'lodash'
 import {
   setupDefaultErrorMessageGenerators,
-} from 'flight-common/modules/notification/errorMessageCustomization'
+} from 'flight-common/lib/modules/notification/errorMessageCustomization'
 import {CustomerSupportLink, ContactCustomerSupport} from 'flight-common'
 
 import * as clusterActionTypes from 'clusters/actionTypes';

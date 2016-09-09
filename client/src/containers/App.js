@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Footer, LoadingPage} from 'flight-common';
-import NotificationModals from 'flight-common/modules/notification/components/NotificationModals';
+import NotificationModals from 'flight-common/lib/modules/notification/components/NotificationModals';
 
 import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
