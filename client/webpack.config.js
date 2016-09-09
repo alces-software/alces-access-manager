@@ -8,7 +8,7 @@ var env = process.env.NODE_ENV;
 
 var appName = "alces-access-manager";
 var entries, devServer, devtool, outputFile, pathinfo, plugins, publicPath,
-    loaders, resolveAlias, resolveRoot;
+    loaders, resolveAlias;
 
 if (env === "production") {
   devtool = "source-map";
@@ -53,16 +53,15 @@ if (env === "production") {
     },
     {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader"),
+      loader: ExtractTextPlugin.extract("style", "css?sourceMap!resolve-url"),
     },
     {
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract("css!sass"),
+      loader: ExtractTextPlugin.extract("style", "css?sourceMap!resolve-url!sass?sourceMap"),
     },
   ]
 
   resolveAlias = [];
-  resolveRoot = [];
 
 } else {
   devtool = "cheap-module-inline-source-map";
@@ -94,29 +93,31 @@ if (env === "production") {
     },
     {
       test: /\.css$/,
-      loader: "style!css?sourceMap",
+      loader: "style!css?sourceMap!resolve-url",
     },
     {
       test: /\.scss$/,
-      loader: "style!css?sourceMap!sass?sourceMap",
+      loader: "style!css!resolve-url!sass?sourceMap",
     },
-    // In a development environment we want to build and bundle flight-common.
+  ];
+
+  // In a development environment we want to build and bundle flight-common
+  // from a local directory.  The following loader and resolveAlias
+  // configurations allow that.
+  //
+  // This could be replaced with https://github.com/thebeansgroup/webpack-link
+  // perhaps that would be the better option.
+  loaders.push(
     {
       include: path.resolve(__dirname, '../../flight-common/src'),
       test: /\.js$/,
       loader: "babel",
-    },
-  ]
-
+    }
+  );
   resolveAlias = {
-    // In a development environment we want to build and bundle flight-common.
-    "flight-common": path.resolve(__dirname, '../../flight-common/src'),
+    "flight-common": path.resolve(__dirname, '../../flight-common'),
+    "flight-common/lib": path.resolve(__dirname, '../../flight-common/src'),
   }
-  resolveRoot = [
-    // In a development environment we want to build and bundle flight-common.
-    path.resolve(__dirname, '../../flight-common/src'),
-  ]
-
 }
 
 module.exports = {
@@ -130,7 +131,7 @@ module.exports = {
     root: [
       path.resolve('src'),
       path.resolve('src/modules'),
-    ].concat(resolveRoot),
+    ],
     extensions: [
       '', '.js',
     ],

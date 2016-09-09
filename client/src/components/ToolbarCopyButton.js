@@ -2,7 +2,7 @@
 import ClipboardAction from 'clipboard/lib/clipboard-action';
 import React from 'react';
 import {ContactCustomerSupport} from 'flight-common';
-import MessageGenerator from "flight-common/modules/notification/MessageGenerator";
+import MessageGenerator from "flight-common/lib/modules/notification/MessageGenerator";
 
 import ToolbarButton from 'components/ToolbarButton';
 
