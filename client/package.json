@@ -13,7 +13,8 @@
     "clean": "rm -rf ./dist",
     "uninstall-dependencies": "for package in $( ls node_modules ) ; do npm uninstall $package ; done",
     "test": "env NODE_PATH=$NODE_PATH:$PWD/src:$PWD/src/modules NODE_ENV=test mocha --compilers js:babel-register --recursive 'src/**/__tests__/*'  --require src/__tests__/setup.js",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "shrinkpack": "shrinkpack"
   },
   "keywords": [
     "redux",
@@ -92,6 +93,7 @@
     "redux-cli": "^1.4.2",
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^3.1.1",
+    "shrinkpack": "^0.17.0",
     "sinon": "^1.17.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
