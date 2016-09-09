@@ -8,8 +8,8 @@
   "main": "index.js",
   "scripts": {
     "dev-server": "NODE_ENV=development node server.js",
-    "build": "NODE_ENV=production webpack --colors --progress",
-    "build-dev": "NODE_ENV=development webpack --colors --progress",
+    "build": "npm run clean && NODE_ENV=production webpack --colors --progress",
+    "build-dev": "npm run clean && NODE_ENV=development webpack --colors --progress",
     "clean": "rm -rf ./dist",
     "uninstall-dependencies": "for package in $( ls node_modules ) ; do npm uninstall $package ; done",
     "test": "env NODE_PATH=$NODE_PATH:$PWD/src:$PWD/src/modules NODE_ENV=test mocha --compilers js:babel-register --recursive 'src/**/__tests__/*'  --require src/__tests__/setup.js",
