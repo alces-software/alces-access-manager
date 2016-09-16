@@ -24,14 +24,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # VBoxManage dhcpserver add --netname cluster1 --ip 192.168.25.1 --netmask 255.255.255.0 --lowerip 192.168.25.100 --upperip 192.168.25.200 --enable
   intnet_net = "cluster1"
   nodename = "node01"
-  
+
   config.vm.hostname = "#{nodename}.cluster"
   config.vm.provider "virtualbox" do |v|
     v.gui = true
-    #v.customize ["modifyvm", :id, "--nic2", "hostonly"]
-    #v.customize ["modifyvm", :id, "--hostonlyadapter2", hostonly_net]
     v.customize ["modifyvm", :id, "--nic2", "intnet"]
     v.customize ["modifyvm", :id, "--intnet2", intnet_net]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   provision_script = <<-RUBY
