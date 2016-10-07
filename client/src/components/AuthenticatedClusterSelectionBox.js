@@ -38,9 +38,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <p>
-          SSH access: <SshAccessCommand cluster={cluster}/>
-        </p>
+        <SshAccessCommand cluster={cluster}/>
         {vpnAccessInfo}
         <SelectionBoxButtonContainer>
           <ButtonLink

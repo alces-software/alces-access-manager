@@ -54,10 +54,7 @@ class ClusterInformationHeader extends Component {
     return (
       <div>
         {runningSessionsInfo}
-        <p>
-          You can sign into this cluster directly with SSH, using the following
-          command: <SshAccessCommand cluster={cluster}/>.
-        </p>
+        <SshAccessCommand cluster={cluster} fullInfo={true}/>
         {vpnAccessInfo}
       </div>
     )
