@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 
-import SshAccessCommand from 'components/SshAccessCommand';
+import SshAccessInfo from 'components/SshAccessInfo';
 import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 const propTypes = {
@@ -54,10 +54,7 @@ class ClusterInformationHeader extends Component {
     return (
       <div>
         {runningSessionsInfo}
-        <p>
-          You can sign into this cluster directly with SSH, using the following
-          command: <SshAccessCommand cluster={cluster}/>.
-        </p>
+        <SshAccessInfo cluster={cluster} fullInfo={true}/>
         {vpnAccessInfo}
       </div>
     )

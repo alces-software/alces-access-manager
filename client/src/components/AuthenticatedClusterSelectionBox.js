@@ -7,7 +7,7 @@ import {ButtonLink} from 'flight-common';
 import ButtonContent from 'components/ButtonContent';
 import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
 import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
-import SshAccessCommand from 'components/SshAccessCommand';
+import SshAccessInfo from 'components/SshAccessInfo';
 import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
@@ -38,9 +38,7 @@ class AuthenticatedClusterSelectionBox extends React.Component {
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <p>
-          SSH access: <SshAccessCommand cluster={cluster}/>
-        </p>
+        <SshAccessInfo cluster={cluster}/>
         {vpnAccessInfo}
         <SelectionBoxButtonContainer>
           <ButtonLink
