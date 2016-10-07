@@ -6,7 +6,7 @@ const propTypes = {
 
 function SshAccessCommand({cluster}) {
   return (
-    <code>ssh {cluster.authenticated_username}@{cluster.ip}</code>
+    <code>ssh {cluster.authenticated_username}@{cluster.loginIp}</code>
   );
 }
 

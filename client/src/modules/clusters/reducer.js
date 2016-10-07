@@ -36,6 +36,7 @@ function setSessionsInfo(state, action) {
     session_types, // eslint-disable-line camelcase
     can_launch_compute_sessions, // eslint-disable-line camelcase
     has_vpn, // eslint-disable-line camelcase
+    login_ip, // eslint-disable-line camelcase
   } = action.payload;
   return modifyClusterInState(
     state, ip,
@@ -43,6 +44,7 @@ function setSessionsInfo(state, action) {
       cluster.sessionTypes = session_types; // eslint-disable-line camelcase
       cluster.canLaunchComputeSessions = can_launch_compute_sessions; // eslint-disable-line camelcase
       cluster.hasVpn = has_vpn; // eslint-disable-line camelcase
+      cluster.loginIp = login_ip; // eslint-disable-line camelcase
     }
   );
 }
