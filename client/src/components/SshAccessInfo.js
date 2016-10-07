@@ -5,7 +5,7 @@ const propTypes = {
   fullInfo: PropTypes.bool,
 };
 
-function SshAccessCommand({cluster, fullInfo}) {
+function SshAccessInfo({cluster, fullInfo}) {
   if (cluster.loginIp) {
     return (
       <p>
@@ -27,6 +27,6 @@ function SshAccessCommand({cluster, fullInfo}) {
   }
 }
 
-SshAccessCommand.propTypes = propTypes;
-export default SshAccessCommand;
+SshAccessInfo.propTypes = propTypes;
+export default SshAccessInfo;
 

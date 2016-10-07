@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 
-import SshAccessCommand from 'components/SshAccessCommand';
+import SshAccessInfo from 'components/SshAccessInfo';
 import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 const propTypes = {
@@ -54,7 +54,7 @@ class ClusterInformationHeader extends Component {
     return (
       <div>
         {runningSessionsInfo}
-        <SshAccessCommand cluster={cluster} fullInfo={true}/>
+        <SshAccessInfo cluster={cluster} fullInfo={true}/>
         {vpnAccessInfo}
       </div>
     )
