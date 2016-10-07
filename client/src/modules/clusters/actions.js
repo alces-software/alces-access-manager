@@ -1,8 +1,8 @@
 
 import _ from 'lodash';
+import {push} from 'redux-router';
 
 import * as actionTypes from './actionTypes';
-import {redirectTo} from 'actions/router';
 import {loadSessions} from 'sessions/actions';
 
 export function loadClusters() {
@@ -41,7 +41,7 @@ export function authenticate(cluster, {username, password}) {
     return dispatch(authenticateRequest).
       then( () => {
         dispatch(loadSessions(cluster));
-        dispatch(redirectTo(`/cluster/${cluster.ip}`));
+        dispatch(push(`/cluster/${cluster.ip}`));
     });
   };
 }
@@ -64,7 +64,7 @@ export function logout(cluster) {
 
   return (dispatch) => {
     return dispatch(logoutRequest).
-      then( () => dispatch(redirectTo(`/`)) );
+      then( () => dispatch(push(`/`)) );
   }
 }
 

@@ -1,6 +1,7 @@
 
+import {push} from 'redux-router';
+
 import * as actionTypes from './actionTypes';
-import {redirectTo} from 'actions/router';
 
 export function stateChange(state, msg) {
   return {
@@ -79,7 +80,7 @@ export function hideSessionFailedModal() {
   return (dispatch, getState) => {
     const clusterIp = getState().router.params.clusterIp;
     const clusterUrl = `/cluster/${clusterIp}`;
-    dispatch(redirectTo(clusterUrl));
+    dispatch(push(clusterUrl));
 
     return dispatch({
       type: actionTypes.HIDE_SESSION_FAILED_MODAL,

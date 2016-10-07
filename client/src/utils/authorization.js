@@ -1,5 +1,5 @@
 
-import {replaceState} from 'redux-router'
+import {push} from 'redux-router';
 
 import {
   clusterFromRouteSelector,
@@ -43,7 +43,7 @@ export function canAccessClustersPage(store) {
 // Authorization failure handlers.
 
 export function redirectToClustersPage() {
-  this.props.dispatch(replaceState(null, '/'));
+  this.props.dispatch(push('/'));
 }
 
 export function redirectToSessionsPage() {
@@ -59,5 +59,5 @@ export function redirectToSingleClusterSessionsPage() {
 
 function redirectToSessionsPageForCluster(clusterIp, dispatch) {
   const route = `/cluster/${clusterIp}`;
-  dispatch(replaceState(null, route));
+  dispatch(push(route));
 }
