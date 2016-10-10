@@ -8,7 +8,7 @@ var env = process.env.NODE_ENV;
 
 var appName = "alces-access-manager";
 var entries, devServer, devtool, outputFile, pathinfo, plugins, publicPath,
-    loaders;
+    loaders, resolveAlias;
 
 if (env === "production") {
   devtool = "source-map";
@@ -29,22 +29,19 @@ if (env === "production") {
       __DEVELOPMENT__: false,
       __TEST__: false,
       __UNIVERSAL__: false,
-      // Which set of development tools are enabled?
-      __DEVTOOLS__: false,
-      __PERSIST_STATE__: false,
     }),
     new ExtractTextPlugin(appName + ".[hash].css"),
     new webpack.optimize.UglifyJsPlugin({
       compress : {
         screw_ie8 : true,   // eslint-disable-line camelcase
-        warnings: false
+        warnings: false,
       },
       mangle : {
-        screw_ie8 : true   // eslint-disable-line camelcase
-      }
+        screw_ie8 : true,   // eslint-disable-line camelcase
+      },
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new webpack.optimize.DedupePlugin(),
   ];
 
   loaders = [
@@ -52,17 +49,19 @@ if (env === "production") {
       test: /\.js$/,
       loader: 'babel',
       exclude: /node_modules/,
-      include: __dirname
+      include: __dirname,
     },
     {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      loader: ExtractTextPlugin.extract("style", "css?sourceMap!resolve-url"),
     },
     {
       test: /\.scss$/,
-      loader: ExtractTextPlugin.extract("css!sass")
-    }
+      loader: ExtractTextPlugin.extract("style", "css?sourceMap!resolve-url!sass?sourceMap"),
+    },
   ]
+
+  resolveAlias = [];
 
 } else {
   devtool = "cheap-module-inline-source-map";
@@ -71,7 +70,7 @@ if (env === "production") {
   publicPath = "http://localhost:3001/";
 
   entries = [
-    "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr"
+    "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr",
   ];
 
   plugins = [
@@ -82,10 +81,7 @@ if (env === "production") {
       __DEVELOPMENT__: true,
       __TEST__: false,
       __UNIVERSAL__: false,
-      // Which set of development tools are enabled?
-      __DEVTOOLS__: true,
-      __PERSIST_STATE__: true,
-    })
+    }),
   ];
 
   loaders = [
@@ -93,18 +89,35 @@ if (env === "production") {
       test: /\.js$/,
       loader: 'babel',
       exclude: /node_modules/,
-      include: __dirname
+      include: __dirname,
     },
     {
       test: /\.css$/,
-      loader: "style!css?sourceMap"
+      loader: "style!css?sourceMap!resolve-url",
     },
     {
       test: /\.scss$/,
-      loader: "style!css?sourceMap!sass?sourceMap"
-    }
-  ]
+      loader: "style!css!resolve-url!sass?sourceMap",
+    },
+  ];
 
+  // In a development environment we want to build and bundle flight-common
+  // from a local directory.  The following loader and resolveAlias
+  // configurations allow that.
+  //
+  // This could be replaced with https://github.com/thebeansgroup/webpack-link
+  // perhaps that would be the better option.
+  loaders.push(
+    {
+      include: path.resolve(__dirname, '../../flight-common/src'),
+      test: /\.js$/,
+      loader: "babel",
+    }
+  );
+  resolveAlias = {
+    "flight-common": path.resolve(__dirname, '../../flight-common'),
+    "flight-common/lib": path.resolve(__dirname, '../../flight-common/src'),
+  }
 }
 
 module.exports = {
@@ -112,27 +125,31 @@ module.exports = {
   devServer: devServer,
   devtool: devtool,
   entry: entries.concat([
-    './index'
+    './index',
   ]),
   resolve: {
     root: [
       path.resolve('src'),
-      path.resolve('src/modules')
+      path.resolve('src/modules'),
     ],
     extensions: [
-      '', '.js'
-    ]
+      '', '.js',
+    ],
+    alias: Object.assign({
+      react: path.resolve('./node_modules/react'),
+    },
+    resolveAlias),
   },
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: publicPath,
     pathinfo: pathinfo,
-    filename: outputFile
+    filename: outputFile,
   },
   plugins: plugins,
   module: {
     preLoaders: [
-      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules/}
+      {test: /\.js$/, loader: "eslint-loader", exclude: /node_modules|flight-common/},
     ],
     loaders: loaders.concat([
       { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
@@ -141,7 +158,18 @@ module.exports = {
       { test: /\.eot(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "file-loader" },
       { test: /\.svg(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "file-loader" },
       { test: /\.png(\?v=[0-9]\.[0-9]\.[0-9])?$/,    loader: "url-loader?limit=100000" },
-      { test: /\.md$/,     loaders: ["html", "markdown"]}
-    ])
-  }
+      { test: /\.ogg$/, loader: "file-loader" },
+      { test: /\.md$/,     loaders: ["html", "markdown"]},
+
+      // We now use a fork of react-flipcard installed from Github (to pull in
+      // a needed bug fix), however since this contains unbuilt ES6 and JSX
+      // sources, and is without its own build instructions, we build this
+      // ourselves using our Babel config, which appears to work fine.
+      {
+        include: path.resolve(__dirname, 'node_modules/react-flipcard/lib'),
+        test: /\.js$/,
+        loader: "babel",
+      },
+    ]),
+  },
 };

@@ -4,6 +4,10 @@ clusters:
     ip: 127.0.0.1
     auth_port: 25269
     ssl: true
+  - name: Duplicate Clusterware Vagrant
+    ip: localhost
+    auth_port: 25269
+    ssl: true
   - name: Another Cluster
     ip: 10.10.10.10
     auth_port: 25269
@@ -14,10 +18,11 @@ environment:
 
 ssl:
   # Options used for SSL connections
-  root: /home/bob/projects/alces/alces-access-manager-daemon/config/ssl
+  root: /home/bob/projects/alces/access-manager-project/alces-access-manager-daemon/config/ssl
   certificate: daemon_crt.pem
   key: daemon_key.pem
   ca: alces-ca_crt.pem
 
 timeout: 5
+session_refresh_period: 5
 ...

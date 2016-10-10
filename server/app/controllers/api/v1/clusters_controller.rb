@@ -5,7 +5,12 @@ require 'daemon_client'
 
 class Api::V1::ClustersController < ApplicationController
   rescue_from DaemonClient::ConnError, with: :daemon_connection_error_handler
+  rescue_from DaemonClient::TimeoutError, with: :daemon_timeout_error_handler
 
+  before_action :check_cluster_authentication, only: [:sessions, :launch_session, :vpn_config]
+
+  # Note: currently this action returns everything in the config file, not just
+  # the clusters.
   def index
     clusters_config = overall_config[:clusters]
     clusters_config.each do |cluster|
@@ -58,18 +63,45 @@ class Api::V1::ClustersController < ApplicationController
     end
   end
 
+  def ping
+    responded = begin
+      daemon.ping
+    rescue DaemonClient::ConnError
+      false
+    end
+
+    render json: {available: responded}
+  end
+
   def logout
     authentications.delete(params[:ip])
   end
 
   def sessions
-    username = authentications[params[:ip]]
-    unless username
-      handle_error 'not_authenticated', :unauthorized and return
-    end
+    render json: {success: true, **sessions_info}
+  end
 
-    user_sessions = sessions_for_response(username)
-    render json: user_sessions
+  def launch_session
+    # Override config file timeout with a large value; launching a session can
+    # take a long time but this is OK as this action is only called
+    # asynchronously and we provide UI feedback.
+    @connection_opts = connection_opts.merge({timeout: 60})
+
+    request_compute_node = params[:node_type] === 'compute'
+    launch_response = launch_session_for_user(params[:session_type], request_compute_node)
+
+    if launch_response === true
+      render json: {success: true, **sessions_info}
+    else
+      render json: {success: false, launch_response: launch_response}
+    end
+  end
+
+  def vpn_config
+    vpn_config_archive = daemon_sessions_wrapper.vpn_config
+    send_data vpn_config_archive,
+      filename: "#{cluster_config[:name]}-vpn.tar.gz",
+      type: 'application/x-tar'
   end
 
   private
@@ -80,11 +112,19 @@ class Api::V1::ClustersController < ApplicationController
     handle_error 'daemon_unavailable', :bad_gateway
   end
 
-  def authentications
-    unless session[:authentications]
-      session[:authentications] = {}
+  def daemon_timeout_error_handler(exception)
+    handle_error 'daemon_timeout', :gateway_timeout
+  end
+
+  def check_cluster_authentication
+    @username = authentications[params[:ip]]
+    unless @username
+      handle_error 'not_authenticated', :unauthorized and return
     end
-    session[:authentications]
+  end
+
+  def authentications
+    session[:authentications] ||= {}
   end
 
   def auth_response
@@ -95,9 +135,17 @@ class Api::V1::ClustersController < ApplicationController
     DaemonClient::Connection.new(connection_opts)
   end
 
+  def daemon_sessions_wrapper
+    opts = {
+      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
+      :username => @username
+    }
+    DaemonClient::Wrapper.new(daemon, opts)
+  end
+
   def connection_opts
     cluster_daemon_address = "#{params[:ip]}:#{cluster_config[:auth_port]}"
-    {
+    @connection_opts ||= {
       address: cluster_daemon_address,
       timeout: overall_config[:timeout],
       ssl_config: cluster_config[:ssl] ? ssl_config : nil
@@ -129,14 +177,22 @@ class Api::V1::ClustersController < ApplicationController
     end.new(overall_config).ssl_config
   end
 
+  def sessions_info
+    daemon_sessions_wrapper
+    .sessions_info(@username)
+    .tap { |sessions_info| add_screenshots_to_sessions!(sessions_info[:sessions]) }
+  end
 
-  def sessions_for_response(username)
-    opts = {
-      :handler => 'Alces::AccessManagerDaemon::SessionsHandler',
-      :username => username
-    }
-    wrapper = DaemonClient::Wrapper.new(daemon, opts)
-    wrapper.sessions_for(username)
+  def add_screenshots_to_sessions!(sessions)
+    sessions.map! do |vnc_session|
+      vnc_session.tap do
+        vnc_session[:screenshot] = Session.screenshot_filename_for_session(vnc_session['uuid'])
+      end
+    end
+  end
+
+  def launch_session_for_user(type, request_compute_node)
+    daemon_sessions_wrapper.launch_session(type, request_compute_node)
   end
 
   def config_file

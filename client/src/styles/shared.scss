@@ -1,0 +1,7 @@
+
+@mixin vnc-session-border() {
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid rgb(188, 232, 241);
+  box-shadow: rem(2px) rem(2px) rem(8px) 0 #777;
+}

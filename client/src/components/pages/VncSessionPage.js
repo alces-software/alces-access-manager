@@ -2,16 +2,15 @@
 import React from 'react';
 import {Button, ButtonGroup, ButtonToolbar, Input} from 'react-bootstrap';
 import {reduxForm} from 'redux-form';
+import {StandardModal} from 'flight-common';
 
 import NoVnc from 'components/NoVnc';
-import StandardModal from 'components/StandardModal';
 import ToolbarButton from 'components/ToolbarButton';
 import ToolbarCopyButton from 'components/ToolbarCopyButton';
 
 class VncSessionPage extends React.Component {
   render() {
     const {
-      cluster,
       fields: {
         pastedText,
       },
@@ -19,16 +18,25 @@ class VncSessionPage extends React.Component {
       notificationActions,
       novnc,
       novncActions,
+      notifications: {infoGeneratorsMap},
       session,
     } = this.props;
+
+    // We set the maximum width of the overall VNC container to the width of
+    // the VNC session, so the in-browser session will display as wide as
+    // possible.
+    const vncContainerStyles = {maxWidth: novnc.width};
 
     const url = __PRODUCTION__ ?
       // In production we want to use SSL and connect to a proxy to the VNC
       // session websocket on the AAM appliance.
-      `wss://${window.location.host}/vnc/${session.access_host}/${session.websocket}`
+      `wss://${window.location.host}/ws/${session.access_host}/${session.websocket}`
       :
-      // In development we connect to the websocket directly, and without SSL.
-      `ws://${cluster.ip}:${session.websocket}`;
+      // In development we don't use SSL and connect to the websocket directly
+      // on the equivalent localhost port; manually forwarding this port to the
+      // correct port on the node for this session is required for this to
+      // succeed.
+      `ws://localhost:${session.websocket}`;
 
     const pasteModalButtons = (
       <Button
@@ -42,20 +50,20 @@ class VncSessionPage extends React.Component {
 
     return (
       <div className="container">
-        <div className="vnc-container">
+        <div className="vnc-container" style={vncContainerStyles}>
           <ButtonToolbar className="vnc-button-toolbar">
-            {/* Sound toggle planned for future iteration.
             <ButtonGroup>
               <ToolbarButton
-                iconName="vnc-volume-on"
-                tooltip="Disable sound (currently ON)"
+                iconName={novnc.soundEnabled ? "vnc-volume-on" : "vnc-volume-off"}
+                tooltip={novnc.soundEnabled  ? "Disable sound (currently ON)" : "Enable sound (currently OFF)"}
+                onClick={this.handleClickSoundButton.bind(this)}
               />
             </ButtonGroup>
-            */}
             <ButtonGroup>
               <ToolbarCopyButton
                 novnc={novnc}
                 notificationActions={notificationActions}
+                infoGeneratorsMap={infoGeneratorsMap}
               />
               <ToolbarButton
                 iconName="vnc-paste"
@@ -67,10 +75,14 @@ class VncSessionPage extends React.Component {
               <ToolbarButton
                 iconName="vnc-interactive"
                 tooltip="Interactive mode"
+                onClick={novncActions.setInteractiveMode}
+                active={!novnc.viewportDrag}
               />
               <ToolbarButton
                 iconName="vnc-drag-viewport"
                 tooltip="Drag viewport mode"
+                onClick={novncActions.setDragViewportMode}
+                active={novnc.viewportDrag}
               />
             </ButtonGroup>
           </ButtonToolbar>
@@ -118,6 +130,22 @@ class VncSessionPage extends React.Component {
         </StandardModal>
       </div>
     );
+  }
+
+  handleClickSoundButton() {
+    const {
+      novnc: {soundEnabled},
+      novncActions: {enableSound, disableSound},
+    } = this.props;
+
+    soundEnabled ? disableSound() : enableSound();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // session is parsed from URL, so if it is unset we are probably in the
+    // process of navigating away from this page and shouldn't render (or will
+    // get errors).
+    return !!nextProps.session;
   }
 }
 

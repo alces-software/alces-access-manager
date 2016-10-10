@@ -3,12 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {Footer, LoadingPage} from 'flight-common';
+import NotificationModals from 'flight-common/lib/modules/notification/components/NotificationModals';
 
+import * as clusterActions from 'clusters/actions';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
-import LoadingPage from 'components/LoadingPage';
-import * as notificationActions from 'notification/actions';
-import NotificationModals from 'notification/components/NotificationModals';
 import {appSelector} from 'selectors';
 
 if (!__TEST__){
@@ -17,21 +16,30 @@ if (!__TEST__){
 
 class App extends React.Component {
   render() {
+    const {
+      notifications: {showingModal, currentModal, exitingModal},
+    } = this.props;
+
     return (
       <div className="stickyFooter-wrapper-wrapper">
         <div className="flight">
           <NotificationModals
-            showingModal={this.props.notifications.showingModal}
-            onCloseNotification={this.props.closeNotificationModal}
-            currentModal={this.props.notifications.currentModal}
-            exitingModal={this.props.notifications.exitingModal}
+            showingModal={showingModal}
+            currentModal={currentModal}
+            exitingModal={exitingModal}
           />
-          <Header/>
+          <Header
+            productName={this.productName()}
+            {...this.props}
+          />
           <div className="pageContainer">
             {this.page()}
           </div>
         </div>
-        <Footer ref={(footer) => this.footer = footer}/>
+        <Footer
+          productName={this.productName()}
+          ref={(footer) => this.footer = footer}
+        />
       </div>
     )
   }
@@ -46,6 +54,11 @@ class App extends React.Component {
       key = 'loadingPage';
     }
 
+    const pageOrLoadingPage = loaded ?
+      this.props.children
+    :
+      <LoadingPage productName={this.productName()}/>;
+
     return (
       <ReactCSSTransitionGroup
         transitionEnterTimeout={300}
@@ -53,10 +66,14 @@ class App extends React.Component {
         transitionName="fade-in-out"
         >
         <FadeTransitionHandler key={key} className="page" footer={this.footer}>
-          {loaded ? this.props.children : <LoadingPage/>}
+          {pageOrLoadingPage}
         </FadeTransitionHandler>
       </ReactCSSTransitionGroup>
     )
+  }
+
+  productName() {
+    return "Alces Access Manager";
   }
 }
 
@@ -89,6 +106,6 @@ class FadeTransitionHandler extends React.Component {
 export default connect(
   appSelector,
   {
-    closeNotificationModal: notificationActions.closeModal,
+    logout: clusterActions.logout,
   }
 )(App);

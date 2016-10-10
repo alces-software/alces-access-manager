@@ -1,35 +1,45 @@
 
 import * as actionTypes from './actionTypes';
 
-// Adapted from Portal VNC event creating; maps noVNC state names to Portal's
-// own event names. TODO: do we really need the mapping aspect of this, could
-// just store the last state to occur that we care about.
-function updatedEventState(novncState) {
-  const statesMap = {
-    loaded: 'load',
-    connect: 'start',
-    failed: 'failure',
-    fatal: 'fatal',
-    normal: 'connect',
-    disconnected: 'disconnect',
-  };
-  return statesMap[novncState];
+function initialState() {
+  const soundEnabled = localStorage.soundEnabled === 'true' ||
+    localStorage.soundEnabled === undefined;
+  localStorage.setItem('soundEnabled', soundEnabled);
+  return {soundEnabled};
 }
 
-const initialState = {};
-export default function reducer(state=initialState, action) {
+export default function reducer(state=initialState(), action) {
   switch (action.type) {
 
     case actionTypes.STATE_CHANGE:
       const novncState = action.payload.state;
-      const eventState = updatedEventState(novncState) || state.eventState;
       const {msg} = action.payload;
+      if (novncState === 'failed' && msg === 'Disconnect timeout') {
+        // Disconnect is called when NoVNC component unmounts, even if not
+        // connected (e.g. if this has failed). The disconnect will then
+        // timeout; this is fine but we don't want to update the state with
+        // this failure as will already have reset the noVNC state for this
+        // connection.
+        return state;
+      }
+
       return {
       ...state,
       state: novncState,
-      eventState,
       msg,
     };
+
+    case actionTypes.ENABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: true,
+    }
+
+    case actionTypes.DISABLE_SOUND:
+      return {
+      ...state,
+      soundEnabled: false,
+    }
 
     case actionTypes.SET_COPY_TEXT:
       return {
@@ -75,6 +85,29 @@ export default function reducer(state=initialState, action) {
       showingSessionFailedModal: false,
       sessionFailedOnInitialConnect: undefined,
     }
+
+    case actionTypes.SET_INTERACTIVE_MODE:
+      return {
+      ...state,
+      viewportDrag: false,
+    }
+
+    case actionTypes.SET_DRAG_VIEWPORT_MODE:
+      return {
+      ...state,
+      viewportDrag: true,
+    }
+
+    case actionTypes.SET_DIMENSIONS:
+      const {width, height} = action.payload;
+      return {
+      ...state,
+      width,
+      height,
+    }
+
+    case actionTypes.RESET:
+      return initialState();
 
     default:
       return state;

@@ -1,8 +1,6 @@
 {
     "extends": "eslint:recommended",
     "globals": {
-      "__PERSIST_STATE__": true,
-      "__DEVTOOLS__": true,
       "__DEVELOPMENT__": true,
       "__PRODUCTION__": true,
       "__TEST__": true,

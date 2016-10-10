@@ -1,10 +1,10 @@
 
 import axios from 'axios';
+import { displayErrorModal } from 'flight-common/lib/modules/notification/actions'
 // import _ from 'lodash';
 // import * as jsonApiTypes from "jsonApi/actionTypes";
 
-import { displayErrorModal } from 'notification/actions'
-import Console from "utils/console";
+import Console from 'flight-common/lib/utils/console';
 
 const apiMimeType = 'application/x-vnd.alces-software.webapp.api+json;version=1'
 const jsonApiMimeType = "application/vnd.api+json";

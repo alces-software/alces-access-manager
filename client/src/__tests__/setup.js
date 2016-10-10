@@ -4,9 +4,7 @@
 global.__TEST__          = true,
 global.__DEVELOPMENT__   = false;
 global.__PRODUCTION__    = false,
-global.__UNIVERSAL__     = false,
-global.__DEVTOOLS__      = false,
-global.__PERSIST_STATE__ = false
+global.__UNIVERSAL__     = false
 
 
 // Setup jsdom for testing React components.

@@ -1,0 +1,21 @@
+cluster:
+  uuid: '7b4249e8-637a-11e5-a343-7831c1c0e63c'
+  token: '8R0c6lyMG1pJGP/wzg8dHA=='
+  name: 'el7cluster'
+  role: 'slave'
+  tags:
+    scheduler_roles: ':compute:'
+  interface: enp0s8
+  quorum: 2
+  service_url: https://flight.alces-software.com
+instance:
+  users:
+  - username: alces-cluster
+    uid: 501
+    group: alces-cluster
+    gid: 501
+    groups:
+      - gridware
+      - admins:388
+    ssh_public_key: |
+      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCK8fxlYAcZHfZ9Rhcl0IIcFAleztyMkBF6CxfcaqI6XO9WYhy/sawZXnOHlACjLfx1RuDu+kDvPT/lhxay7yrQt0g1HsTs3xwW6luZuLxPvCS7Zqi0AGqr/LC6OWUKodpNe8ZUPxCWx+JiyaRb9SD+PWqV0WPiZXTmgd9lRYfWuvMl24sNvK8VWWzWSr8q2+1yGNbyzoFC/NUfoMuFEPyb+XV3BIKNyacAM8gep+mrFxadV1ehZConzeoJSFavlJUiU76JMKkbJcfUeXFqTBk/W1mXpmYPw+JUZzsDM2RZD/Ef4LrhyxjtLVLelrIU5j4DN/7lMCsMf3tdfXbJ2+fp aws_ireland

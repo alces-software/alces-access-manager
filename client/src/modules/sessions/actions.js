@@ -1,39 +1,62 @@
 
 import * as actionTypes from './actionTypes';
-import * as uiActions from 'ui/actions';
 
-function sessionLoadAction(clusterIp, actionType) {
+export function loadSessions(cluster) {
   return {
-    type: actionType,
+    type: actionTypes.LOAD_SESSIONS,
     meta: {
       apiRequest: {
         config: {
-          url: `/api/v1/cluster/${clusterIp}/sessions`,
+          url: `/api/v1/cluster/${cluster.ip}/sessions`,
           method: 'get',
         },
       },
     },
     payload: {
-      clusterIp,
+      cluster,
     },
   };
 }
 
-export function loadSessions(clusterIp) {
-  return sessionLoadAction(clusterIp, actionTypes.LOAD_SESSIONS)
+export function pollForSessions(cluster) {
+  return (dispatch, getState) => {
+    const {sessionRefreshPeriod} = getState().ui;
+    const pollIntervalInMs = sessionRefreshPeriod * 1000;
+
+    const pollIfNotPolling = () => {
+      const {pollingSessions} = getState().ui
+
+      // We want to poll every pollIntervalInMs, but only if we are not already
+      // waiting for a load sessions action, to avoid sending numerous requests
+      // to the server; the UI can also break if we receive the results of
+      // multiple load sessions actions in quick succession (I think due to the
+      // ReactCSSTransitionReplace component getting confused by the quick
+      // update).
+      if (!pollingSessions) {
+        dispatch(loadSessions(cluster))
+      }
+    }
+
+    return setInterval(
+      pollIfNotPolling,
+      pollIntervalInMs
+    );
+  }
 }
 
-export function reloadSessions(clusterIp) {
-  // After received response to request, dispatch action to stop animation
-  // after a timeout; this stops the animation being jarring if the request and
-  // response time is very short.
-  return (dispatch) => {
-    return dispatch(sessionLoadAction(clusterIp, actionTypes.RELOAD_SESSIONS)).
-      then( () => {
-      setTimeout(
-        () => dispatch(uiActions.stopSessionReloadAnimation()),
-        1000
-      );
-    });
-  }
+export function launchSession(cluster, {sessionType, node}) {
+  return {
+    type: actionTypes.LAUNCH,
+    payload: {
+      cluster,
+    },
+    meta: {
+      apiRequest: {
+        config: {
+          url: `/api/v1/cluster/${cluster.ip}/launch/${sessionType}/on/${node}`,
+          method: 'post',
+        },
+      },
+    },
+  };
 }

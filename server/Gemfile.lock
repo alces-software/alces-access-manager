@@ -70,6 +70,7 @@ GEM
     net-ping (1.7.8)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    puma (2.15.3)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -123,6 +124,7 @@ DEPENDENCIES
   minitest-reporters
   mocha
   net-ping
+  puma
   rails (= 4.2.5)
   rails-api
   spring

@@ -2,9 +2,13 @@
 import _ from 'lodash';
 import React from 'react';
 import {Button} from 'react-bootstrap';
+import {ButtonLink} from 'flight-common';
 
-import Icon from 'components/Icon';
-import {ButtonLink} from 'components/Links';
+import ButtonContent from 'components/ButtonContent';
+import ClusterSelectionInfo from 'components/ClusterSelectionInfo';
+import SelectionBoxButtonContainer from 'components/SelectionBoxButtonContainer';
+import SshAccessInfo from 'components/SshAccessInfo';
+import VpnConfigDownloadLink from 'components/VpnConfigDownloadLink';
 
 class AuthenticatedClusterSelectionBox extends React.Component {
   render() {
@@ -12,43 +16,48 @@ class AuthenticatedClusterSelectionBox extends React.Component {
 
     const clusterLink = `/cluster/${cluster.ip}`;
 
-    const ButtonContent = ({text, iconName}) => (
-      <span>
-        {text}&nbsp;&nbsp;<Icon name={iconName}/>
-      </span>
-    );
+    const logoutCluster = _.partial(logout, cluster);
 
-    const logoutCluster = _.partial(logout, cluster.ip);
+    const vpnAccessInfo = cluster.hasVpn ?
+      (
+        <p>
+          VPN configuration: <VpnConfigDownloadLink
+            cluster={cluster}>
+            download
+          </VpnConfigDownloadLink>
+        </p>
+    )
+    :
+      null;
 
     return (
       <div
         className="static-selection-box"
-        >
-        <p>
-          <strong>{cluster.name}</strong>
-        </p>
-        <p>
-          IP: {cluster.ip}
-        </p>
+      >
+        <ClusterSelectionInfo cluster={cluster}/>
         <p>
           Logged in as <em>{cluster.authenticated_username}</em>
         </p>
-        <ButtonLink
-          bsStyle="success"
-          className="selection-box-button"
-          to={clusterLink}
-          type="button"
+        <SshAccessInfo cluster={cluster}/>
+        {vpnAccessInfo}
+        <SelectionBoxButtonContainer>
+          <ButtonLink
+            bsStyle="success"
+            className="selection-box-button"
+            to={clusterLink}
+            type="button"
           >
-          <ButtonContent text="View" iconName="cluster"/>
-        </ButtonLink>
-        <Button
-          bsStyle="info"
-          className="selection-box-button"
-          onClick={logoutCluster}
-          type="button"
+            <ButtonContent text="View" iconName="cluster"/>
+          </ButtonLink>
+          <Button
+            bsStyle="info"
+            className="selection-box-button"
+            onClick={logoutCluster}
+            type="button"
           >
-          <ButtonContent text="Change User" iconName="cluster-logout"/>
-        </Button>
+            <ButtonContent text="Change User" iconName="cluster-logout"/>
+          </Button>
+        </SelectionBoxButtonContainer>
       </div>
     );
   }

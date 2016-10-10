@@ -7,6 +7,8 @@ gem 'rails-api'
 
 gem 'spring', :group => :development
 
+gem 'puma'
+
 group :test do
   gem 'mocha'
   gem 'minitest-reporters'

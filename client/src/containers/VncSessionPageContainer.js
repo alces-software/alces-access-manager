@@ -2,10 +2,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {reset} from 'redux-form'
+import * as notificationActions from 'flight-common/lib/modules/notification/actions';
 
 import VncSessionPage from 'components/pages/VncSessionPage';
 import {vncSessionPageSelector} from 'selectors';
-import * as notificationActions from 'notification/actions';
 import * as novncActions from 'novnc/actions';
 
 const mapDispatchToProps = (dispatch) => ({

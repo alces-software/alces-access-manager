@@ -1,9 +1,6 @@
 
 require 'ostruct'
 
-# TODO: This file is adapted from the equivalent in Alces Flight, further work
-# will be needed for a production build.
-
 class HomeController < ActionController::Base
   def index
     @assets = if Rails.env.production?
@@ -23,6 +20,10 @@ class HomeController < ActionController::Base
         revision: 'dev_build'
       )
     end
+  end
+
+  def unavailable_screenshot
+    head 404
   end
 
   helper_method :body_element_attrs

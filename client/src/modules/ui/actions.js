@@ -2,14 +2,8 @@
 import _ from 'lodash';
 
 import * as actionTypes from './actionTypes';
-import {loadClusters} from 'clusters/actions';
+import * as clusterActionTypes from 'clusters/actions';
 import {loadSessions} from 'sessions/actions';
-
-export function stopSessionReloadAnimation() {
-  return {
-    type: actionTypes.STOP_SESSION_RELOAD_ANIMATION,
-  }
-}
 
 function startLoadSessionData() {
   return {
@@ -29,7 +23,7 @@ export function loadSessionData() {
       const authenticatedClusters = _.filter(clusters, (cluster) => cluster.authenticated_username);
       return Promise.all(
         _.map(authenticatedClusters,
-              (cluster) => dispatch(loadSessions(cluster.ip))
+              (cluster) => dispatch(loadSessions(cluster))
              )
       );
     }
@@ -37,12 +31,20 @@ export function loadSessionData() {
     dispatch(startLoadSessionData());
 
     return dispatch(
-      loadClusters()
+      clusterActionTypes.loadClusters()
     ).then( ({clusters}) =>
       loadAuthenticatedClusterSessions(clusters)
     ).then( () => dispatch(
       finishLoadSessionData()
-    ));
+    )).then( () =>
+      dispatch(clusterActionTypes.pingClusters())
+    );
     // TODO: error handling?
   }
+}
+
+export function closeLaunchFailedModal() {
+  return {
+    type: actionTypes.CLOSE_LAUNCH_FAILED_MODAL,
+  };
 }

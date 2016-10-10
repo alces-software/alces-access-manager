@@ -10,7 +10,6 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
   # too?
 
   class IndexTest < Api::V1::ClustersControllerTest
-    # TODO: change this, will currently return whole config (is that what we want?)
     test "should return the clusters specified in the config file" do
       mock_config_file
 
@@ -198,7 +197,7 @@ class Api::V1::ClustersControllerTest < ActionController::TestCase
     end
 
     test "returns error when Daemon not available" do
-      @controller.stubs(:sessions_for_response).raises(DaemonClient::ConnError)
+      @controller.stubs(:user_sessions).raises(DaemonClient::ConnError)
 
       mock_successful_authenticate
 
