@@ -30,6 +30,10 @@ function setPingResponse(state, action) {
   );
 }
 
+// TODO: Remove need for manually converting keys from snake to camel case in
+// this method - we should use the same middleware as Exodus server-side to
+// transform the Json sent to the client, and then here can just pluck out the
+// needed keys.
 function setSessionsInfo(state, action) {
   const {cluster: {ip}} = action.meta.payload;
   const {
@@ -37,6 +41,7 @@ function setSessionsInfo(state, action) {
     can_launch_compute_sessions, // eslint-disable-line camelcase
     has_vpn, // eslint-disable-line camelcase
     login_ip, // eslint-disable-line camelcase
+    proxy_address, // eslint-disable-line camelcase
   } = action.payload;
   return modifyClusterInState(
     state, ip,
@@ -45,6 +50,7 @@ function setSessionsInfo(state, action) {
       cluster.canLaunchComputeSessions = can_launch_compute_sessions; // eslint-disable-line camelcase
       cluster.hasVpn = has_vpn; // eslint-disable-line camelcase
       cluster.loginIp = login_ip; // eslint-disable-line camelcase
+      cluster.proxyAddress = proxy_address; // eslint-disable-line camelcase
     }
   );
 }
