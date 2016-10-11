@@ -36,23 +36,27 @@ function setPingResponse(state, action) {
 // needed keys.
 function setSessionsInfo(state, action) {
   const {cluster: {ip}} = action.meta.payload;
+
+  /* eslint-disable camelcase */
   const {
-    session_types, // eslint-disable-line camelcase
-    can_launch_compute_sessions, // eslint-disable-line camelcase
-    has_vpn, // eslint-disable-line camelcase
-    login_ip, // eslint-disable-line camelcase
-    proxy_address, // eslint-disable-line camelcase
+    session_types,
+    can_launch_compute_sessions,
+    has_vpn,
+    login_ip,
+    proxy_address,
   } = action.payload;
+
   return modifyClusterInState(
     state, ip,
     (cluster) => {
-      cluster.sessionTypes = session_types; // eslint-disable-line camelcase
-      cluster.canLaunchComputeSessions = can_launch_compute_sessions; // eslint-disable-line camelcase
-      cluster.hasVpn = has_vpn; // eslint-disable-line camelcase
-      cluster.loginIp = login_ip; // eslint-disable-line camelcase
-      cluster.proxyAddress = proxy_address; // eslint-disable-line camelcase
+      cluster.sessionTypes = session_types;
+      cluster.canLaunchComputeSessions = can_launch_compute_sessions;
+      cluster.hasVpn = has_vpn;
+      cluster.loginIp = login_ip;
+      cluster.proxyAddress = proxy_address;
     }
   );
+  /* eslint-enable camelcase */
 }
 
 // Returns new state with cluster with given IP modified by executing modifyFn.
