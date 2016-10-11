@@ -126,8 +126,13 @@ class VncSessionPage extends React.Component {
 
     if (__PRODUCTION__) {
       // In production we want to use SSL and connect to a proxy to the VNC
-      // session websocket, which will run on the cluster login node.
-      return `wss://${cluster.proxyAddress}/ws/${session.access_host}/${session.websocket}`
+      // session websocket, which will run on the cluster login node. Note that
+      // the IP proxied to depends on the session type - it will be the same
+      // node as that running the proxy for login sessions, or the access_host
+      // as determined by Clusterware for compute sessions.
+      const isLoginNodeSession = session.host == session.access_host;
+      const internalSessionIp = isLoginNodeSession ? '127.0.0.1' : session.access_host;
+      return `wss://${cluster.proxyAddress}/ws/${internalSessionIp}/${session.websocket}`
     }
     else {
       // In development we don't use SSL and connect to the websocket directly
