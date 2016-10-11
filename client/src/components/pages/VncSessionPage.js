@@ -11,7 +11,6 @@ import ToolbarCopyButton from 'components/ToolbarCopyButton';
 class VncSessionPage extends React.Component {
   render() {
     const {
-      cluster,
       fields: {
         pastedText,
       },
@@ -27,17 +26,6 @@ class VncSessionPage extends React.Component {
     // the VNC session, so the in-browser session will display as wide as
     // possible.
     const vncContainerStyles = {maxWidth: novnc.width};
-
-    const url = __PRODUCTION__ ?
-      // In production we want to use SSL and connect to a proxy to the VNC
-      // session websocket, which will run on the cluster login node.
-      `wss://${cluster.proxyAddress}/ws/${session.access_host}/${session.websocket}`
-      :
-      // In development we don't use SSL and connect to the websocket directly
-      // on the equivalent localhost port; manually forwarding this port to the
-      // correct port on the node for this session is required for this to
-      // succeed.
-      `ws://localhost:${session.websocket}`;
 
     const pasteModalButtons = (
       <Button
@@ -88,7 +76,7 @@ class VncSessionPage extends React.Component {
             </ButtonGroup>
           </ButtonToolbar>
           <NoVnc
-            url={url}
+            url={this.websocketUrl()}
             password={session.password}
             novnc={novnc}
             novncActions={novncActions}
@@ -131,6 +119,23 @@ class VncSessionPage extends React.Component {
         </StandardModal>
       </div>
     );
+  }
+
+  websocketUrl() {
+    const {cluster, session} = this.props;
+
+    if (__PRODUCTION__) {
+      // In production we want to use SSL and connect to a proxy to the VNC
+      // session websocket, which will run on the cluster login node.
+      return `wss://${cluster.proxyAddress}/ws/${session.access_host}/${session.websocket}`
+    }
+    else {
+      // In development we don't use SSL and connect to the websocket directly
+      // on the equivalent localhost port; manually forwarding this port to the
+      // correct port on the node for this session is required for this to
+      // succeed.
+      return `ws://localhost:${session.websocket}`;
+    }
   }
 
   handleClickSoundButton() {
