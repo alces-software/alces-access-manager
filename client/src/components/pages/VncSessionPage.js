@@ -11,6 +11,7 @@ import ToolbarCopyButton from 'components/ToolbarCopyButton';
 class VncSessionPage extends React.Component {
   render() {
     const {
+      cluster,
       fields: {
         pastedText,
       },
@@ -29,8 +30,8 @@ class VncSessionPage extends React.Component {
 
     const url = __PRODUCTION__ ?
       // In production we want to use SSL and connect to a proxy to the VNC
-      // session websocket on the AAM appliance.
-      `wss://${window.location.host}/ws/${session.access_host}/${session.websocket}`
+      // session websocket, which will run on the cluster login node.
+      `wss://${cluster.proxyAddress}/ws/${session.access_host}/${session.websocket}`
       :
       // In development we don't use SSL and connect to the websocket directly
       // on the equivalent localhost port; manually forwarding this port to the
