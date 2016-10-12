@@ -27,17 +27,6 @@ class VncSessionPage extends React.Component {
     // possible.
     const vncContainerStyles = {maxWidth: novnc.width};
 
-    const url = __PRODUCTION__ ?
-      // In production we want to use SSL and connect to a proxy to the VNC
-      // session websocket on the AAM appliance.
-      `wss://${window.location.host}/ws/${session.access_host}/${session.websocket}`
-      :
-      // In development we don't use SSL and connect to the websocket directly
-      // on the equivalent localhost port; manually forwarding this port to the
-      // correct port on the node for this session is required for this to
-      // succeed.
-      `ws://localhost:${session.websocket}`;
-
     const pasteModalButtons = (
       <Button
         onClick={novncActions.pasteText}
@@ -87,7 +76,7 @@ class VncSessionPage extends React.Component {
             </ButtonGroup>
           </ButtonToolbar>
           <NoVnc
-            url={url}
+            url={this.websocketUrl()}
             password={session.password}
             novnc={novnc}
             novncActions={novncActions}
@@ -130,6 +119,28 @@ class VncSessionPage extends React.Component {
         </StandardModal>
       </div>
     );
+  }
+
+  websocketUrl() {
+    const {cluster, session} = this.props;
+
+    if (__PRODUCTION__) {
+      // In production we want to use SSL and connect to a proxy to the VNC
+      // session websocket, which will run on the cluster login node. Note that
+      // the IP proxied to depends on the session type - it will be the same
+      // node as that running the proxy for login sessions, or the access_host
+      // as determined by Clusterware for compute sessions.
+      const isLoginNodeSession = session.host == session.access_host;
+      const internalSessionIp = isLoginNodeSession ? '127.0.0.1' : session.access_host;
+      return `wss://${cluster.proxyAddress}/ws/${internalSessionIp}/${session.websocket}`
+    }
+    else {
+      // In development we don't use SSL and connect to the websocket directly
+      // on the equivalent localhost port; manually forwarding this port to the
+      // correct port on the node for this session is required for this to
+      // succeed.
+      return `ws://localhost:${session.websocket}`;
+    }
   }
 
   handleClickSoundButton() {
