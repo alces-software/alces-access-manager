@@ -130,7 +130,7 @@ class VncSessionPage extends React.Component {
       // the IP proxied to depends on the session type - it will be the same
       // node as that running the proxy for login sessions, or the access_host
       // as determined by Clusterware for compute sessions.
-      const isLoginNodeSession = session.host == session.access_host;
+      const isLoginNodeSession = session.host == cluster.loginIp;
       const internalSessionIp = isLoginNodeSession ? '127.0.0.1' : session.access_host;
       return `wss://${cluster.proxyAddress}/ws/${internalSessionIp}/${session.websocket}`
     }
